@@ -7,6 +7,10 @@ PhoneBook::PhoneBook()
     this->total_index = 0;
 }
 
+/*
+  Prompts the user for an index and displays the corresponding contact.
+  Validates the input to ensure it's a valid index number.
+*/
 void PhoneBook::Desplay_by_Index()
 {
     std::cout << "Enter Index: " ;
@@ -40,8 +44,11 @@ std::string parse(std::string str)
 }
 
 
-
-
+/*
+  Adds a new contact to the phonebook.
+ If the phonebook is full (8 contacts), it replaces the oldest one.
+  Prompts the user for all necessary contact details.
+*/
 void PhoneBook::Add_New_Contact()
 {
     if(current_index == 8)
@@ -57,6 +64,10 @@ void PhoneBook::Add_New_Contact()
     current_index++;
 }
 
+/*
+  Displays a list of all available contacts in a formatted table.
+  Then calls Desplay_by_Index to allow the user to view details of a specific contact.
+*/
 void PhoneBook::Search_A_Contact()
 {
     int i = 0;

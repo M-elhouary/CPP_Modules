@@ -1,6 +1,10 @@
 #include "Contact.hpp"
 
-
+/*
+  Sets the value of a specific field in the contact based on the flag.
+  flag: The field to update (FIRSTN, LASTEN, etc.)
+  value: The string value to set.
+*/
 void Contact::SetValue(t_flag flag, std::string value)
 {
     if(flag == FIRSTN)
@@ -23,6 +27,11 @@ std::string Modified_value(std::string  str_value)
     return str_value;
 }
 
+/*
+    Displays the contact information.
+    flag: If 0, displays a summary (formatted columns).
+      If non-zero, displays full details of the contact.
+*/
 void Contact::DesplayValue(int flag)
 {
     if(flag == 0)
