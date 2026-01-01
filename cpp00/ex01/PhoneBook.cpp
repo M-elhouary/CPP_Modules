@@ -14,7 +14,7 @@ void PhoneBook::Desplay_by_Index()
     int Index;
     std::getline(std::cin, index_value_str);
     std::stringstream ss(index_value_str);
-    if(!(ss >> Index) || Index < 0 || !ss.eof())
+    if(!(ss >> Index) || Index < 0 || !ss.eof() || Index > current_index - 1)
     {
         std::cout << "Invalid index. Please enter a valid number." << std::endl;
         return;
@@ -25,11 +25,16 @@ void PhoneBook::Desplay_by_Index()
 
 std::string parse(std::string str)
 {
-    std::cout << str;
+    
     std::string input_value;
     while (true)
     {
-        std::getline(std::cin, input_value);
+        std::cout << str;
+        if(!std::getline(std::cin, input_value))
+        {
+            std::cout << "\nEOF detected (Ctrl+D) Exiting ADD command " << std::endl;
+            throw std::runtime_error("EOF");
+        }
         if (input_value.empty())
         {
             std::cout << "Input cannot be empty. Please try again." << std::endl;
@@ -66,7 +71,7 @@ void PhoneBook::Search_A_Contact()
     std::cout << "|" << std::setw(10) << "Last  Name";
     std::cout << "|" << std::setw(11) << "Nick Name|" << std::endl;
     std::cout << "---------------------------------------------" << std::endl;
-    while (i < current_index || total_index == 1) 
+    while (i < current_index || (total_index == 1 && i < 8) ) 
     {
         std::cout << "|" << std::setw(10) << i << "|";
         contacts[i].DesplayValue(0);
