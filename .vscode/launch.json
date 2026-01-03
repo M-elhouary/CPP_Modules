@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/mel-houa/c++_psolve/cpp00/ex00",
-      "program": "/home/mel-houa/c++_psolve/cpp00/ex00/build/Debug/outDebug",
+      "cwd": "/home/mel-houa/c++_psolve/cpp00/ex01",
+      "program": "/home/mel-houa/c++_psolve/cpp00/ex01/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
