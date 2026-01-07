@@ -5,16 +5,13 @@
 #include "Weapon.hpp"
 
 
-class HumanA{
-    private:
-        std::string name;
-        Weapon      *weapon;
-
-    public:
-        HumanA(std::string name);
-        setWeapon(Weapon &weapon);
-        void attack();
-
+class HumanA {
+private:
+    std::string name;
+    Weapon& weapon; // Reference: must always point to an object
+public:
+    HumanA(std::string name, Weapon& weapon);
+    void attack();
 };
 
 #endif
