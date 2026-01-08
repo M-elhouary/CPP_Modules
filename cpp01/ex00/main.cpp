@@ -8,7 +8,7 @@ int main() {
 
     Zombie* heapZombie = newZombie("Heap_Zombie");
     heapZombie->announce();
-    // delete heapZombie;
+    delete heapZombie;
 
     return 0;
 }

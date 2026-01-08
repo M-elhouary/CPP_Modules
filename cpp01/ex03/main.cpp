@@ -3,8 +3,8 @@
 
 int main() {
     {
-        Weapon club = Weapon("crude spiked club"); // Create a Weapon object
-        HumanA bob("Bob", club); // Create a HumanA object with a reference to the Weapon
+        Weapon club = Weapon("crude spiked club");
+        HumanA bob("Bob", club);
         bob.attack();
         club.setType("some other type of club");
         bob.attack();
