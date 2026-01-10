@@ -1,5 +1,5 @@
 
-NAME = harl
+NAME = harlFilter
 
 CXX = c++
 

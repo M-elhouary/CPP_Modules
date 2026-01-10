@@ -1,4 +1,3 @@
-
 #ifndef HARL_HPP
 #define HARL_HPP
 
@@ -16,6 +15,5 @@ class Harl{
         Harl();
         void complain( std::string level);
 };
-
 
 #endif

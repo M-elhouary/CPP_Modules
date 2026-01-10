@@ -1,15 +1,15 @@
 #include "Zombie.hpp"
 
-Zombie::Zombie(void) : name() {} // Default constructor for array allocation
+Zombie::Zombie(void) : name() {}
 
 Zombie::~Zombie() {
-    std::cout << this->name << " is destroyed" << std::endl; // Destructor for cleanup message
+    std::cout << this->name << " is destroyed" << std::endl;
 }
 
 void Zombie::announce(void) {
-    std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl; // Announce method
+    std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl; 
 }
 
-void Zombie::setName(std::string name) { // Setter for name
+void Zombie::setName(std::string name) { 
     this->name = name;
 }

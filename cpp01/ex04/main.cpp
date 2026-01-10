@@ -33,6 +33,12 @@ int main(int ac, char **av) {
         }
         new_file << buffer_str; // write modified buffer_str to new file
     }
+    else
+    {
+        std::cout << "Error: invalid number of arguments" << std::endl;
+        std::cout << "Usage: ./replace <filename> <string_to_replace> <replacement_string>" << std::endl;
+        return 1;
+    }
     return 0;
 
 }
