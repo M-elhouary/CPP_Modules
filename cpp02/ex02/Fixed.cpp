@@ -22,7 +22,7 @@ Fixed::~Fixed() {
 }
 
 
-// Assignment operator
+// Assignment operator overload 
 
 Fixed &Fixed::operator=(const Fixed &obj) {
     if (this != &obj) {
@@ -101,22 +101,36 @@ Fixed Fixed::operator--(int) {
     return temp;
 }
 
+
+
+// Static min and max functions
 Fixed &Fixed::min(Fixed &a, Fixed &b) {
-    return (a < b) ? a : b;
+    if (a < b)
+        return a;
+    return b;
 }
 
 const Fixed &Fixed::min(const Fixed &a, const Fixed &b) {
-    return (a < b) ? a : b;
+    if (a < b)
+        return a;
+    return b;
 }
 
 Fixed &Fixed::max(Fixed &a, Fixed &b) {
-    return (a > b) ? a : b;
+    if (a > b)
+        return a;
+    return b;
 }
 
 const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
-    return (a > b) ? a : b;
+    if (a > b)
+        return a;
+    return b;
 }
 
+
+
+// Member functions
 int Fixed::getRawBits(void) const {
     return this->_fixedPointValue;
 }
@@ -133,6 +147,8 @@ int Fixed::toInt(void) const {
     return this->_fixedPointValue >> _fractionalBits;
 }
 
+
+// Insertion operator overload
 std::ostream &operator<<(std::ostream &out, const Fixed &obj) {
     out << obj.toFloat();
     return out;
