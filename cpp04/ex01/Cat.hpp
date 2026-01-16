@@ -9,8 +9,8 @@ public:
     Cat();
     Cat(const Cat &other);
     Cat &operator=(const Cat &other);
-    virtual ~Cat();
-    virtual void  makeSound() const;
+    ~Cat();
+    void makeSound() const;
 };
 
 #endif

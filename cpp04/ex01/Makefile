@@ -1,27 +1,26 @@
-NAME		=	program
+NAME =	program
 
-CXX			=	clang++
-CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
+CXX	=	c++
+CXXFLAGS =	-Wall -Wextra -Werror -std=c++98
 
-SRCS		=	main.cpp \
-				Animal.cpp
+SRCS	=	main.cpp Animal.cpp Dog.cpp Cat.cpp Brain.cpp
 
-OBJS		=	$(SRCS:.cpp=.o)
+OBJS =	$(SRCS:.cpp=.o)
 
-all:		$(NAME)
+all: $(NAME)
 
-$(NAME):	$(OBJS)
-			$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
-%.o:		%.cpp
-			$(CXX) $(CXXFLAGS) -c $< -o $@
+%.o:%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-			rm -f $(OBJS)
+	rm -f $(OBJS)
 
-fclean:		clean
-			rm -f $(NAME)
+fclean:	clean
+		rm -f $(NAME)
 
-re:			fclean all
+re:	fclean all
 
 .PHONY:		all clean fclean re
