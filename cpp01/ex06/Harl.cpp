@@ -81,16 +81,4 @@ void Harl::complain(std::string level)
         break;
     }
 }    
-        break;
-    case 2:
-        ( this->*function[2])();    
-        ( this->*function[3])();
-        break;
-    case 3:
-        ( this->*function[3])();
-    
-    default:
-        break;
-    }
 
-}
