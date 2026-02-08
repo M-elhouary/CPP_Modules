@@ -1,4 +1,4 @@
-#include "Bureaucrat.hpp"
+    #include "Bureaucrat.hpp"
 
 // Constructor with name and grade, checks for grade validity
 
@@ -12,9 +12,7 @@ Bureaucrat::Bureaucrat(const std::string &name, int grade) : name(name)
 }
 
 // Copy constructor
-Bureaucrat::Bureaucrat(const Bureaucrat &other) : name(other.name), grade(other.grade)
-{
-}
+Bureaucrat::Bureaucrat(const Bureaucrat &other) : name(other.name), grade(other.grade){}
 
 // Assignment operator
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
@@ -58,3 +56,21 @@ void Bureaucrat::decrementGrade()
         throw GradeTooLowException();       
     this->grade++;
 }       
+
+
+const char *Bureaucrat::GradeTooHighException::what() const throw()
+{
+    return "Grade too high!";
+}
+
+const char *Bureaucrat::GradeTooLowException::what() const throw()
+{
+    return "Grade too low!";
+}
+
+
+std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat)
+{
+    os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
+    return os;
+}
