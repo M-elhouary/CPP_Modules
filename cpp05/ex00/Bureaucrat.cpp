@@ -24,7 +24,6 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
     return *this;
 }
 
-
 // Destructor
 Bureaucrat::~Bureaucrat(){}
 

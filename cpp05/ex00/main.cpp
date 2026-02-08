@@ -6,7 +6,7 @@ int main()
 {
     try
     {
-        Bureaucrat bob("Bob", 2); 
+        Bureaucrat bob("Bob", 1); 
         std::cout << bob << std::endl;
         bob.incrementGrade(); // This should succeed
         std::cout << bob << std::endl;
