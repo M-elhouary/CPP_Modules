@@ -1,75 +1,73 @@
-    #include "Bureaucrat.hpp"
+#include "Bureaucrat.hpp"
+#include "Form.hpp"
 
-// Constructor with name and grade, checks for grade validity
-
-Bureaucrat::Bureaucrat(const std::string &name, int grade) : name(name)
+Bureaucrat::Bureaucrat(const std::string &n, int g) : name(n), grade(g)
 {
-    if (grade < 1)
+    if (g < 1)
         throw GradeTooHighException();
-    if (grade > 150)
+    if (g > 150)
         throw GradeTooLowException();
-    this->grade = grade;
 }
 
-// Copy constructor
-Bureaucrat::Bureaucrat(const Bureaucrat &other) : name(other.name), grade(other.grade){}
+Bureaucrat::Bureaucrat(const Bureaucrat &other) : name(other.name), grade(other.grade) {}
 
-// Assignment operator
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 {
     if (this != &other)
-    {
-        this->grade = other.grade;
-    }
+        grade = other.grade; // name is const
     return *this;
 }
 
-// Destructor
-Bureaucrat::~Bureaucrat(){}
+Bureaucrat::~Bureaucrat() {}
 
 
-// Getter for name and grade
 const std::string &Bureaucrat::getName() const
 {
-    return this->name;
+    return name;
 }
 
-// Getter for grade
 int Bureaucrat::getGrade() const
 {
-    return this->grade;
+     return grade; 
 }
 
-// Increment and decrement grade methods with exception handling
 void Bureaucrat::incrementGrade()
 {
-    if (this->grade - 1 < 1)
+    if (grade - 1 < 1)
         throw GradeTooHighException();
-    this->grade--;      
+    grade--;
 }
 
-// Decrement grade method
 void Bureaucrat::decrementGrade()
 {
-    if (this->grade + 1 > 150)
-        throw GradeTooLowException();       
-    this->grade++;
-}       
-
+    if (grade + 1 > 150)
+        throw GradeTooLowException();
+    grade++;
+}
 
 const char *Bureaucrat::GradeTooHighException::what() const throw()
 {
-    return "Grade too high!";
+    return "Bureaucrat grade too high!";
 }
 
 const char *Bureaucrat::GradeTooLowException::what() const throw()
 {
-    return "Grade too low!";
+    return "Bureaucrat grade too low!";
 }
 
+void Bureaucrat::signForm(Form &form)
+{
+    try {
+        form.beSigned(*this);
+        std::cout << name << " signed " << form.getName() << std::endl;
+    } catch (const std::exception &e) {
+        std::cout << name << " couldn't sign " << form.getName()
+                  << " because " << e.what() << std::endl;
+    }
+}
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat)
 {
-    os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
+    os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << ".";
     return os;
 }

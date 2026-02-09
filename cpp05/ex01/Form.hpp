@@ -1,8 +1,11 @@
 #ifndef FORM_HPP
 #define FORM_HPP
 
+#include <string>
 #include <iostream>
-#include "Bureaucrat.hpp"
+#include <exception>
+
+class Bureaucrat; // forward declaration to avoid circular dependency
 
 class Form
 {

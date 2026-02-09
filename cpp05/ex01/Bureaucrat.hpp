@@ -3,36 +3,40 @@
 
 #include <iostream>
 #include <string>
-#include <stdexcept>
+#include <exception>
+
+
+
+#include "Form.hpp"
+
+// class Form; // forward 
 
 class Bureaucrat
 {
 private:
     const std::string name;
-    int grade;
+    int               grade;
 
 public:
-    Bureaucrat(const std::string &name, int grade); // Constructor with name and grade
-    Bureaucrat(const Bureaucrat &other);            // Copy constructor
-    Bureaucrat &operator=(const Bureaucrat &other); // Assignment operator
-    ~Bureaucrat();                                  // Destructor
+    Bureaucrat(const std::string &name, int grade);
+    Bureaucrat(const Bureaucrat &other);
+    Bureaucrat &operator=(const Bureaucrat &other);
+    ~Bureaucrat();
 
     const std::string &getName() const;
-    int getGrade() const;
+    int                getGrade() const;
+
     void incrementGrade();
     void decrementGrade();
+
     void signForm(Form &form);
 
-    // Exception classes for grade violations
-    class GradeTooHighException : public std::exception
-    {
+    class GradeTooHighException : public std::exception {
     public:
         virtual const char *what() const throw();
     };
 
-    // Exception class for grade too low
-    class GradeTooLowException : public std::exception
-    {
+    class GradeTooLowException : public std::exception {
     public:
         virtual const char *what() const throw();
     };
@@ -40,4 +44,4 @@ public:
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat);
 
-#endif // BUREAUCRAT_HPP
+#endif
