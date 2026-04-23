@@ -1,4 +1,5 @@
 #include "AForm.hpp"
+#include "Bureaucrat.hpp"
 
 
 // Error text used when grade goes above the highest allowed rank (1).
@@ -14,7 +15,7 @@ const char* AForm::GradeTooLowException::what() const throw()
 };
 
 
-AForm::AForm(const std::string& n, const int gs, const int ge) : name(n), gradeToSign(gs), gradeToExec(ge)
+AForm::AForm(const std::string& n, const int gs, const int ge, const std::string& t) : name(n), gradeToSign(gs), gradeToExec(ge), target(t)
 {
     if(gs < 1)
         throw GradeTooHighException();
@@ -26,10 +27,11 @@ AForm::AForm(const std::string& n, const int gs, const int ge) : name(n), gradeT
     else if(ge > 150)
         throw GradeTooLowException();
 };
-AForm::AForm() : name("default"), isSigned(false), gradeToSign(150), gradeToExec(150) {};
+
+AForm::AForm() : name("default"), isSigned(false), gradeToSign(150), gradeToExec(150), target("default target") {}
 AForm::~AForm(){};
 
-AForm::AForm(const AForm &other) : name(other.name), isSigned(other.isSigned), gradeToSign(other.gradeToSign), gradeToExec(other.gradeToExec)
+AForm::AForm(const AForm &other) : name(other.name), isSigned(other.isSigned), gradeToSign(other.gradeToSign), gradeToExec(other.gradeToExec), target(other.target)
 {
     std::cout << "AForm copy constructor called" << std::endl;
 }
@@ -45,6 +47,10 @@ AForm &AForm::operator=(AForm const &other)
     return *this;
 }
 
+std::string const &AForm::getTarget() const
+{
+    return this->target;
+};
 
 std::string const &AForm::getName() const
 {
