@@ -1,16 +1,15 @@
 #include "Bureaucrat.hpp"
 
-
-
 int main()
 {
     try
     {
         Bureaucrat bob("Bob", 2);
-        std::cout << bob.getName() << ", bureaucrat grade " << bob.getGrade() << std::endl;
+        // Using the custom insertion operator (<<) to print the bureaucrat
+        std::cout << bob << std::endl;
         bob.incrementGrade();
-        std::cout << bob.getName() << ", bureaucrat grade " << bob.getGrade() << std::endl;
-        bob.incrementGrade(); // This should throw an exception
+        std::cout << bob << std::endl;
+        bob.incrementGrade(); // This should throw an exceptkion
     }
     catch (const std::exception &e)
     {
@@ -20,10 +19,10 @@ int main()
     try
     {
         Bureaucrat alice("Alice", 149);
-        std::cout << alice.getName() << ", bureaucrat grade " << alice.getGrade() << std::endl;
-        alice.decrementGrade();
-        std::cout << alice.getName() << ", bureaucrat grade " << alice.getGrade() << std::endl;
-        alice.decrementGrade(); // This should throw an exception
+        std::cout << alice << std::endl;
+        alice.decrementGrade(); // OK, becomes 150
+        std::cout << alice << std::endl;
+        alice.decrementGrade(); // Throws exception
     }
     catch (const std::exception &e)
     {

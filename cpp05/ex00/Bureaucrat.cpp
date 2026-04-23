@@ -57,4 +57,12 @@ void Bureaucrat::decrementGrade()
     if (this->grade + 1 > 150)
         throw GradeTooLowException();       
     this->grade++;
-}       
+}
+
+// Overload of the insertion << operator
+std::ostream &operator<<(std::ostream &os, const Bureaucrat &b)
+{
+    os << b.getName() << ", bureaucrat grade " << b.getGrade();
+    return os;
+}
+
