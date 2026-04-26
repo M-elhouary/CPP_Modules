@@ -1,27 +1,31 @@
-
 #include "Intern.hpp"
-#include "../ex02/ShrubberyCreationForm.hpp"
-#include "../ex02/RobotomyRequestForm.hpp"
-#include "../ex02/PresidentialPardonForm.hpp"
+
 #include <iostream>
 
-Intern::Intern() {}
-Intern::Intern(const Intern&) {}
-Intern& Intern::operator=(const Intern&) { return *this; }
-Intern::~Intern() {}
 
-static AForm* createShrubbery(const std::string& target) {
+Intern::Intern() {} // Default constructor
+Intern::Intern(const Intern&) {} // Copy constructor
+Intern& Intern::operator=(const Intern&) { return *this; } // Assignment operator
+Intern::~Intern() {} // Destructor
+
+static AForm* createShrubbery(const std::string& target) 
+{
     return new ShrubberyCreationForm(target);
 }
-static AForm* createRobotomy(const std::string& target) {
+
+static AForm* createRobotomy(const std::string& target) 
+{
     return new RobotomyRequestForm(target);
 }
-static AForm* createPardon(const std::string& target) {
+
+static AForm* createPardon(const std::string& target)
+{
     return new PresidentialPardonForm(target);
 }
 
 AForm* Intern::makeForm(const std::string& formName, const std::string& target) const {
-    struct FormPair {
+    struct FormPair 
+    {
         const char* name;
         AForm* (*creator)(const std::string&);
     };
