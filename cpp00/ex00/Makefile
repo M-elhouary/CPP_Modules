@@ -1,7 +1,7 @@
 
 # Name of the executable
 NAME = megaphone
-
+		
 # Compiler and flags
 CXX = c++
 # Compiler flags

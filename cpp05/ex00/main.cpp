@@ -1,33 +1,27 @@
 #include "Bureaucrat.hpp"
 
+
 int main()
 {
     try
     {
-        Bureaucrat bob("Bob", 2);
-        // Using the custom insertion operator (<<) to print the bureaucrat
-        std::cout << bob << std::endl;
-        bob.incrementGrade();
-        std::cout << bob << std::endl;
-        bob.incrementGrade(); // This should throw an exceptkion
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Exception: " << e.what() << std::endl;
-    }
+        Bureaucrat b1("Alice", 150);
+        std::cout << b1 << std::endl;
+        b1.incrementGrade();
+        std::cout << b1 << std::endl;
+        b1.decrementGrade();
+        std::cout << b1 << std::endl;
 
-    try
-    {
-        Bureaucrat alice("Alice", 149);
-        std::cout << alice << std::endl;
-        alice.decrementGrade(); // OK, becomes 150
-        std::cout << alice << std::endl;
-        alice.decrementGrade(); // Throws exception
+        Bureaucrat b2("Bob", 1);
+        std::cout << b2 << std::endl;
+        // b2.incrementGrade(); // This should throw an exception.
+        std::cout << b2 << std::endl;
+        Bureaucrat b3("Charlie", 151); // This should throw an exception.
+        b2.decrementGrade();
+        std::cout << b3 << std::endl;
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
-        std::cerr << "Exception: " << e.what() << std::endl;
+        std::cerr << "Exception caught: " << e.what() << std::endl;
     }
-
-    return 0;
-}
+};

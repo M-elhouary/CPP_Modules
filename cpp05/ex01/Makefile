@@ -1,26 +1,25 @@
-NAME =	form
+NAME = Form
 
-CXX	=	c++
-CXXFLAGS =	-Wall -Wextra -Werror -std=c++98
+SRCS = main.cpp Bureaucrat.cpp Form.cpp
 
-SRCS	=	main.cpp Bureaucrat.cpp Form.cpp
+OBJS = $(SRCS:.cpp=.o)
 
-OBJS =	$(SRCS:.cpp=.o)
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-		$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
-%.o:%.cpp
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
 
-fclean:	clean
-		rm -f $(NAME)
+fclean: clean
+	rm -f $(NAME)
 
-re:	fclean all
-
-.PHONY:		all clean fclean re
+re: fclean all

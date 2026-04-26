@@ -1,20 +1,21 @@
-#include "Form.hpp"
+#include "AForm.hpp"
+#include "Bureaucrat.hpp"
 
 
 // Error text used when grade goes above the highest allowed rank (1).
-const char* Form::GradeTooHighException::what() const throw()
+const char* AForm::GradeTooHighException::what() const throw()
 {
     return "too high";
 };
 
 // Error text used when grade goes below the lowest allowed rank (150).
-const char* Form::GradeTooLowException::what() const throw()
+const char* AForm::GradeTooLowException::what() const throw()
 {
     return "too low";
 };
 
 
-Form::Form(const std::string& n, const int gs, const int ge) : name(n), gradeToSign(gs), gradeToExec(ge)
+AForm::AForm(const std::string& n, const int gs, const int ge, const std::string& t) : name(n), gradeToSign(gs), gradeToExec(ge), target(t)
 {
     if(gs < 1)
         throw GradeTooHighException();
@@ -26,18 +27,19 @@ Form::Form(const std::string& n, const int gs, const int ge) : name(n), gradeToS
     else if(ge > 150)
         throw GradeTooLowException();
 };
-Form::Form() : name("default"), isSigned(false), gradeToSign(150), gradeToExec(150) {};
-Form::~Form(){};
 
-Form::Form(const Form &other) : name(other.name), isSigned(other.isSigned), gradeToSign(other.gradeToSign), gradeToExec(other.gradeToExec)
+AForm::AForm() : name("default"), isSigned(false), gradeToSign(150), gradeToExec(150), target("default target") {}
+AForm::~AForm(){};
+
+AForm::AForm(const AForm &other) : name(other.name), isSigned(other.isSigned), gradeToSign(other.gradeToSign), gradeToExec(other.gradeToExec), target(other.target)
 {
-    std::cout << "Form copy constructor called" << std::endl;
+    std::cout << "AForm copy constructor called" << std::endl;
 }
 
 
-Form &Form::operator=(Form const &other)
+AForm &AForm::operator=(AForm const &other)
 {
-    std::cout << " Form copy assignment called " << std::endl;
+    std::cout << " AForm copy assignment called " << std::endl;
     if (this != &other)
     {
         this->isSigned = other.isSigned;
@@ -45,30 +47,34 @@ Form &Form::operator=(Form const &other)
     return *this;
 }
 
+std::string const &AForm::getTarget() const
+{
+    return this->target;
+};
 
-std::string const &Form::getName() const
+std::string const &AForm::getName() const
 {
     return this->name;
 };
 
-int Form::getGradeToExec() const
+int AForm::getGradeToExec() const
  {
     return this->gradeToExec;
 
 };
 
-int Form::getGradeToSign() const
+int AForm::getGradeToSign() const
 {
     return this->gradeToSign;
 };
 
 
-bool Form::getIsSigned() const
+bool AForm::getIsSigned() const
 {
     return this->isSigned;
 };
 
-void Form::beSigned(const class Bureaucrat &b)
+void AForm::beSigned(const class Bureaucrat &b)
 {
     if(b.getGrade() > gradeToSign)
         throw GradeTooLowException();   
@@ -76,7 +82,7 @@ void Form::beSigned(const class Bureaucrat &b)
         this->isSigned = true;
 };
 
-std::ostream& operator<<(std::ostream& o, const Form& i)
+std::ostream& operator<<(std::ostream& o, const AForm& i)
 {
     if(i.getIsSigned())
         o << i.getName() << ", form is signed, grade to sign " << i.getGradeToSign() << ", grade to execute " << i.getGradeToExec() << ".";
