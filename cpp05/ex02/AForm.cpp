@@ -3,17 +3,18 @@
 
 
 // Error text used when grade goes above the highest allowed rank (1).
-const char* AForm::GradeTooHighException::what() const throw()
-{
+
+const char* AForm::GradeTooHighException::what() const throw() {
     return "too high";
-};
+}
 
-// Error text used when grade goes below the lowest allowed rank (150).
-const char* AForm::GradeTooLowException::what() const throw()
-{
+const char* AForm::GradeTooLowException::what() const throw() {
     return "too low";
-};
+}
 
+const char* AForm::FormNotSignedException::what() const throw() {
+    return "form not signed";
+}
 
 AForm::AForm(const std::string& n, const int gs, const int ge, const std::string& t) : name(n), gradeToSign(gs), gradeToExec(ge), target(t)
 {
@@ -26,7 +27,8 @@ AForm::AForm(const std::string& n, const int gs, const int ge, const std::string
         throw GradeTooHighException();
     else if(ge > 150)
         throw GradeTooLowException();
-};
+    isSigned = false;
+}
 
 AForm::AForm() : name("default"), isSigned(false), gradeToSign(150), gradeToExec(150), target("default target") {}
 AForm::~AForm(){};
@@ -49,8 +51,16 @@ AForm &AForm::operator=(AForm const &other)
 
 std::string const &AForm::getTarget() const
 {
-    return this->target;
-};
+    return target;
+}
+
+void AForm::checkExecution(Bureaucrat const & executor) const
+{
+    if (!isSigned)
+        throw FormNotSignedException();
+    if (executor.getGrade() > gradeToExec)
+        throw GradeTooLowException();
+}
 
 std::string const &AForm::getName() const
 {

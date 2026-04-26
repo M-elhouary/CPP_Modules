@@ -9,14 +9,17 @@ class Bureaucrat;
 
 
 
-class AForm {
 
+class AForm {
     private:
-    const std::string name;
-    bool isSigned;
-    const int gradeToSign;
-    const int gradeToExec;
-    const std::string target;
+        const std::string name;
+        bool isSigned;
+        const int gradeToSign;
+        const int gradeToExec;
+        const std::string target;
+
+    protected:
+        void checkExecution(Bureaucrat const & executor) const;
 
     public:
         AForm(const std::string& name, int signGrade, int execGrade, const std::string& target);
@@ -33,17 +36,21 @@ class AForm {
 
         void beSigned(Bureaucrat const &b);
         virtual void execute(Bureaucrat const & executor) const = 0;
-    
 
-    class GradeTooHighException : public std::exception {
-        public:
-            virtual const char* what() const throw();
-    };
+        class GradeTooHighException : public std::exception {
+            public:
+                virtual const char* what() const throw();
+        };
 
-    class GradeTooLowException : public std::exception {
-        public:
-            virtual const char* what() const throw();
-    };
+        class GradeTooLowException : public std::exception {
+            public:
+                virtual const char* what() const throw();
+        };
+
+        class FormNotSignedException : public std::exception {
+            public:
+                virtual const char* what() const throw();
+        };
 };
 
 
