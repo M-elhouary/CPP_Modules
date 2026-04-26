@@ -22,7 +22,7 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=(ShrubberyCreationForm co
 
 void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
 {
-    // You should check if the form is signed and the executor's grade is high enough here or in AForm
+    checkExecution(executor);
     std::ofstream outFile((this->getTarget() + "_shrubbery").c_str());
     if (outFile.is_open())
     {
