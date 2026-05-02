@@ -1,7 +1,6 @@
 #include "Bureaucrat.hpp"
 
 
-
 // Error text used when grade goes above the highest allowed rank (1).
 const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
@@ -43,13 +42,13 @@ const std::string& Bureaucrat::getName() const
 };
 
 // Copy constructor duplicates name and grade.
-Bureaucrat::Bureaucrat(const Bureaucrat &other) : name(other.name), grade(other.grade)
+Bureaucrat::Bureaucrat(const Bureaucrat& other) : name(other.name), grade(other.grade)
 {
     std::cout << "Bureacrat  copy constructor called" << std::endl;
 }
 
 // Assignment updates only grade because name is const.
-Bureaucrat &Bureaucrat::operator=(Bureaucrat const &other)
+Bureaucrat& Bureaucrat::operator=(Bureaucrat const &other)
 {
     std::cout << "Bureacrat copy assignment operator called" << std::endl;
     if (this != &other)
@@ -96,5 +95,4 @@ std::ostream& operator<<(std::ostream& o, const Bureaucrat& i)
 {
     o << i.getName() << ", bureaucrat grade " << i.getGrade() << ".";
     return o;
-
 }

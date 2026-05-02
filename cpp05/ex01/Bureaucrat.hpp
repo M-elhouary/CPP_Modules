@@ -7,7 +7,7 @@
 
 
 
-class Form;
+// class Form;
 class Bureaucrat {
 
     private:
