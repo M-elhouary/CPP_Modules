@@ -1,7 +1,6 @@
 #include "Bureaucrat.hpp"
 
 
-
 // Error text used when grade goes above the highest allowed rank (1).
 const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
@@ -26,9 +25,7 @@ Bureaucrat::Bureaucrat(const std::string& n, int g) : name(n), grade(g)
 // Default Bureaucrat starts at the lowest valid rank.
 Bureaucrat::Bureaucrat() : name("default"), grade(150) {};
 
-Bureaucrat::~Bureaucrat()
-{
-        };
+Bureaucrat::~Bureaucrat(){};
 
 // Read-only accessor for the current grade.
 int Bureaucrat::getGrade() const 

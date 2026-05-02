@@ -78,6 +78,19 @@ void Bureaucrat::decrementGrade()
 };
 
 
+void Bureaucrat::signForm(class Form &f)
+{
+    try
+    {
+        f.beSigned(*this);
+        std::cout << this->getName() << " signed " << f.getName() << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+        std::cout << this->getName() << " couldn't sign " << f.getName() << " because " << e.what() << std::endl;
+    }
+};
+
 // Print Bureaucrat in the required subject format.
 std::ostream& operator<<(std::ostream& o, const Bureaucrat& i)
 {

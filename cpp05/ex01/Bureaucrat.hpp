@@ -3,7 +3,11 @@
 
 #include <iostream>
 #include <stdexcept>
+#include "Form.hpp"
 
+
+
+class Form;
 class Bureaucrat {
 
     private:
@@ -18,6 +22,7 @@ class Bureaucrat {
         Bureaucrat &operator=(Bureaucrat const &other);
         void incrementGrade();
         void decrementGrade();
+        void signForm(class Form &f);
         ~Bureaucrat();
 
         class GradeTooHighException  : public std::exception {

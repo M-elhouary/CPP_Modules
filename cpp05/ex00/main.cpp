@@ -1,7 +1,7 @@
 #include "Bureaucrat.hpp"
 
 
-int main()
+int main()  
 {
     try
     {
@@ -24,4 +24,7 @@ int main()
     {
         std::cerr << "Exception caught: " << e.what() << std::endl;
     }
+    return 0;
+
 };
+    

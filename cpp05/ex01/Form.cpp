@@ -4,6 +4,7 @@
 // Error text used when grade goes above the highest allowed rank (1).
 const char* Form::GradeTooHighException::what() const throw()
 {
+
     return "too high";
 };
 
@@ -12,6 +13,7 @@ const char* Form::GradeTooLowException::what() const throw()
 {
     return "too low";
 };
+
 
 
 Form::Form(const std::string& n, const int gs, const int ge) : name(n), gradeToSign(gs), gradeToExec(ge)
@@ -68,13 +70,16 @@ bool Form::getIsSigned() const
     return this->isSigned;
 };
 
-void Form::beSigned(const class Bureaucrat &b)
+void Form::beSigned(const class Bureaucrat &b) 
 {
     if(b.getGrade() > gradeToSign)
         throw GradeTooLowException();   
     else
         this->isSigned = true;
 };
+
+
+
 
 std::ostream& operator<<(std::ostream& o, const Form& i)
 {
