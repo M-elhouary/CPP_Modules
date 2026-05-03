@@ -3,16 +3,19 @@
 #include <fstream>
 
 
-
+// default constructor
 ShrubberyCreationForm::ShrubberyCreationForm() : AForm("Shrubbery Creation Form", 145, 137, "default target") {}
 
+// destructor
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
+// copy constructor
 ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const &other) : AForm(other) {}
 
-
+// parameterized constructor
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string target) : AForm("Shrubbery Creation Form", 145, 137, target) {}
 
+//
 ShrubberyCreationForm &ShrubberyCreationForm::operator=(ShrubberyCreationForm const &other)
 {
     if (this != &other)

@@ -4,11 +4,11 @@
 #include "PresidentialPardonForm.hpp"
 #include <iostream>
 
-#include <ctime>
+// #include <ctime>
 #include <cstdlib>
 
 int main() {
-    ::srand(std::time(0));
+    // ::srand(std::time(0));
     try {
         Bureaucrat alice("Alice", 1);
         Bureaucrat bob("Bob", 140);

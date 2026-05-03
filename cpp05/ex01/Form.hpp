@@ -6,6 +6,8 @@
 #include <stdexcept>
 #include <string>
 
+
+class Bureaucrat;
 class Form
 {
 
