@@ -59,9 +59,9 @@ std::string const &AForm::getTarget() const
 void AForm::checkExecution(Bureaucrat const & executor) const
 {
     if (!isSigned)
-    throw FormNotSignedException();
+        throw FormNotSignedException();
     if (executor.getGrade() > gradeToExec)
-    throw GradeTooLowException();
+        throw GradeTooLowException();
 }
 
 std::string const &AForm::getName() const
@@ -89,9 +89,9 @@ bool AForm::getIsSigned() const
 void AForm::beSigned(const class Bureaucrat &b)
 {
     if(b.getGrade() > gradeToSign)
-    throw GradeTooLowException();   
+        throw GradeTooLowException();   
     else
-    this->isSigned = true;
+        this->isSigned = true;
 };
 
 

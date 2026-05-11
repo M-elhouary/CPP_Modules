@@ -16,6 +16,9 @@ const char* Bureaucrat::GradeTooLowException::what() const throw()
 // Build a Bureaucrat and enforce the valid grade range [1, 150].
 Bureaucrat::Bureaucrat(const std::string& n, int g) : name(n), grade(g)
 {
+
+    // why throw an exception here instead of just setting the grade to the closest valid value (1 or 150) ?
+    // why check the grade in the constructor instead of just in the incrementGrade and decrementGrade functions ?
     if(g < 1)
         throw GradeTooHighException();
     else if (g > 150)
@@ -60,7 +63,7 @@ Bureaucrat &Bureaucrat::operator=(Bureaucrat const &other)
 // Promote: better rank means a smaller numeric grade.
 void Bureaucrat::incrementGrade()
 {
-    if (this->grade <= 1)
+    if (this->grade < 1)
     throw GradeTooHighException();
     else
         this->grade--;
