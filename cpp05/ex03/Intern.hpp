@@ -17,6 +17,12 @@ class Intern {
         ~Intern();
     // member function to create forms based on name and target parameters 
     AForm* makeForm(const std::string& formName, const std::string& target) const;
+
+    private:
+        AForm* createShrubbery(const std::string& target) const;
+        AForm* createRobotomy(const std::string& target) const;
+        AForm* createPardon(const std::string& target) const;
+
 };
 
 #endif
