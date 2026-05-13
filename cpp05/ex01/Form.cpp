@@ -1,14 +1,12 @@
 #include "Form.hpp"
 
 
-// Error text used when grade goes above the highest allowed rank (1).
 const char* Form::GradeTooHighException::what() const throw()
 {
 
     return "too high";
 };
 
-// Error text used when grade goes below the lowest allowed rank (150).
 const char* Form::GradeTooLowException::what() const throw()
 {
     return "too low";
@@ -56,7 +54,6 @@ std::string const &Form::getName() const
 int Form::getGradeToExec() const
  {
     return this->gradeToExec;
-
 };
 
 int Form::getGradeToSign() const

@@ -2,19 +2,14 @@
 #include "ShrubberyCreationForm.hpp"
 
 
-// default constructor
 ShrubberyCreationForm::ShrubberyCreationForm() : AForm("Shrubbery Creation Form", 145, 137, "default target") {}
 
-// destructor
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
-// copy constructor
 ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const &other) : AForm(other) {}
 
-// parameterized constructor
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string target) : AForm("Shrubbery Creation Form", 145, 137, target) {}
 
-// copy assignment operator
 ShrubberyCreationForm &ShrubberyCreationForm::operator=(ShrubberyCreationForm const &other)
 {
     if (this != &other)
@@ -22,7 +17,6 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=(ShrubberyCreationForm co
     return *this;
 }
 
-// execute function that creates a file with ASCII art of a tree
 void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
 {
     checkExecution(executor);

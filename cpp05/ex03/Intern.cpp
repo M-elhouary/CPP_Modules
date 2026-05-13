@@ -3,10 +3,10 @@
 #include <iostream>
 
 
-Intern::Intern() {} // Default constructor
-Intern::Intern(const Intern&) {} // Copy constructor
-Intern& Intern::operator=(const Intern&) { return *this; } // Assignment operator
-Intern::~Intern() {} // Destructor
+Intern::Intern() {} 
+Intern::Intern(const Intern&) {} 
+Intern& Intern::operator=(const Intern&) { return *this; }
+Intern::~Intern() {} 
 
 AForm* Intern::createShrubbery(const std::string& target) const
 {
@@ -24,7 +24,7 @@ AForm* Intern::createPardon(const std::string& target) const
 }
 
 AForm* Intern::makeForm(const std::string& formName, const std::string& target) const {
-    
+
     typedef AForm* (Intern::*FormCreator)(const std::string&) const;
 
     struct FormPair {
