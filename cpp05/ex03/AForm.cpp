@@ -16,13 +16,7 @@ const char* AForm::FormNotSignedException::what() const throw() {
     return "form not signed";
 }
 
-void AForm::checkExecution(Bureaucrat const & executor) const
-{
-    if (!isSigned)
-        throw FormNotSignedException();
-    if (executor.getGrade() > gradeToExec)
-        throw GradeTooLowException();
-}
+
 
 AForm::AForm(const std::string& n, const int gs, const int ge, const std::string& t) : name(n), gradeToSign(gs), gradeToExec(ge), target(t)
 {
@@ -60,6 +54,13 @@ std::string const &AForm::getTarget() const
     return target;
 }
 
+void AForm::checkExecution(Bureaucrat const & executor) const
+{
+    if (!isSigned)
+        throw FormNotSignedException();
+    if (executor.getGrade() > gradeToExec)
+        throw GradeTooLowException();
+}
 
 std::string const &AForm::getName() const
 {

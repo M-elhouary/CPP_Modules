@@ -1,14 +1,12 @@
 #ifndef AFORM_HPP
-
 #define AFORM_HPP
 
 #include <iostream>
 #include <string>
+#include <ctime>
+#include <cstdlib>
 
 class Bureaucrat;
-
-
-
 
 class AForm {
     private:
@@ -16,8 +14,7 @@ class AForm {
         bool isSigned;
         const int gradeToSign;
         const int gradeToExec;
-        const std::string target;
-
+        const std::string target; 
     protected:
         void checkExecution(Bureaucrat const & executor) const;
 
@@ -34,22 +31,22 @@ class AForm {
         int getGradeToExec() const;
         std::string const &getTarget() const;
 
-        void beSigned(Bureaucrat const &b);
+        void beSigned(Bureaucrat const &b); 
         virtual void execute(Bureaucrat const & executor) const = 0;
 
         class GradeTooHighException : public std::exception {
             public:
-                virtual const char* what() const throw();
+                const char* what() const throw();
         };
 
         class GradeTooLowException : public std::exception {
             public:
-                virtual const char* what() const throw();
+                const char* what() const throw();
         };
 
         class FormNotSignedException : public std::exception {
             public:
-                virtual const char* what() const throw();
+                const char* what() const throw();
         };
 };
 

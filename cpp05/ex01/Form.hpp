@@ -6,6 +6,8 @@
 #include <stdexcept>
 #include <string>
 
+
+class Bureaucrat;
 class Form
 {
 
@@ -27,18 +29,18 @@ public:
     bool getIsSigned() const;
     int getGradeToSign() const;
     int getGradeToExec() const;
-    void beSigned(const class Bureaucrat &b);
+    void beSigned(const class Bureaucrat &b); 
 
     class GradeTooHighException : public std::exception
     {
     public:
-        virtual const char *what() const throw();
+        const char *what() const throw(); //
     };
 
     class GradeTooLowException : public std::exception
     {
     public:
-        virtual const char *what() const throw();
+        const char *what() const throw(); //
     };
 };
 std::ostream &operator<<(std::ostream &o, const Form &i);
