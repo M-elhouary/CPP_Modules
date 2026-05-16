@@ -19,9 +19,9 @@ int main()
         b2.decrementGrade();
         std::cout << b3 << std::endl;
     }
-    catch (const std::exception& e)
+    catch (const std::exception& s)
     {
-        std::cerr << "Exception caught: " << e.what() << std::endl;
+        std::cerr << "Exception caught: " << s.what() << std::endl;
     }
     return 0;
 

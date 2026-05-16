@@ -1,13 +1,12 @@
 #ifndef AFORM_HPP
-
 #define AFORM_HPP
 
 #include <iostream>
 #include <string>
-
+#include <ctime>
+#include <cstdlib>
 
 class Bureaucrat;
-
 
 class AForm {
     private:
@@ -37,17 +36,17 @@ class AForm {
 
         class GradeTooHighException : public std::exception {
             public:
-                virtual const char* what() const throw();
+                const char* what() const throw();
         };
 
         class GradeTooLowException : public std::exception {
             public:
-                virtual const char* what() const throw();
+                const char* what() const throw();
         };
 
         class FormNotSignedException : public std::exception {
             public:
-                virtual const char* what() const throw();
+                const char* what() const throw();
         };
 };
 

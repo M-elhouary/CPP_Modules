@@ -2,10 +2,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
-#include <iostream>
 
-#include <ctime>
-#include <cstdlib>
 
 int main() {
     std::srand(std::time(0));

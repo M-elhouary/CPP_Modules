@@ -37,8 +37,9 @@ AForm* Intern::makeForm(const std::string& formName, const std::string& target) 
         {"robotomy request", &Intern::createRobotomy},
         {"presidential pardon", &Intern::createPardon}
     };
+    
 
-    for (size_t i = 0; i < sizeof(forms)/sizeof(forms[0]); ++i) {
+    for (size_t i = 0; i < sizeof(forms)/sizeof(forms[0]); i++) {
         if (formName == forms[i].name) {
             std::cout << "Intern creates " << formName << std::endl;
             return (this->*(forms[i].creator))(target);
