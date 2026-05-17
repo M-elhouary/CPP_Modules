@@ -1,6 +1,7 @@
 #include "Intern.hpp"
-#include "../ex02/Bureaucrat.hpp"
-#include <iostream>
+#include "Bureaucrat.hpp"
+#include <cstdlib>
+#include <ctime>
 
 int main() {
     std::srand(std::time(0));

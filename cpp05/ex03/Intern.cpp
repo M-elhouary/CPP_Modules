@@ -1,6 +1,5 @@
 #include "Intern.hpp"
 
-#include <iostream>
 
 
 Intern::Intern() {} 

@@ -23,7 +23,7 @@ class AForm {
         AForm();
         AForm(AForm const &other);
         AForm &operator=(AForm const &other);
-        virtual ~AForm();
+        virtual ~AForm(); 
 
         std::string const &getName() const;
         bool getIsSigned() const;

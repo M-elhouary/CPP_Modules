@@ -2,6 +2,7 @@
 #define INTERN_HPP
 
 #include <string>
+#include <iostream>
 #include "AForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
