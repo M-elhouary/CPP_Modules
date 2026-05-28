@@ -20,7 +20,7 @@ class AForm {
 
 	public:
 		AForm(const std::string& name, int signGrade, int execGrade, const std::string& target);
-		AForm();
+		AForm(); 
 		AForm(AForm const &other);
 		AForm &operator=(AForm const &other);
 		virtual ~AForm();
