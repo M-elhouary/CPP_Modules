@@ -62,9 +62,15 @@ void ScalarConverter::printAfterCast(double literal)
     std::cout << "int: " << i << std::endl;
 
     float f = static_cast<float>(literal);
-    std::cout << "float: " << f << std::endl;
+    std::cout << "float: " << std::fixed
+              << std::setprecision(1)
+              << f 
+              << "f"
+              << std::endl;
 
-    std::cout << "double: " << literal << std::endl;
+    std::cout << "double: "<< std::fixed
+              << std::setprecision(1)
+              << literal << std::endl;
 }
 
 std::string ScalarConverter::detectType(std::string &literal)
@@ -83,9 +89,13 @@ std::string ScalarConverter::detectType(std::string &literal)
         else
             return "double";
     }
-    else
+    else if (isdigit(literal[0]) || (literal[0] == '-' && literal.length() > 1) || (literal[0] == '+' && literal.length() > 1))
     {
         return "int";
+    }
+    else
+    {
+        return "unknown";
     }
 }
 
@@ -93,27 +103,27 @@ void ScalarConverter::convert(std::string &literal)
 {
     ScalarConverter sc; // allowed inside class methods
     std::string type = sc.detectType(literal);
-    sc.HandlePseudoLiteral(literal, type);
-    sc.printAfterCast(d);
 
     if (type == "D" || type == "F")
     {
-        HandlePseudoLiteral(literal, type);
+        sc.HandlePseudoLiteral(literal, type);
+        return;
+    }
+    else if (type == "unknown")
+    {
+        std::cout << "char: impossible" << std::endl;
+        std::cout << "int: impossible" << std::endl;
+        std::cout << "float: impossible" << std::endl;
+        std::cout << "double: impossible" << std::endl;
         return;
     }
     char *end;
     double d = std::strtod(literal.c_str(), &end);
     // check if conversion succeeded using end pointer
-    if (end == literal.c_str())
+
+    if (d)
     {
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: " << literal << "f" << std::endl;
-        std::cout << "double: " << literal << std::endl;
-    }
-    else
-    {
-        printAfterCast(d);
+        sc.printAfterCast(d);
     }
 }
 
