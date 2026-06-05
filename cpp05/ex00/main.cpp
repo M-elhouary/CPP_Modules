@@ -2,10 +2,6 @@
 
 
 
-// what is the deff betwen abstract and poly
-// what does throw () mean in the what() function of the exception classes?
-// what is the defualte behavior of the what() function in the std::exception class, and how does it differ from the custom implementations in GradeTooHighException and GradeTooLowException?
-// what is the data of temp object created when a Bureaucrat object is copied using the copy constructor, and how does it differ from the original object?
 // file and c string 
 // vtablle and virtual functions
 // const and non const member functions
