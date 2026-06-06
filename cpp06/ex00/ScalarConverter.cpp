@@ -103,13 +103,15 @@ void ScalarConverter::convert(std::string &literal)
 {
     ScalarConverter sc; // allowed inside class methods
     std::string type = sc.detectType(literal);
+    char *end;
+    double d = std::strtod(literal.c_str(), &end);
 
     if (type == "D" || type == "F")
     {
         sc.HandlePseudoLiteral(literal, type);
         return;
     }
-    else if (type == "unknown")
+    else if (type == "unknown" || (*(end+1) != '\0'))
     {
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: impossible" << std::endl;
@@ -117,8 +119,6 @@ void ScalarConverter::convert(std::string &literal)
         std::cout << "double: impossible" << std::endl;
         return;
     }
-    char *end;
-    double d = std::strtod(literal.c_str(), &end);
     // check if conversion succeeded using end pointer
 
     if (d)
