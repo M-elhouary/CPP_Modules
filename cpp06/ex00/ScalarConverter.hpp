@@ -25,7 +25,11 @@ public:
     std::string detectType(std::string  &literal);
     std::string isPseudoLiteral(std::string  &literal);
     void HandlePseudoLiteral(std::string  &literal, std::string &type);
-    void printAfterCast(double d);  
+    void printChar(double d);
+    void printInt(double d);
+    void printFloat(double d);
+    void printDouble(double d); 
+    void printImpossible(std::string type, char *end);
 };
 
 

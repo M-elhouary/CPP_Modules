@@ -1,11 +1,11 @@
 #include <iostream>
 #include <iomanip>
 
-int main()
+int main(int argc, char *argv[])
 {
-    int i = 1;
+    char i = 'a';
 
-    double d = static_cast<double>(i);
+    double d = static_cast<double>(argv[1][0]);
 
     std::cout << "Integer value: " << i << std::endl;
     std::cout << "Double value: "

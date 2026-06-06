@@ -1,13 +1,5 @@
 #include "ScalarConverter.hpp"
 
-// nan      (Not A Number)
-// +inf     (positive infinity)
-// -inf     (negative infinity)
-
-// nanf
-
-// +inff
-// -inff
 
 ScalarConverter::ScalarConverter() {}
 
@@ -53,24 +45,39 @@ void ScalarConverter::HandlePseudoLiteral(std::string &literal, std::string &typ
     }
 }
 
-void ScalarConverter::printAfterCast(double literal)
+void ScalarConverter::printChar(double d)
 {
-    char c = static_cast<char>(literal);
-    std::cout << "char: " << c << std::endl;
+    char c = static_cast<char>(d);
+    if(!std::isprint(c))
+    {
+        std::cout << "char: Non displayable" << std::endl;
+        return;
+    }
+    std::cout << "char: " << "'" << c <<  "'" << std::endl;
+}
 
-    int i = static_cast<int>(literal);
+
+void ScalarConverter::printInt(double d)
+{
+    int i = static_cast<int>(d);
     std::cout << "int: " << i << std::endl;
+}
 
-    float f = static_cast<float>(literal);
+void ScalarConverter::printFloat(double d)
+{
+    float f = static_cast<float>(d);
     std::cout << "float: " << std::fixed
               << std::setprecision(1)
               << f 
               << "f"
               << std::endl;
+}
 
+void ScalarConverter::printDouble(double d)
+{
     std::cout << "double: "<< std::fixed
               << std::setprecision(1)
-              << literal << std::endl;
+              << d << std::endl;
 }
 
 std::string ScalarConverter::detectType(std::string &literal)
@@ -99,32 +106,44 @@ std::string ScalarConverter::detectType(std::string &literal)
     }
 }
 
+void ScalarConverter::printImpossible(std::string type, char *end)
+{
+    if (type == "unknown" || ((*end == 'f') && (*(end + 1) != '\0'))) // check if there are extra characters after the number (except for 'f' in float)
+    {
+        std::cout << "char: impossible" << std::endl;
+        std::cout << "int: impossible" << std::endl;
+        std::cout << "float: impossible" << std::endl;
+        std::cout << "double: impossible" << std::endl;
+    }
+}
+
 void ScalarConverter::convert(std::string &literal)
 {
     ScalarConverter sc; // allowed inside class methods
+    double d;
     std::string type = sc.detectType(literal);
     char *end;
-    double d = std::strtod(literal.c_str(), &end);
+    if(type == "char")
+        d = static_cast<double>(literal[0]);
+    else
+        d = std::strtod(literal.c_str(), &end);
 
     if (type == "D" || type == "F")
     {
         sc.HandlePseudoLiteral(literal, type);
         return;
     }
-    else if (type == "unknown" || (*(end+1) != '\0'))
+    else if (type == "unknown" || ((*end == 'f') && (*(end + 1) != '\0'))) // check if there are extra characters after the number (except for 'f' in float)
     {
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: impossible" << std::endl;
-        std::cout << "double: impossible" << std::endl;
+        sc.printImpossible(type, end);
         return;
     }
     // check if conversion succeeded using end pointer
+    sc.printChar(d);
+    sc.printInt(d);
+    sc.printFloat(d);
+    sc.printDouble(d);
 
-    if (d)
-    {
-        sc.printAfterCast(d);
-    }
 }
 
 std::ostream &operator<<(std::ostream &out, ScalarConverter const &rhs)
