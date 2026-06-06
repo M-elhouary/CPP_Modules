@@ -1,6 +1,17 @@
 #include "ScalarConverter.hpp"
 
 
+//    std::string detectType(std::string  &literal);
+//     std::string isPseudoLiteral(std::string  &literal);
+//     void HandlePseudoLiteral(std::string  &literal, std::string &type);
+//     void printChar(double d);
+//     void printInt(double d);
+//     void printFloat(double d);
+//     void printDouble(double d); 
+//     void printImpossible();
+
+
+
 ScalarConverter::ScalarConverter() {}
 
 ScalarConverter::ScalarConverter(ScalarConverter &src)
@@ -16,7 +27,7 @@ ScalarConverter &ScalarConverter::operator=(ScalarConverter &rhs)
     return *this;
 }
 
-std::string ScalarConverter::isPseudoLiteral(std::string &literal)
+std::string isPseudoLiteral(std::string &literal)
 {
     if (literal == "nan" || literal == "+inf" || literal == "-inf")
         return "D";
@@ -26,7 +37,7 @@ std::string ScalarConverter::isPseudoLiteral(std::string &literal)
         return "";
 }
 
-void ScalarConverter::HandlePseudoLiteral(std::string &literal, std::string &type)
+void HandlePseudoLiteral(std::string &literal, std::string &type)
 {
 
     if (type == "D")
@@ -45,105 +56,101 @@ void ScalarConverter::HandlePseudoLiteral(std::string &literal, std::string &typ
     }
 }
 
-void ScalarConverter::printChar(double d)
+void printChar(double d)
 {
     char c = static_cast<char>(d);
-    if(!std::isprint(c))
+    if (!std::isprint(c))
     {
         std::cout << "char: Non displayable" << std::endl;
         return;
     }
-    std::cout << "char: " << "'" << c <<  "'" << std::endl;
+    std::cout << "char: " << "'" << c << "'" << std::endl;
 }
 
-
-void ScalarConverter::printInt(double d)
+void printInt(double d)
 {
     int i = static_cast<int>(d);
     std::cout << "int: " << i << std::endl;
 }
 
-void ScalarConverter::printFloat(double d)
+void printFloat(double d)
 {
     float f = static_cast<float>(d);
     std::cout << "float: " << std::fixed
               << std::setprecision(1)
-              << f 
+              << f
               << "f"
               << std::endl;
 }
 
-void ScalarConverter::printDouble(double d)
+void printDouble(double d)
 {
-    std::cout << "double: "<< std::fixed
+    std::cout << "double: " << std::fixed
               << std::setprecision(1)
               << d << std::endl;
 }
 
-std::string ScalarConverter::detectType(std::string &literal)
+std::string detectType(std::string &literal)
 {
     std::string pseudo = isPseudoLiteral(literal);
     if (pseudo != "")
         return pseudo;
     else if (literal.length() == 1 && !std::isdigit(literal[0]))
-    {
         return "char";
-    }
-    else if (literal.find('.') != std::string::npos)
+    else if ((literal.find('.')) != std::string::npos)
     {
-        if (!literal.empty() && literal[literal.size() - 1] == 'f')
+        if (!literal.empty() && literal[literal.length() - 1] == 'f' && literal.length() > 1)
             return "float";
         else
             return "double";
     }
     else if (isdigit(literal[0]) || (literal[0] == '-' && literal.length() > 1) || (literal[0] == '+' && literal.length() > 1))
-    {
         return "int";
-    }
     else
-    {
         return "unknown";
-    }
 }
 
-void ScalarConverter::printImpossible(std::string type, char *end)
+void printImpossible()
 {
-    if (type == "unknown" || ((*end == 'f') && (*(end + 1) != '\0'))) // check if there are extra characters after the number (except for 'f' in float)
-    {
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: impossible" << std::endl;
-        std::cout << "double: impossible" << std::endl;
-    }
+    std::cout << "char: impossible" << std::endl;
+    std::cout << "int: impossible" << std::endl;
+    std::cout << "float: impossible" << std::endl;
+    std::cout << "double: impossible" << std::endl;
 }
 
 void ScalarConverter::convert(std::string &literal)
 {
-    ScalarConverter sc; // allowed inside class methods
+    // ScalarConverter sc; // allowed inside class methods
     double d;
-    std::string type = sc.detectType(literal);
-    char *end;
-    if(type == "char")
+    char *end = NULL;
+    std::string type = detectType(literal);
+    if (type == "char")
+    {
         d = static_cast<double>(literal[0]);
+        std::cout << "char: " << "'" << literal[0] << "'" << std::endl;
+        std::cout << d << std::endl;
+
+    }
     else
         d = std::strtod(literal.c_str(), &end);
 
+
     if (type == "D" || type == "F")
     {
-        sc.HandlePseudoLiteral(literal, type);
+        HandlePseudoLiteral(literal, type);
         return;
     }
-    else if (type == "unknown" || ((*end == 'f') && (*(end + 1) != '\0'))) // check if there are extra characters after the number (except for 'f' in float)
-    {
-        sc.printImpossible(type, end);
+    else if (type == "unknown" || ((*end == 'f') && (*(end + 1) != '\0')) 
+                                    || ((*end != 'f') && (*end != '\0'))) // check if there are extra characters after the number (except for 'f' in float)
+    { 
+        printImpossible();
         return;
     }
     // check if conversion succeeded using end pointer
-    sc.printChar(d);
-    sc.printInt(d);
-    sc.printFloat(d);
-    sc.printDouble(d);
-
+    printChar(d);
+    printInt(d);
+    printFloat(d);
+    printDouble(d);
 }
 
 std::ostream &operator<<(std::ostream &out, ScalarConverter const &rhs)
