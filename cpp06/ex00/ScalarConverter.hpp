@@ -10,21 +10,20 @@
 #include <cmath>
 #include <cctype>
 #include <iomanip>
-
+#include <cfloat>
+#include <climits>
 
 class ScalarConverter
 {
 private:
     ScalarConverter();
-    ScalarConverter(ScalarConverter  &src);
+    ScalarConverter(ScalarConverter &src);
     ~ScalarConverter();
-    ScalarConverter &operator=(ScalarConverter  &rhs);
-
-public:
-    static void convert(std::string &literal);
+    ScalarConverter &operator=(const ScalarConverter &rhs);
  
+public:
+    static void convert(const std::string &literal);
 };
-
 
 std::ostream &operator<<(std::ostream &out, ScalarConverter const &rhs);
 
