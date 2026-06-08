@@ -2,14 +2,11 @@
 #define B_HPP 
 
 
-
-#include "base.hpp"
+#include "Base.hpp"
 
 class B : public Base
 {
-public:
-    B() {}  
-    ~B() {}
+
 
 };
 
