@@ -3,20 +3,20 @@
 #include "B.hpp"
 #include "C.hpp"
 #include <iostream>
-#include <cstdlib> // For rand() and srand()
-#include <ctime>   // For time()
+#include <cstdlib>
+#include <ctime>   
 
 
 Base * generate(void)
 {
-    int random = rand() % 3; // Generate a random number between 0 and 2
+    int random = rand() % 3;
 
     if (random == 0)
-        return new A(); // Return an instance of class A
+        return new A();
     else if (random == 1)
-        return new B(); // Return an instance of class B
+        return new B(); 
     else
-        return new C(); // Return an instance of class C
+        return new C(); 
 }
 
 void identify(Base* p)
@@ -33,8 +33,8 @@ void identify(Base &p)
 {
 	try
 	{
+		(void)p;
 		A &a = dynamic_cast<A&>(p);
-		(void)a;
 		std::cout << "A" << std::endl;
 	}
 	catch (std::exception &e) {}
@@ -59,13 +59,13 @@ void identify(Base &p)
 
 int main()
 {
-    srand(time(NULL)); // Seed the random number generator
+    srand(time(NULL)); 
 
     Base* obj = generate();
-    Base &ref = *obj; // Generate a random object of type A, B, or C
+    Base &ref = *obj; 
 
-    identify(obj); // Identify the type of the generated object using pointer
-    identify(ref); // Identify the type of the generated object using reference
-    delete obj; // Clean up the allocated object
+    identify(obj); 
+    identify(ref);
+    delete obj;
     return 0;
 }   
