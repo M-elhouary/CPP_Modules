@@ -22,19 +22,19 @@ Base * generate(void)
 void identify(Base* p)
 {
     if(dynamic_cast<A*>(p))
-        std::cout << "Generated an instance of class A" << std::endl;
+        std::cout << " A" << std::endl;
     else if(dynamic_cast<B*>(p))
-        std::cout << "Generated an instance of class B" << std::endl;
+        std::cout << " B" << std::endl;
     else if(dynamic_cast<C*>(p))
-        std::cout << "Generated an instance of class C" << std::endl;
+        std::cout << " C" << std::endl;
 }
 
 void identify(Base &p)
 {
 	try
 	{
-		(void)p;
 		A &a = dynamic_cast<A&>(p);
+		(void)a;
 		std::cout << "A" << std::endl;
 	}
 	catch (std::exception &e) {}

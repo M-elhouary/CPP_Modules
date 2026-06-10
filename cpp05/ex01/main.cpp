@@ -5,16 +5,21 @@ int main()
 {
     try
     {
-        Bureaucrat b1("Alice", 2);
-        Form f1("Form1", 51, 1);
-        // std::cout << b1 << std::endl;
-        // std::cout << f1 << std::endl;
-        b1.signForm(f1);
-        std::cout << "After signing:" << std::endl;
-        std::cout << f1 << std::endl;
+        Bureaucrat a("A", 1);
+        a.incrementGrade();
     }
-    catch (const std::exception& e)
+    catch (std::exception &e)
     {
-        std::cerr << "Exception caught: " << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
+    }
+
+    try
+    {
+        Bureaucrat b("B", 150);
+        b.decrementGrade();
+    }
+    catch (std::exception &e)
+    {
+        std::cout << e.what() << std::endl;
     }
 }

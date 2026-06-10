@@ -3,7 +3,7 @@
 
 ScalarConverter::ScalarConverter() {}
 
-ScalarConverter::ScalarConverter(ScalarConverter &src)
+ScalarConverter::ScalarConverter(ScalarConverter const &src)
 {
     (void)src; //
 }
@@ -93,7 +93,7 @@ void printFloat(double d)
     }
     float f = static_cast<float>(d);
     std::cout << "float: " << std::fixed
-              << std::setprecision(5)
+              << std::setprecision(1)
               << f
               << "f"
               << std::endl;
@@ -113,7 +113,7 @@ void printDouble(double d)
 bool isliteral(const std::string &literal)
 {
     size_t dotCount = literal.find('.');
-    for (size_t i = 0; i < literal.length(); ++i)
+    for (size_t i = 0; i < literal.length() -  1; ++i)
     {
         if (std::isalpha(literal[i]) && (((dotCount != std::string::npos) && !isdigit(literal[dotCount + 1]))
         || dotCount == std::string::npos) && literal[i+1] != '\0')

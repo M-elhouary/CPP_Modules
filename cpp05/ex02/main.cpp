@@ -8,23 +8,26 @@ int main() {
     std::srand(std::time(0));
     try {
 
-        Bureaucrat alice("Alice", 1);
-        Bureaucrat bob("Bob", 140);
-        Bureaucrat charlie("Charlie", 50);
-
+        Bureaucrat alice("Alice", 1); 
         ShrubberyCreationForm shrub("garden");
-        RobotomyRequestForm robot("Bender");
-        PresidentialPardonForm pardon("Ford Prefect");
+        // alice.executeForm(shrub);
 
-        std::cout << "\n--- Attempt to execute unsigned forms ---" << std::endl;
-        alice.executeForm(shrub);
-        alice.executeForm(robot);
-        alice.executeForm(pardon);
+        // Bureaucrat bob("Bob", 140);
+        // Bureaucrat charlie("Charlie", 50);
 
-        std::cout << "\n--- Signing forms ---" << std::endl;
+        // ShrubberyCreationForm shrub("garden");
+        // RobotomyRequestForm robot("Bender");
+        // PresidentialPardonForm pardon("Ford Prefect");
+
+        // std::cout << "\n--- Attempt to execute unsigned forms ---" << std::endl;
+        // alice.executeForm(shrub);
+        // alice.executeForm(robot);
+        // alice.executeForm(pardon);
+
+        // std::cout << "\n--- Signing forms ---" << std::endl;
         
         try {
-             shrub.beSigned(bob);
+             shrub.beSigned(alice);
          } 
          catch (std::exception &e)
          {
@@ -50,15 +53,15 @@ int main() {
     //          std::cout << e.what() << std::endl;
     //          }
 
-        std::cout << "\n--- Execution with insufficient grade ---" << std::endl;
-        bob.executeForm(shrub); 
+        // std::cout << "\n--- Execution with insufficient grade ---" << std::endl;
+        // bob.executeForm(shrub); 
     //     charlie.executeForm(robot); 
     //     bob.executeForm(pardon); 
 
-        std::cout << "\n--- Execution with high grade ---" << std::endl;
-        alice.executeForm(shrub);
     //     alice.executeForm(robot);
     //     alice.executeForm(pardon);
+        alice.executeForm(shrub);
+
 
     } catch (std::exception &e) {
         std::cout << "Exception: " << e.what() << std::endl;

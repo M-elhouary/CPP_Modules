@@ -2,26 +2,13 @@
 #include <iostream>
 #include "Serializer.hpp"
 
-struct mystruct
-{
-	int x;
-	int y;
-	char c;
-	bool b;
-};
+
 
 int main()
 {
 
-	mystruct s;
 
-	// Assigning values
-	s.x = 5;
-	s.y = 10;
-	s.c = 'a';
-	s.b = true;
 
-	std::cout << "Size of mystruct: " << sizeof(s) << " bytes" << std::endl;
 
 	Data *data = new Data;
 	data->s1 = "hello";
