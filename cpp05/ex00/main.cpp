@@ -7,7 +7,7 @@ int main()
         Bureaucrat b("ahmed", 1);
         std::cout << b << std::endl;
         b.incrementGrade();
-        std::cout << b << std::endl;
+        // std::cout << b << std::endl;
 
 
     }

@@ -52,7 +52,7 @@ Bureaucrat &Bureaucrat::operator=(Bureaucrat const &other)
 void Bureaucrat::incrementGrade()
 {
     if (this->grade <= 1)
-    throw GradeTooHighException();
+        throw GradeTooHighException();
     else
         this->grade--;
 };
