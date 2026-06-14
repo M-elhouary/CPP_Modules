@@ -4,9 +4,9 @@ int main()
 {
     try
     {
-        Bureaucrat b("ahmed", 1);
+        Bureaucrat b("ahmed", 0);
         std::cout << b << std::endl;
-        b.incrementGrade();
+        // b.incrementGrade();
         // std::cout << b << std::endl;
 
 
@@ -15,6 +15,8 @@ int main()
     {
         std::cerr << "Exception caught: " << s.what() << std::endl;
     }
+
+
     return 0;
 
 };

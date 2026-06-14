@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <cfloat>
 #include <climits>
+#include <algorithm>
 
 class ScalarConverter
 {

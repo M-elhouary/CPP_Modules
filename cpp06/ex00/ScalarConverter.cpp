@@ -93,17 +93,24 @@ void printDouble(double d)
               << d << std::endl;
 }
 
-
-bool isFlDb(char *end, const std::string &literal)
+bool haveOneDot(const std::string &literal)
 {
+    int dots = std::count(literal.begin(), literal.end(), '.');
+    if (dots == 1)
+        return true;
+    else
+        return false;
+}
+
+bool isFlDb(char *end, const std::string &literal, const std::string &type)
+{
+
     size_t dotIndex = literal.find('.');
-    std::cout << *end << std::endl;
-    std::cout << "dotIndex: " << dotIndex << std::endl;
-    std::cout <<std::string::npos << std::endl;
     if ( ( literal[dotIndex + 1] == 'f' ) || (literal[dotIndex + 1] == '\0' )
          || (*end == 'f' && *(end + 1) != '\0') 
          || ((dotIndex == std::string::npos ) && ((*end == 'f' )))
-         || literal[dotIndex + 1] == '.' )
+         ||  (!haveOneDot(literal) && (type != "int") )
+         || (*end != '\0' && *end != 'f'))
     {
         return false;
     }
@@ -131,13 +138,6 @@ std::string detectType(const std::string &literal)
         return "unknown";
 }
 
-bool haveDot(const std::string &literal)
-{
-    if (literal.find('.') != std::string::npos)
-        return true;
-    else
-        return false;
-}
 
 
 
@@ -155,7 +155,6 @@ void ScalarConverter::convert(const std::string &literal)
     char *end;
 
     std::string type = detectType(literal);
-    std::cout << "Detected type: " << type << std::endl;
     if (type == "D" || type == "F")
     {
         HandlePseudoLiteral(literal, type);
@@ -166,13 +165,12 @@ void ScalarConverter::convert(const std::string &literal)
     else
     {
         d = std::strtod(literal.c_str(), &end);
-        std::cout << "Parsed double: " << d << std::endl;
         if (errno == ERANGE)
         {
             printImpossible();
             return;
         }
-        if (type == "unknown" || (isFlDb(end, literal) == false))
+        if (type == "unknown" ||( (isFlDb(end, literal, type) == false)))
         {
             printImpossible();
             return;

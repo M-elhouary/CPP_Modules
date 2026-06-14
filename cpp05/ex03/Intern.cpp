@@ -20,7 +20,7 @@ AForm* Intern::createRobotomy(const std::string& target) const
 AForm* Intern::createPardon(const std::string& target) const
 {
     return new PresidentialPardonForm(target);
-}
+}(target);
 
 AForm* Intern::makeForm(const std::string& formName, const std::string& target) const {
 
