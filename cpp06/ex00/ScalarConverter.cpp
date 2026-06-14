@@ -97,11 +97,12 @@ void printDouble(double d)
 bool isFlDb(char *end, const std::string &literal)
 {
     size_t dotIndex = literal.find('.');
-
-    if (  literal[dotIndex + 1] == 'f'  
-         || literal[dotIndex + 1] == '\0' 
+    std::cout << *end << std::endl;
+    std::cout << "dotIndex: " << dotIndex << std::endl;
+    std::cout <<std::string::npos << std::endl;
+    if ( ( literal[dotIndex + 1] == 'f' ) || (literal[dotIndex + 1] == '\0' )
          || (*end == 'f' && *(end + 1) != '\0') 
-         || dotIndex == std::string::npos
+         || ((dotIndex == std::string::npos ) && ((*end == 'f' )))
          || literal[dotIndex + 1] == '.' )
     {
         return false;
@@ -171,7 +172,7 @@ void ScalarConverter::convert(const std::string &literal)
             printImpossible();
             return;
         }
-        if (type == "unknown" || (isFlDb(end, literal) == false && type != "int"))
+        if (type == "unknown" || (isFlDb(end, literal) == false))
         {
             printImpossible();
             return;
