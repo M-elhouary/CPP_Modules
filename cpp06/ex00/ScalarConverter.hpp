@@ -25,7 +25,4 @@ private:
 public:
     static void convert(const std::string &literal);
 };
-
-std::ostream &operator<<(std::ostream &out, ScalarConverter const &rhs);
-
 #endif

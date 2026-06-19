@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <ctime>   
 
-
+// Function to generate a random instance of A, B, or C 
 Base * generate(void)
 {
     int random = rand() % 3;
@@ -19,6 +19,8 @@ Base * generate(void)
         return new C(); 
 }
 
+
+// Function to identify the type of the object pointed to by p using dynamic_cast
 void identify(Base* p)
 {
     if(dynamic_cast<A*>(p))
@@ -35,26 +37,28 @@ void identify(Base &p)
 	{
 		A &a = dynamic_cast<A&>(p);
 		(void)a;
-		std::cout << "A" << std::endl;
+		std::cout << " A" << std::endl;
 	}
 	catch (std::exception &e) {}
+
+
 	try
 	{
 		B &b = dynamic_cast<B&>(p);
 		(void)b;
-		std::cout << "B" << std::endl;
+		std::cout << " B" << std::endl;
 	}
 	catch (std::exception &e) {}
+
+
 	try
 	{
 		C &c = dynamic_cast<C&>(p);
 		(void)c;
-		std::cout << "C" << std::endl;
+		std::cout << " C" << std::endl;
 	}
 	catch (std::exception &e) {}
 }
-
-
 
 
 int main()
@@ -66,6 +70,7 @@ int main()
 
     identify(obj); 
     identify(ref);
+
     delete obj;
     return 0;
 }   

@@ -1,5 +1,9 @@
 #include "ScalarConverter.hpp"
 
+enum Type { CHAR, INT, FLOAT, DOUBLE, PSEUDO_DOUBLE, PSEUDO_FLOAT, UNKNOWN };
+
+
+
 ScalarConverter::ScalarConverter() {}
 
 ScalarConverter::ScalarConverter(ScalarConverter const &src)
@@ -15,27 +19,27 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter &rhs)
     return *this;
 }
 
-std::string isPseudoLiteral(const std::string &literal)
+Type isPseudoLiteral(const std::string &literal)
 {
     if (literal == "nan" || literal == "+inf" || literal == "-inf")
-        return "D";
+        return PSEUDO_DOUBLE;
     else if (literal == "+inff" || literal == "-inff" || literal == "nanf")
-        return "F";
+        return PSEUDO_FLOAT;
     else
-        return "";
+        return UNKNOWN;
 }
 
-void HandlePseudoLiteral(const std::string &literal, std::string &type)
+void HandlePseudoLiteral(const std::string &literal, Type type)
 {
 
-    if (type == "D")
+    if (type == PSEUDO_DOUBLE)
     {
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: impossible" << std::endl;
         std::cout << "float: " << literal << "f" << std::endl;
         std::cout << "double: " << literal << std::endl;
     }
-    else if (type == "F")
+    else if (type == PSEUDO_FLOAT)
     {
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: impossible" << std::endl;
@@ -102,40 +106,42 @@ bool haveOneDot(const std::string &literal)
         return false;
 }
 
-bool isFlDb(char *end, const std::string &literal, const std::string &type)
+bool isFlDb(char* end, const std::string &literal)
 {
-
-    size_t dotIndex = literal.find('.');
-    if ( ( literal[dotIndex + 1] == 'f' ) || (literal[dotIndex + 1] == '\0' )
-         || (*end == 'f' && *(end + 1) != '\0') 
-         || ((dotIndex == std::string::npos ) && ((*end == 'f' )))
-         ||  (!haveOneDot(literal) && (type != "int") )
-         || (*end != '\0' && *end != 'f'))
-    {
+    // Check 1: Invalid character at end (not null terminator or 'f')
+    if (*end != '\0' && *end != 'f')
         return false;
-    }
+    
+    // Check 2: If 'f' exists, nothing should come after it
+    if (*end == 'f' && *(end + 1) != '\0')
+        return false;
+    
+    // Check 3: No decimal point = must not have 'f'
+    if (!haveOneDot(literal) && *end == 'f')
+        return false;
+    
     return true;
 }
 
 
-std::string detectType(const std::string &literal)
+Type detectType(const std::string &literal)
 {
-    std::string pseudo = isPseudoLiteral(literal);
-    if (pseudo != "")
+    Type pseudo = isPseudoLiteral(literal);
+    if (pseudo != UNKNOWN)
         return pseudo;
     else if (literal.length() == 1 && !std::isdigit(literal[0]))
-        return "char";
+        return CHAR;
     else if ((literal.find('.')) != std::string::npos)
     {
         if (!literal.empty() && literal.find('f') != std::string::npos)
-            return "float";
+            return FLOAT;
         else
-            return "double";
+            return DOUBLE;
     }
     else if (isdigit(literal[0]) || (literal[0] == '-' && literal.length() > 1) || (literal[0] == '+' && literal.length() > 1))
-        return "int";
+        return INT;
     else
-        return "unknown";
+        return UNKNOWN;
 }
 
 
@@ -151,16 +157,23 @@ void printImpossible()
 
 void ScalarConverter::convert(const std::string &literal)
 {
-    double d;
-    char *end;
+    if (literal.empty())
+    {
+        printImpossible();
+        return;
+    }
 
-    std::string type = detectType(literal);
-    if (type == "D" || type == "F")
+    double d;
+    char* end;
+    errno = 0;
+
+    Type type = detectType(literal);
+    if (type == PSEUDO_DOUBLE || type == PSEUDO_FLOAT)
     {
         HandlePseudoLiteral(literal, type);
         return;
     }
-    else if (type == "char")
+    else if (type == CHAR)
         d = static_cast<double>(literal[0]);
     else
     {
@@ -170,7 +183,7 @@ void ScalarConverter::convert(const std::string &literal)
             printImpossible();
             return;
         }
-        if (type == "unknown" ||( (isFlDb(end, literal, type) == false)))
+        if (type == UNKNOWN || !isFlDb(end, literal))
         {
             printImpossible();
             return;
@@ -181,10 +194,4 @@ void ScalarConverter::convert(const std::string &literal)
     printInt(d);
     printFloat(d);
     printDouble(d);
-}
-
-std::ostream &operator<<(std::ostream &out, ScalarConverter const &rhs)
-{
-    (void)rhs;
-    return out;
 }
