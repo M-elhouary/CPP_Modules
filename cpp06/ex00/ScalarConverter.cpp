@@ -87,7 +87,7 @@ void printFloat(double d)
               << std::setprecision(1)
               << f
               << "f"
-              << std::endl;
+              << std::endl; 
 }
 
 void printDouble(double d)
@@ -108,6 +108,7 @@ bool haveOneDot(const std::string &literal)
 
 bool isFlDb(char* end, const std::string &literal)
 {
+    (void)literal; // Suppress unused variable warning
     // Check 1: Invalid character at end (not null terminator or 'f')
     if (*end != '\0' && *end != 'f')
         return false;
@@ -157,6 +158,8 @@ void printImpossible()
 
 void ScalarConverter::convert(const std::string &literal)
 {
+
+    // check if the input is empty
     if (literal.empty())
     {
         printImpossible();
