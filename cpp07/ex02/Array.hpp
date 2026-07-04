@@ -2,19 +2,19 @@
 #ifndef ARRAY_HPP
 # define ARRAY_HPP
 
-# include <stdexcept>
+#include <stdexcept>
 
-template<typename T>
+template<typename S>
 class Array
 {
 	private:
-		T *_array;
+		S *_array;
 		unsigned int _size;
 
 	public:
-		Array() : _array(new T[0]), _size(0) {}
-		Array(unsigned int n) : _array(new T[n]), _size(n) {}
-		Array(Array const &src) : _array(new T[src._size]), _size(src._size)
+		Array() : _array(new S[0]), _size(0) {}
+		Array(unsigned int n) : _array(new S[n]), _size(n) {}
+		Array(Array const &src) : _array(new S[src._size]), _size(src._size)
 		{
 			for (unsigned int i = 0; i < _size; i++)
 				_array[i] = src._array[i];
@@ -27,21 +27,31 @@ class Array
 			{
 				delete[] _array;
 				_size = rhs._size;
-				_array = new T[_size];
+				_array = new S[_size];
 				for (unsigned int i = 0; i < _size; i++)
 					_array[i] = rhs._array[i];
 			}
 			return *this;
 		}
 
-		T &operator[](unsigned int i)
+		S &operator[](unsigned int i)
 		{
 			if (i >= _size)
 				throw std::out_of_range("index is out of range");
 			return _array[i];
 		}
 
-		unsigned int size() const { return _size; }
+		const S &operator[](unsigned int i) const
+		{
+			if (i >= _size)
+				throw std::out_of_range("index is out of range");
+			return _array[i];
+		}
+
+		unsigned int size() const
+		 { 
+			return _size; 
+		 }
 };
 
 #endif
