@@ -1,21 +1,35 @@
-
-#include <iostream>
-#include <vector>
 #include "easyfind.hpp"
 
 int main()
 {
-	std::vector<int> v;
-	for (int i = 0; i < 10; i++)
-		v.push_back(i);
+
+	// list container test
+	std::list<int> list;
+	for(int i = 0; i < 10; i++)
+		list.push_back(i);
 	try
 	{
-		std::cout << *easyfind(v, 5) << std::endl;
-		std::cout << *easyfind(v, 10) << std::endl;
+		std::cout << *easyfind(list, 6) << std::endl;
+		std::cout << *easyfind(list, 11) << std::endl;
 	}
-	catch (std::exception &e)
+	catch(const std::exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		std::cerr << e.what() << '\n';
 	}
-	return 0;
+	
+	// vector test
+	std::vector<int> vector(10);
+	for(int i = 0; i < 10; i++)
+		vector[i] = i;
+	try
+	{
+		std::cout << *easyfind(vector, 7) << std::endl;
+		std::cout << *easyfind(vector, 12) << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	// deque container test
+	return 0; 
 }
