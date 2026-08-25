@@ -27,22 +27,17 @@ void Span::addNumber(int n)
 	_v.push_back(n);
 }
 
-int Span::shortestSpan()
+int Span::shortestSpan() const
 {
 	if (_v.size() < 2)
 		throw std::runtime_error("not enough numbers");
-	std::vector<int> tmp = _v;
+	std::vector<int> tmp(_v);
 	std::sort(tmp.begin(), tmp.end());
-	int min = tmp[1] - tmp[0];
-	for (size_t i = 2; i < tmp.size(); i++)
-	{
-		if (tmp[i] - tmp[i - 1] < min)
-			min = tmp[i] - tmp[i - 1];
-	}
-	return min;
+	std::adjacent_difference(tmp.begin(), tmp.end(), tmp.begin());
+	return *std::min_element(tmp.begin() + 1, tmp.end());
 }
 
-int Span::longestSpan()
+int Span::longestSpan() const
 {
 	if (_v.size() < 2)
 		throw std::runtime_error("not enough numbers");
