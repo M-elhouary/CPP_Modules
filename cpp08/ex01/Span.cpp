@@ -37,9 +37,10 @@ int Span::shortestSpan() const
 	return *std::min_element(tmp.begin() + 1, tmp.end());
 }
 
-int Span::longestSpan() const
+long Span::longestSpan() const
 {
 	if (_v.size() < 2)
 		throw std::runtime_error("not enough numbers");
-	return *std::max_element(_v.begin(), _v.end()) - *std::min_element(_v.begin(), _v.end());
+	return static_cast<long>(*std::max_element(_v.begin(), _v.end())) -
+	       static_cast<long>(*std::min_element(_v.begin(), _v.end()));
 }
