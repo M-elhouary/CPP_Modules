@@ -25,7 +25,7 @@ class Span
 
 		void addNumber(int n);
 		int shortestSpan() const;
-		int longestSpan() const;
+		long longestSpan() const;
 
 		template <typename Iterator>
 		void addRange(Iterator first, Iterator last)
