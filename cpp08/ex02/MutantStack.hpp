@@ -18,7 +18,7 @@ class MutantStack : public std::stack<T>
 				std::stack<T>::operator=(rhs);
 			return *this;
 		}
-		
+
 		typedef typename std::stack<T>::container_type::iterator iterator;
 		iterator begin() 
 		{ 
