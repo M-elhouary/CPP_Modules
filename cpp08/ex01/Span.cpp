@@ -27,12 +27,13 @@ void Span::addNumber(int n)
 	_v.push_back(n);
 }
 
-int Span::shortestSpan()
+int Span::shortestSpan() const
 {
 
 	// Check if there are at least two numbers in the vector
 	if (_v.size() < 2)
 		throw std::runtime_error("not enough numbers");
+<<<<<<< HEAD
 
 		// Create a copy of the vector and sort it
 	std::vector<int> tmp = _v;
@@ -47,13 +48,24 @@ int Span::shortestSpan()
 			min = tmp[i] - tmp[i - 1];
 	}
 	return min;
+=======
+	std::vector<int> tmp(_v);
+	std::sort(tmp.begin(), tmp.end());
+	std::adjacent_difference(tmp.begin(), tmp.end(), tmp.begin());
+	return *std::min_element(tmp.begin() + 1, tmp.end());
+>>>>>>> 0c0834f54ea6b220b7764a6d80a4f8e832f74b0c
 }
 
-int Span::longestSpan()
+long Span::longestSpan() const
 {
 	// Check if there are at least two numbers in the vector
 	if (_v.size() < 2)
 		throw std::runtime_error("not enough numbers");
+<<<<<<< HEAD
 	// Calculate the longest span by finding the difference between the maximum and minimum elements in the vector
 	return *std::max_element(_v.begin(), _v.end()) - *std::min_element(_v.begin(), _v.end());
+=======
+	return static_cast<long>(*std::max_element(_v.begin(), _v.end())) -
+	       static_cast<long>(*std::min_element(_v.begin(), _v.end()));
+>>>>>>> 0c0834f54ea6b220b7764a6d80a4f8e832f74b0c
 }

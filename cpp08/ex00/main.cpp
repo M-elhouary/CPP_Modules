@@ -30,6 +30,5 @@ int main()
 	{
 		std::cerr << e.what() << '\n';
 	}
-	// deque container test
 	return 0; 
 }

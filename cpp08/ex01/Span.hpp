@@ -6,6 +6,10 @@
 # include <stdexcept>
 # include <algorithm>
 # include <numeric>
+# include <iterator>
+#include <list>
+#include <cstdlib>
+#include <iostream>
 
 class Span
 {
@@ -20,8 +24,20 @@ class Span
 		Span &operator=(Span const &rhs);
 
 		void addNumber(int n);
-		int shortestSpan();
-		int longestSpan();
+		int shortestSpan() const;
+		long longestSpan() const;
+
+		template <typename Iterator>
+		void addRange(Iterator first, Iterator last)
+		{
+			if (static_cast<unsigned int>(std::distance(first, last)) > _n - _v.size())
+				throw std::runtime_error("Span is full");
+			while (first != last)
+			{
+				addNumber(*first);
+				++first;
+			}
+		}
 };
 
 #endif
