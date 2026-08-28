@@ -2,7 +2,7 @@
 
 BitcoinExchange::BitcoinExchange() {};
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) {}
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) : _data(other._data) {}
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 {
