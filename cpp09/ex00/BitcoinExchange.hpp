@@ -18,7 +18,7 @@ public:
 
     void printData() const;
     void LoadData(std::string dbfilename);
-    void parseData(const std::string& filename);
+    bool parseDataline(std::string DateStr, std::string RateStr);
     double getBitcoinValue(const std::string& date) const;
 };
 

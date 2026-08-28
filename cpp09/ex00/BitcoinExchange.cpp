@@ -16,44 +16,61 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 
 BitcoinExchange::~BitcoinExchange() {}
 
+
+bool BitcoinExchange::parseDataline(std::string DateStr, std::string RateStr)
+{
+    // Convert the rate string to a double and store it in the map
+    double rate;
+    rate = std::stod(RateStr);
+    _data[DateStr] = rate;
+    return true;
+};
+
 void BitcoinExchange::LoadData(std::string dbfilename)
 {
-    std::string path = "/home/mel-houa/cpp09/ex00/data.csv";
-    std::ifstream file(path.c_str());
-    
+    std::ifstream file(dbfilename.c_str());
+    std::string line;
     std::string DateStr;
     std::string RateStr;
-    std::string line;
+    size_t comaPos;
+    double rate;
+
 
     /// Check if the file is open
     if (!file.is_open())
-    {
         std::cerr << "Error: opening input file." << std::endl;
-    }
-
-    // Skip the first line (header)
-    if (!std::getline(file, line))
-    {
-        std::cerr << "Error: reading input file." << std::endl;
-    }
-
 
     while (std::getline(file, line))
     {
+        if(line.empty())
+        {
+            std::cerr << "Error: empty line in data file." << std::endl;
+            return;
+        }
         // Check if the line contains a comma
-        if (line.find(",") == std::string::npos)
+        if ((comaPos = line.find(",")) == std::string::npos)
         {
             std::cerr << "Error: parsing data file." << std::endl;
+            line.clear();
+            return;
         }
-        // Split the line into date and rate
-        size_t comaPos;
-        DateStr = line.substr(0, line.find(","));
-        RateStr = line.substr(line.find(",") + 1, line.length());
+        DateStr = line.substr(0, comaPos);
+        RateStr = line.substr(comaPos + 1, line.length());
+        
+        // header check
+        if (DateStr != "date" && RateStr != "exchange_rate")
+        {
+            std::cerr << "Error: invalid header." << std::endl;
+            line.clear();
+            return;
+        }
+        else if (DateStr == "date" && RateStr == "exchange_rate")
+            continue;
 
-        // Convert the rate string to a double and store it in the map
-        double rate = std::stod(RateStr);
-        _data[DateStr] = rate;
-
+        if(!parseDataline(DateStr, RateStr))
+            return;
+        // Clear the line string for the next iteration
+        line.clear();
     }
     // Close the file
     file.close();
