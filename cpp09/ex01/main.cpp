@@ -11,7 +11,6 @@ int main(int ac, char **av)
         return 1;
     }
     RPN rpn;
-    rpn.parseInput(av[1]);
-    
+    rpn.caculateRPN(av[1]);
     return 0;
 }

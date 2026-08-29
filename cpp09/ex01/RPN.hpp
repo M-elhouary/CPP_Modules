@@ -20,12 +20,13 @@ class RPN
         RPN(const RPN &other);
         RPN &operator=(const RPN &other);
 
-        void parseInput(const std::string &input);
+        bool   parseInput(const std::string &input);
         void performOperation(char operation);
         int apply(int left, int right, char operation) const;
         void clearStack();
         bool isOperator(char token) const;
         bool isOperand(char token) const;
+        void caculateRPN(const std::string &input);
 };
 
 
