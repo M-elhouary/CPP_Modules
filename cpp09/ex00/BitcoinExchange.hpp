@@ -5,10 +5,16 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include <sstream>
 
 class BitcoinExchange {
 private:
     std::map<std::string, double> _data;
+    std::string trim(const std::string &text) const;
+    int parseToInt(const std::string &text) const;
+    bool parseToDouble(const std::string &text, double &result) const;
+    bool isLeapYear(int year) const;
+    int daysInMonth(int year, int month) const;
 
 public:
     BitcoinExchange();
@@ -16,10 +22,10 @@ public:
     BitcoinExchange& operator=(const BitcoinExchange& other);
     ~BitcoinExchange();
 
-    void printData() const;
-    void LoadData(std::string dbfilename);
-    bool parseDataline(std::string DateStr, std::string RateStr);
-    double getBitcoinValue(const std::string& date) const;
+    bool LoadData(const std::string &dbfilename);
+    bool parseInputLine(const std::string &inputfilename);
+    bool isValideDate(const std::string &date) const;
+    double getBitcoinValue(const std::string &date) const;
 };
 
-#endif // BITCOINEXCHANGE_HPP   
+#endif // BITCOINEXCHANGE_HPP

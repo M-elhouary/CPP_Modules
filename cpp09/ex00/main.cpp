@@ -1,16 +1,18 @@
 #include "BitcoinExchange.hpp"
 
-
-
-
 int main(int ac, char **av)
 {
-
-    if(ac != 2)
+    if (ac != 2)
     {
-        std::cout << "Input failed" << std::endl;
+        std::cerr << "Error: usage: ./btc <input file>" << std::endl;
+        return 1;
     }
-    
-    
 
+    BitcoinExchange bitcoinExchange;
+    if (!bitcoinExchange.LoadData("data.csv"))
+        return 1;
+    if (!bitcoinExchange.parseInputLine(av[1]))
+        return 1;
+
+    return 0;
 }
