@@ -14,7 +14,11 @@ int main(int argc, char **argv)
         std::cerr << "Error" << std::endl;
         return 1;
     }
-    pmergeMe.execute();
+    if (!pmergeMe.startSorting())
+    {
+        std::cerr << "Error: failed to start sorting." << std::endl;
+        return 1;
+    }
 
     return 0;
 }
