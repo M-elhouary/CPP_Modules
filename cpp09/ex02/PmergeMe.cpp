@@ -95,6 +95,13 @@ bool PmergeMe::buildPairs(std::vector<Pairs> &pairs, std::vector<int> const &dat
         pairs.push_back({a,b});
     }
     if (hasStraggler)
+        if(a < b)
+         std::swap(a, b);
+        pairs.push_back({a,b});
+    }
+    if (hasStraggler)
+        straggler = data.back();
+    return true;
         straggler = data.back();
     return true;
 }
