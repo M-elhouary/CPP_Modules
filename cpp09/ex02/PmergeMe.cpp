@@ -5,14 +5,13 @@
 #include <cctype>
 #include <climits>
 
-PmergeMe::PmergeMe()
-{
-}
 
-PmergeMe::PmergeMe(const PmergeMe &other)
-    : _vectorData(other._vectorData), _dequeData(other._dequeData)
-{
-}
+
+
+// ================================== canonical form of the class ==================================
+PmergeMe::PmergeMe(){}
+
+PmergeMe::PmergeMe(const PmergeMe &other) : _vectorData(other._vectorData), _dequeData(other._dequeData){}
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 {
@@ -24,9 +23,10 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
     return *this;
 }
 
-PmergeMe::~PmergeMe()
-{
-}
+PmergeMe::~PmergeMe(){}
+
+
+// =================================== parsing part ===================================
 
 /// chekc if the token is a digit
 bool PmergeMe::isOperand(char token) const
@@ -89,6 +89,15 @@ bool PmergeMe::parseArguments(int argc, char **argv)
 // Build pairs from the data,
 //  returning true if successful, false otherwise
 
+
+
+
+
+
+
+
+
+
 bool PmergeMe::buildPairs(std::vector<Pairs> &pairs, std::vector<int> const &data, bool &hasStraggler, int &straggler) const
 {
     if (data.size() < 2)
@@ -109,6 +118,8 @@ bool PmergeMe::buildPairs(std::vector<Pairs> &pairs, std::vector<int> const &dat
     return true;
 }
 
+// ================================== sorting part ==================================
+
 std::vector<int> PmergeMe::sortWinners( std::vector<int> &winners, std::vector<Pairs> &pairs)
 {
     bool hasStraggler = true;
@@ -121,7 +132,7 @@ std::vector<int> PmergeMe::sortWinners( std::vector<int> &winners, std::vector<P
         
     for (size_t i = 0; i < newWinners.size(); ++i)
          newWinners.push_back(winners[i]);
-    PmergeMe::buildPairs(pairs, winners, hasStraggler, straggler);
+    PmergeMe::buildPairs(pairs, newWinners, hasStraggler, straggler);
     return sortWinners(newWinners, pairs);
 }
 
@@ -159,7 +170,7 @@ bool PmergeMe::startSorting()
     for (size_t i = 0; i < pairs.size(); ++i)
          winners.push_back(pairs[i].winner);
     PairsForWinners = pairs;
-    sortWinners( winners, PairsForWinners);
+    winners = sortWinners( winners, PairsForWinners);
     // sort the losers based on the sorted winners
     std::vector<int> sortedLosers;
     for (size_t i = 0; i < PairsForWinners.size(); ++i)
@@ -178,7 +189,7 @@ bool PmergeMe::startSorting()
 
     // Jacobsthal sequence insertion for the losers
     Jacobsthal(sortedLosers.size()-1);
-    
+
 
     return true;
 }
