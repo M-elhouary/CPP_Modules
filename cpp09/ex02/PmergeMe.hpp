@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+
+
 struct Pairs
 {
     int winner;
@@ -13,19 +15,22 @@ struct Pairs
 };
 
 
+
 class PmergeMe
 {
   public:
-  PmergeMe();
-  PmergeMe(const PmergeMe &other);
-  PmergeMe &operator=(const PmergeMe &other);
-  ~PmergeMe();
+    PmergeMe();
+    PmergeMe(const PmergeMe &other);
+    PmergeMe &operator=(const PmergeMe &other);
+    ~PmergeMe();
   
     std::vector<int> sortWinners( std::vector<int>  &data, std::vector<Pairs> &pairs);
     bool parseArguments(int argc, char **argv);
     bool startSorting();
     bool isOperand(char token) const;
     bool buildPairs(std::vector<Pairs> &pairs, std::vector<int> const &data, bool &hasStraggler, int &straggler) const;
+    std::vector<size_t> Jacobsthal(size_t loserSize);
+    void insertLosers(std::vector<int> &mainChain, std::vector<int> const &losers, bool hasStraggler, int straggler);
   private:
     std::vector<int> _vectorData;
     std::deque<int> _dequeData;
@@ -40,4 +45,6 @@ class PmergeMe
     double nowMicroseconds() const;
 };
 
-#endif // PMERGEME_HPP
+
+
+#endif

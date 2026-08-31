@@ -5,13 +5,10 @@
 #include <cctype>
 #include <climits>
 
-
-
-
 // ================================== canonical form of the class ==================================
-PmergeMe::PmergeMe(){}
+PmergeMe::PmergeMe() {}
 
-PmergeMe::PmergeMe(const PmergeMe &other) : _vectorData(other._vectorData), _dequeData(other._dequeData){}
+PmergeMe::PmergeMe(const PmergeMe &other) : _vectorData(other._vectorData), _dequeData(other._dequeData) {}
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 {
@@ -23,16 +20,10 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
     return *this;
 }
 
-PmergeMe::~PmergeMe(){}
-
+PmergeMe::~PmergeMe() {}
 
 // =================================== parsing part ===================================
 
-/// chekc if the token is a digit
-bool PmergeMe::isOperand(char token) const
-{
-    return std::isdigit(static_cast<unsigned char>(token));
-}
 
 // Parse a string token into a positive integer,
 // returning true if successful, false otherwise
@@ -61,12 +52,12 @@ bool PmergeMe::parsePositiveInt(const std::string &token, int &value) const
             return false;
         }
         value = value * 10 + digit;
+    }
 
-        if (value == 0)
-        {
-            std::cerr << "Error: zero is not a positive integer for token '" << token << "'." << std::endl;
-            return false;
-        }
+    if (value == 0)
+    {
+        std::cerr << "Error: zero is not a positive integer for token '" << token << "'." << std::endl;
+        return false;
     }
     return true;
 }
@@ -86,18 +77,6 @@ bool PmergeMe::parseArguments(int argc, char **argv)
     return true;
 }
 
-// Build pairs from the data,
-//  returning true if successful, false otherwise
-
-
-
-
-
-
-
-
-
-
 bool PmergeMe::buildPairs(std::vector<Pairs> &pairs, std::vector<int> const &data, bool &hasStraggler, int &straggler) const
 {
     if (data.size() < 2)
@@ -106,97 +85,140 @@ bool PmergeMe::buildPairs(std::vector<Pairs> &pairs, std::vector<int> const &dat
     hasStraggler = (data.size() % 2 == 1);
     for (size_t i = 0; i + 1 < data.size(); i += 2)
     {
-        Pairs pair;
         int a = data[i];
         int b = data[i + 1];
         if (a < b)
             std::swap(a, b);
-        pairs.push_back({a, b});
+        Pairs pair;
+        pair.winner = a;
+        pair.loser = b;
+        pairs.push_back(pair);
     }
     if (hasStraggler)
-        if(a < b)
-         std::swap(a, b);
-        pairs.push_back({a,b});
-    }
-    if (hasStraggler)
-        straggler = data.back();
-    return true;
         straggler = data.back();
     return true;
 }
-
 // ================================== sorting part ==================================
 
-std::vector<int> PmergeMe::sortWinners( std::vector<int> &winners, std::vector<Pairs> &pairs)
+std::vector<int> PmergeMe::sortWinners(std::vector<int> &winners, std::vector<Pairs> &pairs)
 {
-    bool hasStraggler = true;
+    (void)pairs;
+    std::vector<int> data = winners;
+
+
+
+    if (data.size() <= 1)
+        return data;
+
+
+
+    std::vector<Pairs> localPairs;
+
+    bool hasStraggler = false;
     int straggler = 0;
 
-    std::vector<int> newWinners(winners.size());
+    buildPairs(localPairs, data, hasStraggler, straggler);
 
-    if (newWinners.size() <= 1)
-        return newWinners;
-        
-    for (size_t i = 0; i < newWinners.size(); ++i)
-         newWinners.push_back(winners[i]);
-    PmergeMe::buildPairs(pairs, newWinners, hasStraggler, straggler);
-    return sortWinners(newWinners, pairs);
-}
-
-
-size_t Jacobsthal(size_t n)
-{
-    if (n == 0)
-        return 0;
-    if (n == 1)
-        return 1;
-    size_t j0 = 0;
-    size_t j1 = 1;
-    size_t j2 = 0;
-    for (size_t i = 2; i <= n; ++i)
+    std::vector<int> mainChain;
+    std::vector<int> pend;
+    
+    for (size_t i = 0; i < localPairs.size(); ++i)
     {
-        j2 = j1 + 2 * j0;
-        j0 = j1;
-        j1 = j2;
+        mainChain.push_back(localPairs[i].winner);
+        pend.push_back(localPairs[i].loser);
     }
-    return j2;
+
+    std::vector<int> result = sortWinners(mainChain, pairs);
+
+    insertLosers(result, pend, hasStraggler, straggler);
+
+    return result;
 }
 
+std::vector<size_t> PmergeMe::Jacobsthal(size_t n)
+{
+    std::vector<size_t> sequence;
+
+    if (n <= 1)
+        return sequence;
+
+    size_t previousJacob = 1;
+    size_t currentJacob = 3;
+    size_t previousBoundary = 1;
+
+    while (currentJacob <= n)
+    {
+        sequence.push_back(currentJacob);
+
+        for (size_t i = currentJacob - 1; i > previousBoundary; --i)
+            sequence.push_back(i);
+
+        previousBoundary = currentJacob;
+
+        size_t nextJacob = currentJacob + (2 * previousJacob);
+
+        previousJacob = currentJacob;
+        currentJacob = nextJacob;
+    }
+
+    for (size_t i = n; i > previousBoundary; --i)
+        sequence.push_back(i);
+
+    return sequence;
+}
+
+void PmergeMe::insertLosers(std::vector<int> &mainChain, std::vector<int> const &losers, bool hasStraggler, int straggler)
+{
+    if (!losers.empty())
+    {
+        int first = losers[0];
+        mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), first), first);
+    }
+
+    std::vector<size_t> jacobsthalSequence = Jacobsthal(losers.size());
+    for (size_t k = 0; k < jacobsthalSequence.size(); ++k)
+    {
+        size_t j = jacobsthalSequence[k];
+        if (j < 2 || j > losers.size())
+            continue;
+        int value = losers[j - 1];
+        mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), value), value);
+    }
+
+    if (hasStraggler)
+        mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), straggler), straggler);
+}
 
 bool PmergeMe::startSorting()
 {
+    if (_vectorData.size() <= 1)
+        return true;
+
     bool hasStraggler = false;
     int straggler = 0;
+
     std::vector<Pairs> pairs;
+
     std::vector<Pairs> PairsForWinners;
 
-    if(!buildPairs(pairs, _vectorData, hasStraggler, straggler))
+    if (!buildPairs(pairs, _vectorData, hasStraggler, straggler))
         return false;
 
     std::vector<int> winners;
     for (size_t i = 0; i < pairs.size(); ++i)
-         winners.push_back(pairs[i].winner);
+        winners.push_back(pairs[i].winner);
+
     PairsForWinners = pairs;
-    winners = sortWinners( winners, PairsForWinners);
-    // sort the losers based on the sorted winners
+
+    std::vector<int> mainChain = sortWinners(winners, PairsForWinners);
+
     std::vector<int> sortedLosers;
-    for (size_t i = 0; i < PairsForWinners.size(); ++i)
-    {
-        std::vector<int>::iterator it = std::find(winners.begin(), winners.end(), PairsForWinners[i].winner);
-        if (it == winners.end())
-        return false;
-        size_t index = it - winners.begin();
-        sortedLosers.push_back(PairsForWinners[index].loser);
-    }
-    _vectorData.clear();
-    _vectorData.insert(_vectorData.end(), winners.begin(), winners.begin()+ 1);
-    _vectorData.insert(_vectorData.end(), winners.begin(), winners.end());
+    for (size_t i = 0; i < pairs.size(); ++i)
+        sortedLosers.push_back(pairs[i].loser);
 
+    _vectorData = mainChain;
 
-
-    // Jacobsthal sequence insertion for the losers
-    Jacobsthal(sortedLosers.size()-1);
-
+    insertLosers(_vectorData, sortedLosers, hasStraggler, straggler);
 
     return true;
 }
