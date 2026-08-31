@@ -3,7 +3,7 @@ NAME = PmergeMe
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = main.cpp PmergeMe.cpp
+SRCS = main.cpp PmergeMe.cpp sortvec.cpp sortdeque.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)

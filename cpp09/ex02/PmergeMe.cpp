@@ -1,11 +1,5 @@
 #include "PmergeMe.hpp"
 
-#include <algorithm>
-#include <sstream>
-#include <cctype>
-#include <climits>
-
-// ================================== canonical form of the class ==================================
 PmergeMe::PmergeMe() {}
 
 PmergeMe::PmergeMe(const PmergeMe &other) : _vectorData(other._vectorData), _dequeData(other._dequeData) {}
@@ -21,12 +15,6 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 }
 
 PmergeMe::~PmergeMe() {}
-
-// =================================== parsing part ===================================
-
-
-// Parse a string token into a positive integer,
-// returning true if successful, false otherwise
 
 bool PmergeMe::parsePositiveInt(const std::string &token, int &value) const
 {
@@ -62,8 +50,6 @@ bool PmergeMe::parsePositiveInt(const std::string &token, int &value) const
     return true;
 }
 
-// Parse command line arguments into _vectorData and _dequeData,
-// returning true if successful, false otherwise
 bool PmergeMe::parseArguments(int argc, char **argv)
 {
     int num;
@@ -75,64 +61,6 @@ bool PmergeMe::parseArguments(int argc, char **argv)
         _dequeData.push_back(num);
     }
     return true;
-}
-
-bool PmergeMe::buildPairs(std::vector<Pairs> &pairs, std::vector<int> const &data, bool &hasStraggler, int &straggler) const
-{
-    if (data.size() < 2)
-        return true;
-
-    hasStraggler = (data.size() % 2 == 1);
-    for (size_t i = 0; i + 1 < data.size(); i += 2)
-    {
-        int a = data[i];
-        int b = data[i + 1];
-        if (a < b)
-            std::swap(a, b);
-        Pairs pair;
-        pair.winner = a;
-        pair.loser = b;
-        pairs.push_back(pair);
-    }
-    if (hasStraggler)
-        straggler = data.back();
-    return true;
-}
-// ================================== sorting part ==================================
-
-std::vector<int> PmergeMe::sortWinners(std::vector<int> &winners, std::vector<Pairs> &pairs)
-{
-    (void)pairs;
-    std::vector<int> data = winners;
-
-
-
-    if (data.size() <= 1)
-        return data;
-
-
-
-    std::vector<Pairs> localPairs;
-
-    bool hasStraggler = false;
-    int straggler = 0;
-
-    buildPairs(localPairs, data, hasStraggler, straggler);
-
-    std::vector<int> mainChain;
-    std::vector<int> pend;
-    
-    for (size_t i = 0; i < localPairs.size(); ++i)
-    {
-        mainChain.push_back(localPairs[i].winner);
-        pend.push_back(localPairs[i].loser);
-    }
-
-    std::vector<int> result = sortWinners(mainChain, pairs);
-
-    insertLosers(result, pend, hasStraggler, straggler);
-
-    return result;
 }
 
 std::vector<size_t> PmergeMe::Jacobsthal(size_t n)
@@ -167,68 +95,46 @@ std::vector<size_t> PmergeMe::Jacobsthal(size_t n)
     return sequence;
 }
 
-void PmergeMe::insertLosers(std::vector<int> &mainChain, std::vector<int> const &losers, bool hasStraggler, int straggler)
+std::vector<int> PmergeMe::getVecData()
 {
-    if (!losers.empty())
-    {
-        int first = losers[0];
-        mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), first), first);
-    }
-
-    std::vector<size_t> jacobsthalSequence = Jacobsthal(losers.size());
-    for (size_t k = 0; k < jacobsthalSequence.size(); ++k)
-    {
-        size_t j = jacobsthalSequence[k];
-        if (j < 2 || j > losers.size())
-            continue;
-        int value = losers[j - 1];
-        mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), value), value);
-    }
-
-    if (hasStraggler)
-        mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), straggler), straggler);
+    return _vectorData;
 }
 
-bool PmergeMe::startSorting()
+std::deque<int> PmergeMe::getDequeData()
 {
-    if (_vectorData.size() <= 1)
-        return true;
-
-    bool hasStraggler = false;
-    int straggler = 0;
-
-    std::vector<Pairs> pairs;
-
-    std::vector<Pairs> PairsForWinners;
-
-    if (!buildPairs(pairs, _vectorData, hasStraggler, straggler))
-        return false;
-
-    std::vector<int> winners;
-    for (size_t i = 0; i < pairs.size(); ++i)
-        winners.push_back(pairs[i].winner);
-
-    PairsForWinners = pairs;
-
-    std::vector<int> mainChain = sortWinners(winners, PairsForWinners);
-
-    std::vector<int> sortedLosers;
-    for (size_t i = 0; i < pairs.size(); ++i)
-        sortedLosers.push_back(pairs[i].loser);
-
-    _vectorData = mainChain;
-
-    insertLosers(_vectorData, sortedLosers, hasStraggler, straggler);
-
-    return true;
+    return _dequeData;
 }
 
 void PmergeMe::printBefore() const
 {
+
+    std::cout << "Before sort vector : " ;
+    for (size_t i = 0; i < _vectorData.size(); i++)
+        std::cout << _vectorData[i] << " ";
+
+
+    std::cout << std::endl;
+    
+
+    std::cout << "Before sort deque : " ;
+    for (size_t i = 0; i < _dequeData.size(); i++)
+        std::cout << _dequeData[i] << " ";
+    std::cout << std::endl;
+    
+    
 }
 
 void PmergeMe::printAfter() const
 {
+    std::cout << "After sort deque: " ;
+    for (size_t i = 0; i < _vectorData.size(); i++)
+        std::cout << _vectorData[i] << " ";
+    std::cout << std::endl;
+    
+
+    std::cout << "After deque: ";
+    for (size_t i = 0; i < _dequeData.size(); i++)
+        std::cout << _dequeData[i] << " ";
 }
 
 void PmergeMe::printTimings(unsigned long count) const
@@ -236,12 +142,13 @@ void PmergeMe::printTimings(unsigned long count) const
     (void)count;
 }
 
-bool PmergeMe::verifyResults() const
-{
-    return false;
-}
-
 double PmergeMe::nowMicroseconds() const
 {
     return 0.0;
+}
+
+void PmergeMe::startSort()
+{
+    PmergeMe::sortingVector(PmergeMe::getVecData());
+    PmergeMe::sortingDeque(PmergeMe::getDequeData());
 }
