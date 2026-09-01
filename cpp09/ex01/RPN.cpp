@@ -87,6 +87,13 @@ bool RPN::parseInput(const std::string &input)
             return false;
         }
 
+        if (i > 2 && isOperand(input[i]) && i + 1 < input.length() && isOperand(input[i + 1]))
+        {
+            std::cerr << "Error: operand must be less than 10." << std::endl;
+            clearStack();
+            return false;
+        }
+
         if (isOperator(input[i]))
         {
             if (stack.size() < 2)

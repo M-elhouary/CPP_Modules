@@ -9,6 +9,7 @@
 #include <sstream>
 #include <cctype>
 #include <climits>
+#include <sys/time.h>
 
 struct Pairs
 {
@@ -45,6 +46,8 @@ public:
 private:
   std::vector<int> _vectorData;
   std::deque<int> _dequeData;
+  double _vectorTimeUs;
+  double _dequeTimeUs;
 };
 
 #endif

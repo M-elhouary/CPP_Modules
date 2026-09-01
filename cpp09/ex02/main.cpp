@@ -17,24 +17,11 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    // std::vector<int> sortedVec = pmergeMe.sortingVector(pmergeMe.getVecData());
-    // std::deque<int> sortedDeq = pmergeMe.sortingDeque(pmergeMe.getDequeData());
 
-    pmergeMe.printBefore();
-    
+    pmergeMe.printBefore();  
     pmergeMe.startSort();
     pmergeMe.printAfter();
-
-    
-    // std::cout << "Vector: ";
-    // for (size_t i = 0; i < sortedVec.size(); ++i)
-    //     std::cout << sortedVec[i] << " ";
-    // std::cout << std::endl;
-    
-    // std::cout << "Deque:  ";
-    // for (size_t i = 0; i < sortedDeq.size(); ++i)
-    //     std::cout << sortedDeq[i] << " ";
-    // std::cout << std::endl;
+    pmergeMe.printTimings(pmergeMe.getVecData().size());
 
     return 0;
 }

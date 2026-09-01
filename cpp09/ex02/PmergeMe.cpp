@@ -1,8 +1,14 @@
 #include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe() {}
+PmergeMe::PmergeMe() : _vectorTimeUs(0.0), _dequeTimeUs(0.0) {}
 
-PmergeMe::PmergeMe(const PmergeMe &other) : _vectorData(other._vectorData), _dequeData(other._dequeData) {}
+PmergeMe::PmergeMe(const PmergeMe &other)
+    : _vectorData(other._vectorData),
+      _dequeData(other._dequeData),
+      _vectorTimeUs(other._vectorTimeUs),
+      _dequeTimeUs(other._dequeTimeUs)
+{
+}
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 {
@@ -10,6 +16,8 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
     {
         _vectorData = other._vectorData;
         _dequeData = other._dequeData;
+        _vectorTimeUs = other._vectorTimeUs;
+        _dequeTimeUs = other._dequeTimeUs;
     }
     return *this;
 }
@@ -135,20 +143,32 @@ void PmergeMe::printAfter() const
     std::cout << "After deque: ";
     for (size_t i = 0; i < _dequeData.size(); i++)
         std::cout << _dequeData[i] << " ";
-}
-
-void PmergeMe::printTimings(unsigned long count) const
-{
-    (void)count;
+    std::cout << std::endl;
 }
 
 double PmergeMe::nowMicroseconds() const
 {
-    return 0.0;
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return static_cast<double>(tv.tv_sec) * 1000000.0 + static_cast<double>(tv.tv_usec);
+}
+
+void PmergeMe::printTimings(unsigned long count) const
+{
+    std::cout << "Time to process a range of " << count << " elements with std::vector : "
+              << _vectorTimeUs << " us" << std::endl;
+    std::cout << "Time to process a range of " << count << " elements with std::deque : "
+              << _dequeTimeUs << " us" << std::endl;
 }
 
 void PmergeMe::startSort()
 {
-    PmergeMe::sortingVector(PmergeMe::getVecData());
-    PmergeMe::sortingDeque(PmergeMe::getDequeData());
+    double start = nowMicroseconds();
+    _vectorData = sortingVector(_vectorData);
+    _vectorTimeUs = nowMicroseconds() - start;
+
+    start = nowMicroseconds();
+    _dequeData = sortingDeque(_dequeData);
+    _dequeTimeUs = nowMicroseconds() - start;
+    printTimings(_vectorData.size());
 }
