@@ -21,13 +21,13 @@ class RPN
         RPN &operator=(const RPN &other);
 
         bool   parseInput(const std::string &input);
-        void performOperation(char operation);
+        bool performOperation(char operation);
         int apply(int left, int right, char operation) const;
         void clearStack();
         bool isOperator(char token) const;
         bool isOperand(char token) const;
-        void caculateRPN(const std::string &input);
-};
+        bool caculateRPN(const std::string &input);
+    };
 
 
 #endif // RPN_HPP

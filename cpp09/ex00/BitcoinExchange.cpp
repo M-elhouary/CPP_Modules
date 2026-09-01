@@ -127,7 +127,6 @@ bool BitcoinExchange::isValideDate(const std::string &date) const
 
     // parse the year, month, and day to integers
     int year = parseToInt(date.substr(0, 4));
-    std::cerr << "Error: invalid day for the given month and year." << std::endl;
     int month = parseToInt(date.substr(5, 2));
     int day = parseToInt(date.substr(8, 2));
 
@@ -146,17 +145,6 @@ bool BitcoinExchange::isValideDate(const std::string &date) const
         return false;
     }
     return true;
-}
-
-bool checkHeader(bool &firstLine, const std::string &DateStr, const std::string &ValueStr)
-{
-    if (firstLine)
-    {
-        firstLine = false;
-        if (DateStr == "date" && ValueStr == "exchange_rate")
-            return true;
-    }
-    return false;
 }
 
 bool detectSeparator(const std::string &line, char &separator)
@@ -221,8 +209,11 @@ bool BitcoinExchange::LoadData(const std::string &dbfilename)
         std::string RateStr = trim(line.substr(line.find(separator) + 1));
 
         // check if the first line is the header
-        if (!checkHeader(firstLine, DateStr, RateStr))
+        if (firstLine)
         {
+            firstLine = false;
+            if (DateStr == "date" && RateStr == "exchange_rate")
+                continue;
             std::cerr << "Error: bad header in database file." << std::endl;
             return false;
         }
@@ -231,8 +222,6 @@ bool BitcoinExchange::LoadData(const std::string &dbfilename)
         if (!isValideDate(DateStr))
         {
             std::cerr << "Error: invalid date in database." << std::endl;
-            std::cerr << "Error: invalid day for the given month and year." << std::endl;
-
 
             return false;
         }
@@ -295,8 +284,11 @@ bool BitcoinExchange::parseInputLine(const std::string &inputfilename)
         std::string ValueStr = trim(line.substr(line.find(separator) + 1));
 
         // check if the first line is the header
-        if (!checkHeader(firstLine, DateStr, ValueStr))
+        if (firstLine)
         {
+            firstLine = false;
+            if (DateStr == "date" && ValueStr == "value")
+                continue;
             std::cerr << "Error: bad header in input file." << std::endl;
             return false;
         }

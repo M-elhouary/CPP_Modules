@@ -115,34 +115,17 @@ std::deque<int> PmergeMe::getDequeData()
 
 void PmergeMe::printBefore() const
 {
-
-    std::cout << "Before sort vector : " ;
+    std::cout << "Before: ";
     for (size_t i = 0; i < _vectorData.size(); i++)
         std::cout << _vectorData[i] << " ";
-
-
     std::cout << std::endl;
-    
-
-    std::cout << "Before sort deque : " ;
-    for (size_t i = 0; i < _dequeData.size(); i++)
-        std::cout << _dequeData[i] << " ";
-    std::cout << std::endl;
-    
-    
 }
 
 void PmergeMe::printAfter() const
 {
-    std::cout << "After sort deque: " ;
+    std::cout << "After: ";
     for (size_t i = 0; i < _vectorData.size(); i++)
         std::cout << _vectorData[i] << " ";
-    std::cout << std::endl;
-    
-
-    std::cout << "After deque: ";
-    for (size_t i = 0; i < _dequeData.size(); i++)
-        std::cout << _dequeData[i] << " ";
     std::cout << std::endl;
 }
 
@@ -170,5 +153,4 @@ void PmergeMe::startSort()
     start = nowMicroseconds();
     _dequeData = sortingDeque(_dequeData);
     _dequeTimeUs = nowMicroseconds() - start;
-    printTimings(_vectorData.size());
 }

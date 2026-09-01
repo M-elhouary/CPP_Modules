@@ -2,19 +2,19 @@ NAME = rpn
 
 CXX = c++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC = RPN.cpp main.cpp
 
 OBG = $(SRC:.cpp=.o)
 
 $(NAME): $(OBG)
-	$(CXX) $(CFLAGS) -o $(NAME) $(OBG)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBG)
 
 all: $(NAME)
 
-%.cpp%.o: %.cpp
-	$(CXX) $(CFLAGS) -c $< -o $@
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBG)

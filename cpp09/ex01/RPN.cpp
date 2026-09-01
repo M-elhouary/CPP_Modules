@@ -55,16 +55,27 @@ int RPN::apply(int left, int right, char operation) const
 }
 
 // apply the operation to the two operands and return the result
-void RPN::performOperation(char operation)
+bool RPN::performOperation(char operation)
 {
+    if (stack.size() < 2)
+    {
+        std::cerr << "Error: not enough operands for operation '" << operation << "'." << std::endl;
+        return false;
+    }
 
     int right = stack.top();
     stack.pop();
     int left = stack.top();
     stack.pop();
 
-    int result = apply(left, right, operation);
-    stack.push(result);
+    if (operation == '/' && right == 0)
+    {
+        std::cerr << "Error: division by zero." << std::endl;
+        return false;
+    }
+
+    stack.push(apply(left, right, operation));
+    return true;
 }
 
 void RPN::clearStack()
@@ -87,22 +98,24 @@ bool RPN::parseInput(const std::string &input)
             return false;
         }
 
-        if (i > 2 && isOperand(input[i]) && i + 1 < input.length() && isOperand(input[i + 1]))
+        // reject tokens that touch each other (no whitespace separator)
+        if (i + 1 < input.length() && !std::isspace(input[i + 1]))
         {
-            std::cerr << "Error: operand must be less than 10." << std::endl;
+            if (isOperand(input[i]) && isOperand(input[i + 1]))
+                std::cerr << "Error: operand must be less than 10." << std::endl;
+            else
+                std::cerr << "Error: failed to parse input." << std::endl;
             clearStack();
             return false;
         }
 
         if (isOperator(input[i]))
         {
-            if (stack.size() < 2)
+            if (!performOperation(input[i]))
             {
-                std::cerr << "Error: not enough operands for operation '" << input[i] << "'." << std::endl;
                 clearStack();
                 return false;
             }
-            performOperation(input[i]);
         }
         else
             stack.push(input[i] - '0');
@@ -110,22 +123,23 @@ bool RPN::parseInput(const std::string &input)
     return true;
 }
 
-void RPN::caculateRPN(const std::string &input)
+bool RPN::caculateRPN(const std::string &input)
 {
     // Parse the input and build the stack
     if (!parseInput(input))
     {
         clearStack();
-        return;
+        return false;
     }
     // Check if the stack has exactly one element after processing the input
     if (stack.size() != 1)
     {
         std::cerr << "Error: invalid RPN expression." << std::endl;
         clearStack();
-        return;
+        return false;
     }
     int result = stack.top();
     stack.pop();
     std::cout << result << std::endl;
+    return true;
 }
