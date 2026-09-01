@@ -80,14 +80,23 @@ int BitcoinExchange::daysInMonth(int year, int month) const
 {
     switch (month)
     {
-        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            return 31;
-        case 4: case 6: case 9: case 11:
-            return 30;
-        case 2:
-            return isLeapYear(year) ? 29 : 28;
-        default:
-            return 0;
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+    case 12:
+        return 31;
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+        return 30;
+    case 2:
+        return isLeapYear(year) ? 29 : 28;
+    default:
+        return 0;
     }
 }
 
@@ -99,7 +108,10 @@ bool BitcoinExchange::isValideDate(const std::string &date) const
 
     // check if the date is in the format YYYY-MM-DD
     if (date[4] != '-' || date[7] != '-')
+    {
+
         return false;
+    }
 
     // check if the numbers are valid
     for (size_t i = 0; i < date.length(); i++)
@@ -107,26 +119,34 @@ bool BitcoinExchange::isValideDate(const std::string &date) const
         if (i == 4 || i == 7)
             continue;
         if (!std::isdigit(static_cast<unsigned char>(date[i])))
+        {
+
             return false;
+        }
     }
 
     // parse the year, month, and day to integers
     int year = parseToInt(date.substr(0, 4));
+    std::cerr << "Error: invalid day for the given month and year." << std::endl;
     int month = parseToInt(date.substr(5, 2));
     int day = parseToInt(date.substr(8, 2));
 
     if (year < 1 || year > 9999)
+    {
         return false;
+    }
     if (month < 1 || month > 12)
+    {
         return false;
+    }
     if (day < 1)
         return false;
     if (day > daysInMonth(year, month))
+    {
         return false;
-
+    }
     return true;
 }
-
 
 bool checkHeader(bool &firstLine, const std::string &DateStr, const std::string &ValueStr)
 {
@@ -138,7 +158,6 @@ bool checkHeader(bool &firstLine, const std::string &DateStr, const std::string 
     }
     return false;
 }
-
 
 bool detectSeparator(const std::string &line, char &separator)
 {
@@ -182,8 +201,6 @@ bool BitcoinExchange::LoadData(const std::string &dbfilename)
         if (!line.empty() && line[line.length() - 1] == '\r')
             line.erase(line.length() - 1);
 
-
-
         // check if the line is empty
         if (trim(line).empty())
         {
@@ -192,19 +209,19 @@ bool BitcoinExchange::LoadData(const std::string &dbfilename)
         }
 
         // check if there is a separator in the line
-        char separator ;
+        char separator;
         if (!detectSeparator(line, separator))
         {
             std::cerr << "Error: parsing database file ! check the format." << std::endl;
             return false;
         }
-        
+
         // extract the date and rate
         std::string DateStr = trim(line.substr(0, line.find(separator)));
         std::string RateStr = trim(line.substr(line.find(separator) + 1));
 
         // check if the first line is the header
-        if(!checkHeader(firstLine, DateStr, RateStr))
+        if (!checkHeader(firstLine, DateStr, RateStr))
         {
             std::cerr << "Error: bad header in database file." << std::endl;
             return false;
@@ -214,6 +231,9 @@ bool BitcoinExchange::LoadData(const std::string &dbfilename)
         if (!isValideDate(DateStr))
         {
             std::cerr << "Error: invalid date in database." << std::endl;
+            std::cerr << "Error: invalid day for the given month and year." << std::endl;
+
+
             return false;
         }
         if (!parseToDouble(RateStr, rate) || rate < 0)
@@ -239,7 +259,6 @@ bool BitcoinExchange::LoadData(const std::string &dbfilename)
     return true;
 }
 
-
 bool BitcoinExchange::parseInputLine(const std::string &inputfilename)
 {
     // check if the file is open
@@ -264,7 +283,7 @@ bool BitcoinExchange::parseInputLine(const std::string &inputfilename)
             return false;
         }
 
-        char separator ;
+        char separator;
         if (!detectSeparator(line, separator))
         {
             std::cerr << "Error: bad input ! check the format." << std::endl;
@@ -276,7 +295,7 @@ bool BitcoinExchange::parseInputLine(const std::string &inputfilename)
         std::string ValueStr = trim(line.substr(line.find(separator) + 1));
 
         // check if the first line is the header
-        if(!checkHeader(firstLine, DateStr, ValueStr))
+        if (!checkHeader(firstLine, DateStr, ValueStr))
         {
             std::cerr << "Error: bad header in input file." << std::endl;
             return false;
@@ -301,7 +320,7 @@ bool BitcoinExchange::parseInputLine(const std::string &inputfilename)
         }
         if (value > 1000)
         {
-            std::cerr << "Error: too large a number." << std::endl; 
+            std::cerr << "Error: too large a number." << std::endl;
             return false;
         }
 
