@@ -9,6 +9,8 @@ int main(int ac, char **av)
     }
 
     BitcoinExchange bitcoinExchange;
+
+    // Load the database
     if (!bitcoinExchange.LoadData("data.csv"))
         return 1;
     if (!bitcoinExchange.parseInputLine(av[1]))
