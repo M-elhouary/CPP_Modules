@@ -222,18 +222,17 @@ bool BitcoinExchange::LoadData(const std::string &dbfilename)
         if (!isValideDate(DateStr))
         {
             std::cerr << "Error: invalid date in database." << std::endl;
-
-            return false;
+                continue;
         }
         if (!parseToDouble(RateStr, rate) || rate < 0)
         {
             std::cerr << "Error: invalid rate in database." << std::endl;
-            return false;
+                continue;
         }
         if (_data.find(DateStr) != _data.end())
         {
             std::cerr << "Error: duplicate date in database." << std::endl;
-            return false;
+                continue;
         }
 
         _data[DateStr] = rate;
@@ -269,14 +268,14 @@ bool BitcoinExchange::parseInputLine(const std::string &inputfilename)
         if (trim(line).empty())
         {
             std::cerr << "Error: empty line in input file." << std::endl;
-            return false;
+            continue;
         }
 
         char separator;
         if (!detectSeparator(line, separator))
         {
-            std::cerr << "Error: bad input ! check the format." << std::endl;
-            return false;
+            std::cerr << "Error: bad input => " << line << std::endl;
+            continue;
         }
 
         // extract the date and value
@@ -290,37 +289,37 @@ bool BitcoinExchange::parseInputLine(const std::string &inputfilename)
             if (DateStr == "date" && ValueStr == "value")
                 continue;
             std::cerr << "Error: bad header in input file." << std::endl;
-            return false;
+            continue;
         }
 
         if (!isValideDate(DateStr))
         {
-            std::cerr << "Error: bad input ! check the format." << std::endl;
-            return false;
+            std::cerr << "Error: bad input => " << line << std::endl;
+            continue;
         }
 
         double value;
         if (!parseToDouble(ValueStr, value))
         {
-            std::cerr << "Error: bad input ! check the format." << std::endl;
-            return false;
+            std::cerr << "Error: bad input => " << line << std::endl;
+            continue;
         }
         if (value < 0)
         {
             std::cerr << "Error: not a positive number." << std::endl;
-            return false;
+            continue;
         }
         if (value > 1000)
         {
             std::cerr << "Error: too large a number." << std::endl;
-            return false;
+            continue;
         }
 
         double rate = getBitcoinValue(DateStr);
         if (rate < 0)
         {
             std::cerr << "Error: no earlier date in database => " << DateStr << std::endl;
-            return false;
+            continue;
         }
 
         std::cout << DateStr << " => " << ValueStr << " = " << (value * rate) << std::endl;

@@ -7,8 +7,7 @@ PmergeMe::PmergeMe(const PmergeMe &other)
       _dequeData(other._dequeData),
       _vectorTimeUs(other._vectorTimeUs),
       _dequeTimeUs(other._dequeTimeUs)
-{
-}
+{}
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 {
@@ -100,7 +99,7 @@ std::vector<size_t> PmergeMe::Jacobsthal(size_t n)
     for (size_t i = n; i > previousBoundary; --i)
         sequence.push_back(i);
 
-    return sequence;
+    return sequence; // 3 5 4 1 2
 }
 
 std::vector<int> PmergeMe::getVecData()

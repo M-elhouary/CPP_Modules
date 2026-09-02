@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jacobsthal Insertion Order Visualizer</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --panel-2: #eef2f8;
+      --text: #162033;
+      --muted: #667085;
+      --border: #d8dee9;
+      --accent: #5b4bdb;
+      --accent-soft: #ebe9ff;
+      --green: #137a55;
+      --green-soft: #dcf8ec;
+      --orange: #b54708;
+      --orange-soft: #fff0db;
+      --blue: #175cd3;
+      --blue-soft: #e5efff;
+      --red: #b42318;
+      --red-soft: #fee4e2;
+      --shadow: 0 16px 40px rgba(21, 31, 52, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e1421;
+        --panel: #151d2c;
+        --panel-2: #1d2738;
+        --text: #eef2f8;
+        --muted: #aab5c5;
+        --border: #344054;
+        --accent: #9b8cff;
+        --accent-soft: #302b60;
+        --green: #75e0b5;
+        --green-soft: #123f34;
+        --orange: #fdbb74;
+        --orange-soft: #4a2c12;
+        --blue: #84adff;
+        --blue-soft: #17345f;
+        --red: #fda29b;
+        --red-soft: #551c1c;
+        --shadow: 0 18px 46px rgba(0, 0, 0, 0.26);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 32rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .app {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 48px;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 { margin: 0; font-size: clamp(1.75rem, 4vw, 3rem); line-height: 1.08; }
+    .subtitle { max-width: 720px; margin: 12px 0 0; color: var(--muted); }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: 10px;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .field { display: grid; gap: 5px; }
+    .field label { color: var(--muted); font-size: .78rem; font-weight: 700; }
+    input[type="number"] {
+      width: 82px;
+      height: 42px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel-2);
+      color: var(--text);
+    }
+
+    .btn {
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel-2);
+      color: var(--text);
+      font-weight: 750;
+    }
+    .btn:hover:not(:disabled) { border-color: var(--accent); }
+    .btn:focus-visible, input:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent); outline-offset: 2px; }
+    .btn.primary { border-color: var(--accent); background: var(--accent); color: white; }
+    .btn:disabled { cursor: not-allowed; opacity: .42; }
+
+    .progress-wrap { margin: 14px 0 22px; }
+    .progress-label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 7px; color: var(--muted); font-size: .82rem; }
+    .progress { height: 8px; overflow: hidden; border-radius: 999px; background: var(--panel-2); }
+    .progress > div { height: 100%; width: 0; border-radius: inherit; background: var(--accent); transition: width .22s ease; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(330px, .92fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .stack { display: grid; gap: 18px; }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card-head { padding: 16px 18px 0; }
+    .card-head h2 { margin: 0; font-size: 1rem; }
+    .card-head p { margin: 4px 0 0; color: var(--muted); font-size: .82rem; }
+    .card-body { padding: 16px 18px 18px; }
+
+    .explanation {
+      min-height: 98px;
+      display: grid;
+      align-content: center;
+      padding: 17px 18px;
+      border-left: 5px solid var(--accent);
+      background: var(--accent-soft);
+    }
+    .explanation .step-kind { color: var(--accent); font-size: .76rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .explanation strong { display: block; margin-top: 3px; font-size: 1.05rem; }
+    .explanation p { margin: 5px 0 0; color: var(--text); font-size: .9rem; }
+
+    .state-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .state {
+      min-width: 0;
+      padding: 10px;
+      border-radius: 11px;
+      background: var(--panel-2);
+    }
+    .state span { display: block; overflow: hidden; color: var(--muted); font-size: .7rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+    .state b { display: block; margin-top: 2px; font-size: 1.06rem; font-variant-numeric: tabular-nums; }
+    .state.changed { background: var(--orange-soft); color: var(--orange); }
+
+    .lane {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 46px;
+    }
+    .tile {
+      position: relative;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel-2);
+      color: var(--muted);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      transition: transform .18s ease, background .18s ease, color .18s ease;
+    }
+    .tile.used { border-color: transparent; background: var(--green-soft); color: var(--green); }
+    .tile.active { z-index: 1; border: 2px solid var(--orange); background: var(--orange-soft); color: var(--orange); transform: translateY(-4px); }
+    .tile.boundary::after {
+      content: "J";
+      position: absolute;
+      top: -7px;
+      right: -5px;
+      display: grid;
+      width: 16px;
+      height: 16px;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      font-size: .58rem;
+    }
+
+    .sequence {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+      min-height: 48px;
+    }
+    .seq-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .seq-item:not(:last-child)::after { content: "→"; color: var(--muted); font-weight: 500; }
+    .seq-num {
+      display: grid;
+      min-width: 38px;
+      height: 38px;
+      padding: 0 8px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+    .seq-item:last-child .seq-num { outline: 2px solid var(--orange); outline-offset: 2px; }
+    .empty { color: var(--muted); font-style: italic; }
+
+    .groups { display: grid; gap: 8px; margin-top: 14px; }
+    .group-row { display: grid; grid-template-columns: 82px 1fr; gap: 10px; align-items: center; font-size: .82rem; }
+    .group-label { color: var(--muted); font-weight: 700; }
+    .group-values { display: flex; flex-wrap: wrap; gap: 5px; }
+    .mini {
+      padding: 3px 8px;
+      border-radius: 7px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+    }
+
+    pre {
+      margin: 0;
+      overflow: auto;
+      background: #101624;
+      color: #dce6f4;
+      font: 500 .79rem/1.65 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      tab-size: 4;
+    }
+    .code-line {
+      display: grid;
+      grid-template-columns: 28px minmax(max-content, 1fr);
+      min-width: max-content;
+      padding: 0 14px 0 8px;
+      border-left: 4px solid transparent;
+    }
+    .code-line .ln { color: #63708a; text-align: right; user-select: none; }
+    .code-line .src { padding-left: 12px; white-space: pre; }
+    .code-line.highlight { border-left-color: #b6aaff; background: #27244d; color: #ffffff; }
+    .kw { color: #ff8bd5; } .type { color: #80d8ff; } .num { color: #ffd580; } .fn { color: #b6aaff; }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 13px; color: var(--muted); font-size: .76rem; }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 10px; height: 10px; border-radius: 3px; background: var(--panel-2); }
+    .dot.used { background: var(--green-soft); }
+    .dot.active { background: var(--orange-soft); border: 1px solid var(--orange); }
+    .dot.boundary { border-radius: 999px; background: var(--accent); }
+
+    .summary {
+      display: grid;
+      gap: 8px;
+      padding: 16px 18px;
+      background: var(--panel-2);
+      color: var(--text);
+      font-size: .87rem;
+    }
+    .summary p { margin: 0; }
+    .summary code { color: var(--accent); font-weight: 800; }
+
+    @media (max-width: 850px) {
+      .hero { align-items: stretch; flex-direction: column; }
+      .layout { grid-template-columns: 1fr; }
+      .code-card { order: 2; }
+    }
+
+    @media (max-width: 560px) {
+      .app { width: min(100% - 20px, 1180px); padding-top: 22px; }
+      .controls { align-items: stretch; }
+      .field { width: 100%; }
+      input[type="number"] { width: 100%; }
+      .controls .btn { flex: 1; }
+      .state-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .state:last-child { grid-column: span 2; }
+      .group-row { grid-template-columns: 1fr; gap: 4px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Ford–Johnson insertion order</p>
+        <h1>Jacobsthal sequence builder</h1>
+        <p class="subtitle">Step through the function and see how Jacobsthal boundaries create descending blocks of indexes.</p>
+      </div>
+      <div class="controls" aria-label="Visualizer controls">
+        <div class="field">
+          <label for="n-input">Maximum index n</label>
+          <input id="n-input" type="number" min="0" max="50" value="11" inputmode="numeric">
+        </div>
+        <button class="btn" id="reset-btn" type="button">Reset</button>
+        <button class="btn" id="prev-btn" type="button">← Previous</button>
+        <button class="btn primary" id="next-btn" type="button">Next →</button>
+        <button class="btn" id="play-btn" type="button" aria-pressed="false">▶ Play</button>
+      </div>
+    </header>
+
+    <div class="progress-wrap" aria-label="Algorithm progress">
+      <div class="progress-label"><span id="progress-text">Step 1</span><span id="progress-percent">0%</span></div>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar"></div></div>
+    </div>
+
+    <div class="layout">
+      <section class="stack" aria-label="Algorithm visualization">
+        <article class="card">
+          <div class="explanation" aria-live="polite">
+            <span class="step-kind" id="step-kind">Initialization</span>
+            <strong id="step-title">Create an empty sequence</strong>
+            <p id="step-detail">The algorithm starts with no indexes in its output.</p>
+          </div>
+          <div class="card-body">
+            <div class="state-grid" aria-label="Current variable values">
+              <div class="state" id="state-prev"><span>previousJacob</span><b id="val-prev">—</b></div>
+              <div class="state" id="state-current"><span>currentJacob</span><b id="val-current">—</b></div>
+              <div class="state" id="state-boundary"><span>previousBoundary</span><b id="val-boundary">—</b></div>
+              <div class="state" id="state-i"><span>i</span><b id="val-i">—</b></div>
+              <div class="state" id="state-next"><span>nextJacob</span><b id="val-next">—</b></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h2>Available indexes: 2 through n</h2>
+            <p>The raised tile is being appended now. A <b>J</b> marks a Jacobsthal boundary.</p>
+          </div>
+          <div class="card-body">
+            <div class="lane" id="number-lane" aria-live="polite"></div>
+            <div class="legend" aria-hidden="true">
+              <span><i class="dot"></i>Waiting</span>
+              <span><i class="dot active"></i>Current append</span>
+              <span><i class="dot used"></i>Already appended</span>
+              <span><i class="dot boundary"></i>Jacobsthal boundary</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h2>Returned insertion order</h2>
+            <p>Each new value is appended with <code>sequence.push_back(...)</code>.</p>
+          </div>
+          <div class="card-body">
+            <div class="sequence" id="sequence-output" aria-live="polite"></div>
+            <div class="groups" id="group-output"></div>
+          </div>
+        </article>
+      </section>
+
+      <aside class="stack">
+        <article class="card code-card">
+          <div class="card-head">
+            <h2>Executing code</h2>
+            <p>The purple line is responsible for the current state.</p>
+          </div>
+          <div class="card-body">
+            <pre aria-label="Jacobsthal C++ function"><code id="code-view"></code></pre>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="summary">
+            <p><strong>Boundary recurrence:</strong> <code>next = current + 2 × previous</code></p>
+            <p><strong>Boundaries:</strong> <span id="boundary-list">3, 5, 11</span></p>
+            <p><strong>Core idea:</strong> append each boundary first, then walk backward to the previous boundary.</p>
+            <p><strong>Tail:</strong> if <code>n</code> stops before the next boundary, append the remaining indexes from <code>n</code> downward.</p>
+          </div>
+        </article>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const codeLines = [
+        '<span class="type">std::vector&lt;size_t&gt;</span> PmergeMe::<span class="fn">Jacobsthal</span>(<span class="type">size_t</span> n)',
+        '{',
+        '    <span class="type">std::vector&lt;size_t&gt;</span> sequence;',
+        '',
+        '    <span class="kw">if</span> (n &lt;= <span class="num">1</span>)',
+        '        <span class="kw">return</span> sequence;',
+        '',
+        '    <span class="type">size_t</span> previousJacob = <span class="num">1</span>;',
+        '    <span class="type">size_t</span> currentJacob = <span class="num">3</span>;',
+        '    <span class="type">size_t</span> previousBoundary = <span class="num">1</span>;',
+        '',
+        '    <span class="kw">while</span> (currentJacob &lt;= n)',
+        '    {',
+        '        sequence.<span class="fn">push_back</span>(currentJacob);',
+        '',
+        '        <span class="kw">for</span> (<span class="type">size_t</span> i = currentJacob - <span class="num">1</span>; i &gt; previousBoundary; --i)',
+        '            sequence.<span class="fn">push_back</span>(i);',
+        '',
+        '        previousBoundary = currentJacob;',
+        '',
+        '        <span class="type">size_t</span> nextJacob = currentJacob + (<span class="num">2</span> * previousJacob);',
+        '',
+        '        previousJacob = currentJacob;',
+        '        currentJacob = nextJacob;',
+        '    }',
+        '',
+        '    <span class="kw">for</span> (<span class="type">size_t</span> i = n; i &gt; previousBoundary; --i)',
+        '        sequence.<span class="fn">push_back</span>(i);',
+        '',
+        '    <span class="kw">return</span> sequence;',
+        '}'
+      ];
+
+      const el = id => document.getElementById(id);
+      const input = el('n-input');
+      const prevBtn = el('prev-btn');
+      const nextBtn = el('next-btn');
+      const resetBtn = el('reset-btn');
+      const playBtn = el('play-btn');
+      let steps = [];
+      let cursor = 0;
+      let timer = null;
+
+      function makeStep(line, kind, title, detail, state, active = null, boundaryValues = [], groups = []) {
+        return { line, kind, title, detail, state: { ...state }, active, boundaryValues: [...boundaryValues], groups: groups.map(g => ({ ...g, values: [...g.values] })) };
+      }
+
+      function buildSteps(n) {
+        const result = [];
+        let state = { previous: null, current: null, boundary: null, i: null, next: null, sequence: [] };
+        let boundaryValues = [];
+        let groups = [];
+
+        result.push(makeStep(3, 'Initialization', 'Create an empty sequence', 'No indexes have been appended yet.', state, null, boundaryValues, groups));
+        result.push(makeStep(5, 'Guard clause', `Check whether n (${n}) is 1 or smaller`, n <= 1 ? 'Yes. Return the empty vector immediately.' : 'No. Continue and initialize the Jacobsthal state.', state, null, boundaryValues, groups));
+        if (n <= 1) {
+          result.push(makeStep(6, 'Return', 'Return an empty vector', 'There are no insertion indexes when n ≤ 1.', state, null, boundaryValues, groups));
+          return result;
+        }
+
+        state = { ...state, previous: 1 };
+        result.push(makeStep(8, 'Initialization', 'Set previousJacob = 1', 'This is the older Jacobsthal value used by the recurrence.', state, null, boundaryValues, groups));
+        state = { ...state, current: 3 };
+        result.push(makeStep(9, 'Initialization', 'Set currentJacob = 3', 'The first useful boundary for this insertion order is 3.', state, null, boundaryValues, groups));
+        state = { ...state, boundary: 1 };
+        result.push(makeStep(10, 'Initialization', 'Set previousBoundary = 1', 'Indexes begin at 2, so boundary 1 sits just before the first block.', state, null, boundaryValues, groups));
+
+        while (state.current <= n) {
+          result.push(makeStep(12, 'While condition', `${state.current} ≤ ${n} is true`, `Boundary ${state.current} fits inside the requested range. Build this block.`, state, null, boundaryValues, groups));
+
+          const block = { label: `${state.boundary + 1}…${state.current}`, values: [] };
+          state = { ...state, sequence: [...state.sequence, state.current] };
+          block.values.push(state.current);
+          boundaryValues.push(state.current);
+          groups.push(block);
+          result.push(makeStep(14, 'Append boundary', `Append currentJacob: ${state.current}`, `The block begins with its Jacobsthal boundary ${state.current}.`, state, state.current, boundaryValues, groups));
+
+          for (let i = state.current - 1; i > state.boundary; --i) {
+            state = { ...state, i };
+            result.push(makeStep(16, 'Descending loop', `${i} > ${state.boundary} is true`, `Walk backward inside the block toward the previous boundary.`, state, i, boundaryValues, groups));
+            state = { ...state, sequence: [...state.sequence, i] };
+            block.values.push(i);
+            result.push(makeStep(17, 'Append index', `Append i: ${i}`, `The current block is produced in descending order.`, state, i, boundaryValues, groups));
+          }
+          state = { ...state, i: null };
+          result.push(makeStep(16, 'Descending loop', `Stop: i reached ${state.boundary}`, 'The condition i > previousBoundary is now false.', state, null, boundaryValues, groups));
+
+          state = { ...state, boundary: state.current };
+          result.push(makeStep(19, 'Move boundary', `previousBoundary becomes ${state.current}`, 'This completed boundary becomes the lower limit of the next block.', state, null, boundaryValues, groups));
+
+          const calculated = state.current + (2 * state.previous);
+          state = { ...state, next: calculated };
+          result.push(makeStep(21, 'Jacobsthal recurrence', `nextJacob = ${state.current} + 2 × ${state.previous} = ${calculated}`, 'This calculates the next Jacobsthal boundary.', state, null, boundaryValues, groups));
+
+          state = { ...state, previous: state.current };
+          result.push(makeStep(23, 'Shift values', `previousJacob becomes ${state.current}`, 'Save the old current value for the next recurrence.', state, null, boundaryValues, groups));
+          state = { ...state, current: state.next, next: null };
+          result.push(makeStep(24, 'Advance boundary', `currentJacob becomes ${state.current}`, 'The next while-condition will test this new boundary against n.', state, null, boundaryValues, groups));
+        }
+
+        result.push(makeStep(12, 'While condition', `${state.current} ≤ ${n} is false`, `The next Jacobsthal boundary is beyond n, so full boundary blocks are finished.`, state, null, boundaryValues, groups));
+
+        let tailCreated = false;
+        for (let i = n; i > state.boundary; --i) {
+          if (!tailCreated) {
+            groups.push({ label: `${state.boundary + 1}…${n} tail`, values: [] });
+            tailCreated = true;
+          }
+          state = { ...state, i };
+          result.push(makeStep(27, 'Tail loop', `${i} > ${state.boundary} is true`, 'This index belongs to the unfinished block after the last full boundary.', state, i, boundaryValues, groups));
+          state = { ...state, sequence: [...state.sequence, i] };
+          groups[groups.length - 1].values.push(i);
+          result.push(makeStep(28, 'Append tail', `Append i: ${i}`, 'Tail indexes are also appended in descending order.', state, i, boundaryValues, groups));
+        }
+        state = { ...state, i: null };
+        result.push(makeStep(27, 'Tail loop', `Stop: no index remains above ${state.boundary}`, tailCreated ? 'The unfinished final block is complete.' : 'n ended exactly on the last complete boundary, so there was no tail.', state, null, boundaryValues, groups));
+        result.push(makeStep(30, 'Return', `Return { ${state.sequence.join(', ')} }`, `The vector contains every index from 2 through ${n}, arranged block by block.`, state, null, boundaryValues, groups));
+        return result;
+      }
+
+      function renderCode(activeLine) {
+        el('code-view').innerHTML = codeLines.map((line, index) => {
+          const number = index + 1;
+          return `<span class="code-line${number === activeLine ? ' highlight' : ''}"><span class="ln">${number}</span><span class="src">${line || ' '}</span></span>`;
+        }).join('');
+        const active = el('code-view').querySelector('.highlight');
+        if (active) active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+
+      function renderState(step, previousStep) {
+        const values = {
+          prev: step.state.previous,
+          current: step.state.current,
+          boundary: step.state.boundary,
+          i: step.state.i,
+          next: step.state.next
+        };
+        const old = previousStep ? {
+          prev: previousStep.state.previous,
+          current: previousStep.state.current,
+          boundary: previousStep.state.boundary,
+          i: previousStep.state.i,
+          next: previousStep.state.next
+        } : {};
+        Object.entries(values).forEach(([key, value]) => {
+          el(`val-${key}`).textContent = value === null ? '—' : value;
+          el(`state-${key}`).classList.toggle('changed', previousStep != null && old[key] !== value);
+        });
+      }
+
+      function renderLane(n, step) {
+        const used = new Set(step.state.sequence);
+        const boundaries = new Set(step.boundaryValues);
+        if (n < 2) {
+          el('number-lane').innerHTML = '<span class="empty">No indexes: n is smaller than 2.</span>';
+          return;
+        }
+        let html = '';
+        for (let value = 2; value <= n; value++) {
+          const classes = ['tile'];
+          if (used.has(value)) classes.push('used');
+          if (step.active === value) classes.push('active');
+          if (boundaries.has(value)) classes.push('boundary');
+          const status = step.active === value ? 'currently appended' : used.has(value) ? 'already appended' : 'waiting';
+          html += `<span class="${classes.join(' ')}" aria-label="Index ${value}, ${status}${boundaries.has(value) ? ', Jacobsthal boundary' : ''}">${value}</span>`;
+        }
+        el('number-lane').innerHTML = html;
+      }
+
+      function renderSequence(step) {
+        const sequence = step.state.sequence;
+        el('sequence-output').innerHTML = sequence.length
+          ? sequence.map(value => `<span class="seq-item"><span class="seq-num">${value}</span></span>`).join('')
+          : '<span class="empty">sequence is empty</span>';
+
+        el('group-output').innerHTML = step.groups.length
+          ? step.groups.map((group, index) => `<div class="group-row"><span class="group-label">Block ${index + 1}<br>${group.label}</span><span class="group-values">${group.values.map(value => `<span class="mini">${value}</span>`).join('') || '<span class="empty">not appended yet</span>'}</span></div>`).join('')
+          : '';
+      }
+
+      function allBoundaries(n) {
+        const values = [];
+        let previous = 1;
+        let current = 3;
+        while (current <= n) {
+          values.push(current);
+          const next = current + 2 * previous;
+          previous = current;
+          current = next;
+        }
+        return values;
+      }
+
+      function render() {
+        const n = Number(input.value);
+        const step = steps[cursor];
+        const before = cursor > 0 ? steps[cursor - 1] : null;
+        const percent = steps.length <= 1 ? 100 : Math.round((cursor / (steps.length - 1)) * 100);
+
+        el('step-kind').textContent = step.kind;
+        el('step-title').textContent = step.title;
+        el('step-detail').textContent = step.detail;
+        el('progress-text').textContent = `Step ${cursor + 1} of ${steps.length}`;
+        el('progress-percent').textContent = `${percent}%`;
+        el('progress-bar').style.width = `${percent}%`;
+        el('progress-bar').parentElement.setAttribute('aria-valuenow', percent);
+        el('boundary-list').textContent = allBoundaries(n).join(', ') || 'none';
+
+        prevBtn.disabled = cursor === 0;
+        nextBtn.disabled = cursor === steps.length - 1;
+        renderState(step, before);
+        renderLane(n, step);
+        renderSequence(step);
+        renderCode(step.line);
+      }
+
+      function stopPlaying() {
+        if (timer) window.clearInterval(timer);
+        timer = null;
+        playBtn.textContent = '▶ Play';
+        playBtn.setAttribute('aria-pressed', 'false');
+      }
+
+      function reset() {
+        stopPlaying();
+        let n = Number.parseInt(input.value, 10);
+        if (!Number.isFinite(n)) n = 11;
+        n = Math.max(0, Math.min(50, n));
+        input.value = n;
+        steps = buildSteps(n);
+        cursor = 0;
+        render();
+      }
+
+      prevBtn.addEventListener('click', () => {
+        stopPlaying();
+        if (cursor > 0) { cursor--; render(); }
+      });
+      nextBtn.addEventListener('click', () => {
+        stopPlaying();
+        if (cursor < steps.length - 1) { cursor++; render(); }
+      });
+      resetBtn.addEventListener('click', reset);
+      input.addEventListener('change', reset);
+      playBtn.addEventListener('click', () => {
+        if (timer) { stopPlaying(); return; }
+        if (cursor === steps.length - 1) cursor = 0;
+        playBtn.textContent = 'Ⅱ Pause';
+        playBtn.setAttribute('aria-pressed', 'true');
+        render();
+        timer = window.setInterval(() => {
+          if (cursor >= steps.length - 1) { stopPlaying(); return; }
+          cursor++;
+          render();
+        }, 850);
+      });
+      document.addEventListener('keydown', event => {
+        if (event.target === input) return;
+        if (event.key === 'ArrowRight' && cursor < steps.length - 1) { stopPlaying(); cursor++; render(); }
+        if (event.key === 'ArrowLeft' && cursor > 0) { stopPlaying(); cursor--; render(); }
+      });
+
+      reset();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PmergeMe Pair Building and Winner Recursion</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --surface-2: #edf1f7;
+      --text: #142033;
+      --muted: #667085;
+      --border: #d5dce8;
+      --primary: #6554d9;
+      --primary-soft: #ebe9ff;
+      --winner: #175cd3;
+      --winner-soft: #e5efff;
+      --loser: #b54708;
+      --loser-soft: #fff0d9;
+      --success: #067647;
+      --success-soft: #dcfae6;
+      --danger: #b42318;
+      --danger-soft: #fee4e2;
+      --code: #0e1523;
+      --code-active: #2b2559;
+      --shadow: 0 16px 42px rgba(22, 31, 49, .08);
+      --motion-duration: 620ms;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0c1320;
+        --surface: #141d2b;
+        --surface-2: #1d2838;
+        --text: #eef2f7;
+        --muted: #aab4c4;
+        --border: #344054;
+        --primary: #a99cff;
+        --primary-soft: #302a5e;
+        --winner: #84adff;
+        --winner-soft: #17345f;
+        --loser: #fdbb74;
+        --loser-soft: #4a2d13;
+        --success: #75e0a7;
+        --success-soft: #123c2c;
+        --danger: #fda29b;
+        --danger-soft: #541b1b;
+        --shadow: 0 18px 46px rgba(0, 0, 0, .25);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--primary) 16%, transparent), transparent 31rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
+    .app { width: min(1220px, calc(100% - 30px)); margin: 0 auto; padding: 30px 0 48px; }
+    .hero { display: flex; justify-content: space-between; align-items: end; gap: 22px; }
+    .hero-copy { max-width: 790px; }
+    .eyebrow { margin: 0 0 7px; color: var(--primary); font-size: .74rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(1.75rem, 4vw, 3.05rem); line-height: 1.06; }
+    .subtitle { margin: 11px 0 0; color: var(--muted); }
+    .badge { flex: none; padding: 8px 11px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: .8rem; font-weight: 820; }
+
+    .controls {
+      margin-top: 20px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .input-row { display: grid; grid-template-columns: minmax(230px, 1fr) auto; gap: 10px; align-items: end; }
+    .field { display: grid; gap: 5px; }
+    .field label { color: var(--muted); font-size: .76rem; font-weight: 760; }
+    input, select {
+      min-height: 42px;
+      padding: 0 11px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-2);
+      color: var(--text);
+    }
+    .control-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin-top: 10px; }
+    .btn {
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 780;
+    }
+    .btn.primary { border-color: var(--primary); background: var(--primary); color: white; }
+    .btn:hover:not(:disabled) { border-color: var(--primary); }
+    .btn:disabled { cursor: not-allowed; opacity: .42; }
+    button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid color-mix(in srgb, var(--primary) 38%, transparent); outline-offset: 2px; }
+    .speed-field { min-width: 105px; }
+    .error { min-height: 19px; margin: 6px 0 0; color: var(--danger); font-size: .79rem; font-weight: 750; }
+
+    .progress-head { display: flex; justify-content: space-between; gap: 12px; margin-top: 15px; color: var(--muted); font-size: .78rem; }
+    .progress { height: 7px; margin-top: 6px; overflow: hidden; border-radius: 999px; background: var(--surface-2); }
+    .progress-bar { width: 0; height: 100%; border-radius: inherit; background: var(--primary); transition: width .2s ease; }
+
+    .layout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(340px, .8fr); gap: 17px; align-items: start; margin-top: 18px; }
+    .stack { display: grid; gap: 17px; }
+    .card { overflow: hidden; border: 1px solid var(--border); border-radius: 17px; background: var(--surface); box-shadow: var(--shadow); }
+    .card-head { padding: 14px 16px 0; }
+    .card-head h2 { margin: 0; font-size: 1rem; }
+    .card-head p { margin: 4px 0 0; color: var(--muted); font-size: .78rem; }
+    .card-body { padding: 14px 16px 16px; }
+
+    .explanation { min-height: 116px; padding: 16px 18px; border-left: 5px solid var(--primary); background: var(--primary-soft); }
+    .event-label { color: var(--primary); font-size: .7rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+    .explanation h2 { margin: 4px 0 0; font-size: 1.08rem; }
+    .explanation p { margin: 6px 0 0; font-size: .86rem; }
+    .state-line { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+    .state-pill { padding: 3px 8px; border-radius: 999px; background: color-mix(in srgb, var(--surface) 72%, transparent); color: var(--muted); font-size: .69rem; font-weight: 760; }
+    .state-pill strong { color: var(--text); }
+
+    .recursion-map { display: grid; gap: 7px; }
+    .level-row {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      padding: 8px 9px;
+      border-radius: 10px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: .72rem;
+    }
+    .level-row.active { outline: 2px solid var(--primary); background: var(--primary-soft); color: var(--text); }
+    .level-name { color: var(--primary); font-weight: 850; }
+    .level-values { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .level-arrow { color: var(--muted); font-weight: 850; }
+
+    .stage { min-height: 395px; display: grid; align-content: start; gap: 14px; }
+    .lane { min-height: 68px; padding: 10px; border-radius: 12px; background: var(--surface-2); }
+    .lane-head { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+    .lane-title { color: var(--muted); font-size: .69rem; font-weight: 830; letter-spacing: .07em; text-transform: uppercase; }
+    .lane-code { color: var(--primary); font: 700 .66rem ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .number-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 44px; }
+    .number {
+      position: relative;
+      z-index: 1;
+      display: inline-grid;
+      min-width: 45px;
+      height: 45px;
+      padding: 0 9px;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 5px 12px rgba(22, 31, 49, .09);
+      font-size: 1rem;
+      font-weight: 880;
+      font-variant-numeric: tabular-nums;
+      will-change: transform;
+    }
+    .number small { position: absolute; right: 3px; bottom: 1px; color: var(--muted); font-size: .51rem; font-weight: 700; }
+    .number.winner { border-color: transparent; background: var(--winner-soft); color: var(--winner); }
+    .number.loser { border-color: transparent; background: var(--loser-soft); color: var(--loser); }
+    .number.straggler { border: 2px dashed var(--primary); background: var(--primary-soft); color: var(--primary); }
+    .number.comparing { outline: 3px solid var(--primary); outline-offset: 2px; }
+    .number.returned { border-color: transparent; background: var(--success-soft); color: var(--success); }
+    .number.source-copy { opacity: .58; }
+    .empty { color: var(--muted); font-size: .78rem; font-style: italic; }
+
+    .pair-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 8px; }
+    .pair-box { min-height: 106px; padding: 8px; border: 1px solid var(--border); border-radius: 11px; background: var(--surface); text-align: center; }
+    .pair-box.current { outline: 2px solid var(--primary); }
+    .pair-label { display: flex; justify-content: space-between; gap: 7px; margin-bottom: 7px; color: var(--muted); font-size: .62rem; font-weight: 800; }
+    .pair-values { display: flex; justify-content: center; align-items: center; gap: 8px; }
+    .relation { color: var(--muted); font-weight: 850; }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; color: var(--muted); font-size: .71rem; }
+    .legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .swatch { width: 10px; height: 10px; border-radius: 3px; background: var(--surface-2); }
+    .swatch.winner { background: var(--winner-soft); border: 1px solid var(--winner); }
+    .swatch.loser { background: var(--loser-soft); border: 1px solid var(--loser); }
+    .swatch.straggler { background: var(--primary-soft); border: 1px dashed var(--primary); }
+
+    pre { margin: 0; max-height: 740px; overflow: auto; background: var(--code); color: #dce6f4; font: 500 .75rem/1.62 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .code-line { display: grid; grid-template-columns: 29px minmax(max-content, 1fr); min-width: max-content; padding: 0 13px 0 7px; border-left: 4px solid transparent; }
+    .code-line .ln { color: #61708b; text-align: right; user-select: none; }
+    .code-line .src { padding-left: 11px; white-space: pre; }
+    .code-line.active { border-left-color: #b8adff; background: var(--code-active); color: white; }
+    .kw { color: #ff8bd5; } .type { color: #80d8ff; } .num { color: #ffd580; } .fn { color: #b8adff; } .comment { color: #74839e; }
+
+    .key-idea { padding: 14px 16px; border-left: 5px solid var(--winner); border-radius: 12px; background: var(--winner-soft); font-size: .8rem; }
+    .key-idea strong { color: var(--winner); }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .stage { min-height: 360px; }
+    }
+    @media (max-width: 620px) {
+      .app { width: min(100% - 18px, 1220px); padding-top: 20px; }
+      .hero { align-items: start; flex-direction: column; }
+      .input-row { grid-template-columns: 1fr; }
+      .input-row .btn { width: 100%; }
+      .control-row .btn { flex: 1; }
+      .speed-field { width: 100%; }
+      .level-row { grid-template-columns: 54px 1fr; }
+      .level-row .level-arrow, .level-row .winner-values { display: none; }
+      .pair-area { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      :root { --motion-duration: 0ms; }
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">PmergeMe · focused animation</p>
+        <h1>Build pairs, extract winners, recurse</h1>
+        <p class="subtitle">Watch your actual <code>buildPairsVec()</code> and <code>sortingVector(winnersTmp)</code> flow. Every card keeps its original identity while it moves between vectors and recursion levels.</p>
+      </div>
+      <span class="badge">C++98 · std::vector</span>
+    </header>
+
+    <section class="controls" aria-label="Animation controls">
+      <div class="input-row">
+        <div class="field">
+          <label for="data-input">Positive integers, separated by spaces (2–14 values)</label>
+          <input id="data-input" value="9 3 7 1 8 2 6 5 4" autocomplete="off" spellcheck="false">
+        </div>
+        <button class="btn primary" id="build-btn" type="button">Build animation</button>
+      </div>
+      <p class="error" id="error" role="alert"></p>
+      <div class="control-row">
+        <button class="btn" id="reset-btn" type="button">Reset</button>
+        <button class="btn" id="prev-btn" type="button">← Previous</button>
+        <button class="btn primary" id="next-btn" type="button">Next →</button>
+        <button class="btn" id="play-btn" type="button" aria-pressed="false">▶ Play</button>
+        <label class="field speed-field">Speed
+          <select id="speed-select">
+            <option value="1500">Slow</option>
+            <option value="1000" selected>Normal</option>
+            <option value="650">Fast</option>
+          </select>
+        </label>
+      </div>
+      <div class="progress-head"><span id="progress-label">Step 1</span><span id="progress-percent">0%</span></div>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar" id="progress-bar"></div></div>
+    </section>
+
+    <div class="layout">
+      <section class="stack">
+        <article class="card">
+          <div class="explanation" aria-live="polite">
+            <span class="event-label" id="event-label">Function entry</span>
+            <h2 id="event-title">sortingVector(data)</h2>
+            <p id="event-detail">This recursion level receives its own copy of the vector.</p>
+            <div class="state-line" id="state-line"></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><h2>Recursion map</h2><p>Each level receives only the winners produced by the previous level.</p></div>
+          <div class="card-body"><div class="recursion-map" id="recursion-map"></div></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><h2 id="stage-title">Level 0 workspace</h2><p>Cards animate between the same logical containers used by your code.</p></div>
+          <div class="card-body">
+            <div class="stage" id="stage"></div>
+            <div class="legend" aria-hidden="true">
+              <span><i class="swatch winner"></i>Winner (larger)</span>
+              <span><i class="swatch loser"></i>Loser (smaller)</span>
+              <span><i class="swatch straggler"></i>Odd straggler</span>
+            </div>
+          </div>
+        </article>
+
+        <div class="key-idea"><strong>Important:</strong> the recursion does not sort the original vector immediately. First it repeatedly reduces the problem to its winners. During the unwind, every recursive level finishes its own loser-insertion phase and returns a sorted winner vector to its caller.</div>
+      </section>
+
+      <aside class="stack">
+        <article class="card">
+          <div class="card-head"><h2>Your executing code</h2><p>The purple line causes the movement shown on the left.</p></div>
+          <div class="card-body"><pre aria-label="PmergeMe build pairs and recursion code"><code id="code-view"></code></pre></div>
+        </article>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const el = id => document.getElementById(id);
+      const codeLines = [
+        '<span class="type">bool</span> PmergeMe::<span class="fn">buildPairsVec</span>(pairs, data, hasStraggler, straggler)',
+        '{',
+        '    <span class="kw">if</span> (data.size() &lt; <span class="num">2</span>)',
+        '        <span class="kw">return true</span>;',
+        '',
+        '    hasStraggler = (data.size() % <span class="num">2</span> == <span class="num">1</span>);',
+        '    <span class="kw">for</span> (<span class="type">size_t</span> i = <span class="num">0</span>; i + <span class="num">1</span> &lt; data.size(); i += <span class="num">2</span>)',
+        '    {',
+        '        <span class="type">int</span> a = data[i];',
+        '        <span class="type">int</span> b = data[i + <span class="num">1</span>];',
+        '        <span class="kw">if</span> (a &lt; b)',
+        '            std::<span class="fn">swap</span>(a, b);',
+        '        Pairs pair;',
+        '        pair.winner = a;',
+        '        pair.loser = b;',
+        '        pairs.<span class="fn">push_back</span>(pair);',
+        '    }',
+        '    <span class="kw">if</span> (hasStraggler)',
+        '        straggler = data.<span class="fn">back</span>();',
+        '    <span class="kw">return true</span>;',
+        '}',
+        '',
+        '<span class="type">std::vector&lt;int&gt;</span> PmergeMe::<span class="fn">sortingVector</span>(std::vector&lt;int&gt; data)',
+        '{',
+        '    <span class="kw">if</span> (data.size() &lt;= <span class="num">1</span>)',
+        '        <span class="kw">return</span> data;',
+        '',
+        '    std::vector&lt;Pairs&gt; pairs;',
+        '    std::vector&lt;int&gt; winnerSorted;',
+        '    <span class="fn">buildPairsVec</span>(pairs, data, hasStraggler, straggler);',
+        '',
+        '    std::vector&lt;int&gt; winners;',
+        '    std::vector&lt;int&gt; winnersTmp;',
+        '',
+        '    <span class="kw">for</span> (<span class="type">size_t</span> i = <span class="num">0</span>; i &lt; pairs.size(); ++i)',
+        '        winners.<span class="fn">push_back</span>(pairs[i].winner);',
+        '',
+        '    winnersTmp = winners;',
+        '    winnerSorted = <span class="fn">sortingVector</span>(winnersTmp);',
+        '    <span class="comment">// recursion later returns here</span>'
+      ];
+
+      const codeLineFor = {
+        enter: 23, base: 25, detect: 6, compare: 11, swap: 12,
+        store: 16, straggler: 19, extract: 36, copy: 38,
+        call: 39, returned: 39, complete: 40, ready: 40
+      };
+
+      let events = [];
+      let levels = [];
+      let cursor = 0;
+      let timer = null;
+
+      function cloneItem(item) { return item ? { ...item } : null; }
+      function clonePairs(pairs) { return (pairs || []).map(pair => ({ winner: cloneItem(pair.winner), loser: cloneItem(pair.loser) })); }
+
+      function stableSorted(items) {
+        return [...items].sort((a, b) => a.value - b.value || a.origin - b.origin);
+      }
+
+      function normalizedPairs(items) {
+        const pairs = [];
+        for (let i = 0; i + 1 < items.length; i += 2) {
+          const left = items[i];
+          const right = items[i + 1];
+          if (left.value < right.value) pairs.push({ winner: right, loser: left });
+          else pairs.push({ winner: left, loser: right });
+        }
+        return pairs;
+      }
+
+      function addEvent(data) {
+        events.push({
+          type: data.type,
+          depth: data.depth,
+          title: data.title,
+          detail: data.detail,
+          input: (data.input || []).map(cloneItem),
+          remaining: (data.remaining || []).map(cloneItem),
+          pairs: clonePairs(data.pairs),
+          currentRaw: (data.currentRaw || []).map(cloneItem),
+          currentPair: data.currentPair ? { winner: cloneItem(data.currentPair.winner), loser: cloneItem(data.currentPair.loser) } : null,
+          winners: (data.winners || []).map(cloneItem),
+          losers: (data.losers || []).map(cloneItem),
+          winnersTmp: (data.winnersTmp || []).map(cloneItem),
+          winnerSorted: (data.winnerSorted || []).map(cloneItem),
+          result: (data.result || []).map(cloneItem),
+          straggler: cloneItem(data.straggler),
+          pairNumber: data.pairNumber ?? null,
+          hasStraggler: !!data.hasStraggler
+        });
+      }
+
+      function traceLevel(input, depth) {
+        if (!levels[depth]) {
+          const pairs = normalizedPairs(input);
+          levels[depth] = { input: input.map(cloneItem), winners: pairs.map(p => cloneItem(p.winner)) };
+        }
+
+        addEvent({
+          type: 'enter', depth, input,
+          title: `Enter sortingVector() at recursion level ${depth}`,
+          detail: depth === 0
+            ? 'The function receives the original data vector by value.'
+            : 'These values are the winnersTmp vector copied by the previous recursion level.'
+        });
+
+        if (input.length <= 1) {
+          addEvent({
+            type: 'base', depth, input, result: input,
+            title: 'Base case reached: data.size() <= 1',
+            detail: `Return ${input.length ? input[0].value : 'the empty vector'} immediately. The recursive calls now begin to unwind.`
+          });
+          return [...input];
+        }
+
+        const hasStraggler = input.length % 2 === 1;
+        const straggler = hasStraggler ? input[input.length - 1] : null;
+        addEvent({
+          type: 'detect', depth, input,
+          remaining: input.slice(0, hasStraggler ? input.length - 1 : input.length),
+          hasStraggler, straggler,
+          title: `hasStraggler = ${hasStraggler ? 'true' : 'false'}`,
+          detail: hasStraggler
+            ? `The vector has ${input.length} values, so the final value ${straggler.value} has no partner.`
+            : `The vector has ${input.length} values, so every value belongs to a pair.`
+        });
+
+        const built = [];
+        for (let i = 0; i + 1 < input.length; i += 2) {
+          const left = input[i];
+          const right = input[i + 1];
+          const remaining = input.slice(i + 2, hasStraggler ? input.length - 1 : input.length);
+          addEvent({
+            type: 'compare', depth, input, remaining, pairs: built, currentRaw: [left, right], straggler, hasStraggler, pairNumber: built.length + 1,
+            title: `Compare data[${i}] = ${left.value} with data[${i + 1}] = ${right.value}`,
+            detail: `They are copied into local variables a and b. The code needs the larger value in winner and the smaller value in loser.`
+          });
+
+          const pair = left.value < right.value
+            ? { winner: right, loser: left }
+            : { winner: left, loser: right };
+
+          if (left.value < right.value) {
+            addEvent({
+              type: 'swap', depth, input, remaining, pairs: built, currentPair: pair, straggler, hasStraggler, pairNumber: built.length + 1,
+              title: `${left.value} < ${right.value}, so std::swap(a, b)` ,
+              detail: `The cards cross positions: a becomes ${right.value} (winner) and b becomes ${left.value} (loser).`
+            });
+          }
+
+          built.push(pair);
+          addEvent({
+            type: 'store', depth, input, remaining, pairs: built, straggler, hasStraggler, pairNumber: built.length,
+            title: `Store pair ${built.length}: winner ${pair.winner.value}, loser ${pair.loser.value}`,
+            detail: 'pair.winner and pair.loser are assigned, then the Pairs object is pushed into pairs.'
+          });
+        }
+
+        if (hasStraggler) {
+          addEvent({
+            type: 'straggler', depth, input, pairs: built, straggler, hasStraggler,
+            title: `Save straggler = data.back() = ${straggler.value}`,
+            detail: 'The straggler is not included in the winners recursion. It waits for the later insertion phase.'
+          });
+        }
+
+        const winners = built.map(pair => pair.winner);
+        const losers = built.map(pair => pair.loser);
+        addEvent({
+          type: 'extract', depth, input, pairs: built, winners, losers, straggler, hasStraggler,
+          title: `Extract winners: [${winners.map(x => x.value).join(', ')}]`,
+          detail: 'The loop pushes only pairs[i].winner into the winners vector. Losers stay associated with their pairs for the unwind phase.'
+        });
+
+        addEvent({
+          type: 'copy', depth, input, winners, losers, winnersTmp: winners, straggler, hasStraggler,
+          title: 'Copy winners into winnersTmp',
+          detail: 'winnersTmp = winners creates another vector containing the same integer values. The lower row represents the new copy.'
+        });
+
+        addEvent({
+          type: 'call', depth, input, winners, losers, winnersTmp: winners, straggler, hasStraggler,
+          title: `Call sortingVector(winnersTmp) with ${winners.length} values`,
+          detail: `Execution pauses at level ${depth}. The winners move down and become data at level ${depth + 1}.`
+        });
+
+        const childSorted = traceLevel(winners, depth + 1);
+
+        addEvent({
+          type: 'returned', depth, input, pairs: built, winners, losers, winnerSorted: childSorted, straggler, hasStraggler,
+          title: `Recursion returns winnerSorted = [${childSorted.map(x => x.value).join(', ')}]`,
+          detail: `Level ${depth + 1} has fully sorted this level's winners. Execution resumes immediately after sortingVector(winnersTmp).`
+        });
+
+        const fullResult = stableSorted(input);
+        if (depth > 0) {
+          addEvent({
+            type: 'complete', depth, input, winnerSorted: childSorted, losers, straggler, result: fullResult, hasStraggler,
+            title: `Level ${depth} finishes its remaining Ford–Johnson work`,
+            detail: `Loser insertion is collapsed in this focused animation. This level returns [${fullResult.map(x => x.value).join(', ')}] to level ${depth - 1}.`
+          });
+        } else {
+          addEvent({
+            type: 'ready', depth, input, winnerSorted: childSorted, losers, straggler, hasStraggler,
+            title: 'The original level now has its sorted winners',
+            detail: 'This is exactly where your shown code stops. Next, you reorder the losers to match these winners and perform Jacobsthal-guided insertion.'
+          });
+        }
+        return fullResult;
+      }
+
+      function parseInput() {
+        const raw = el('data-input').value.trim();
+        if (!raw) throw new Error('Enter at least two positive integers.');
+        const tokens = raw.split(/\s+/);
+        if (tokens.length < 2 || tokens.length > 14) throw new Error('Use between 2 and 14 values so the movement stays readable.');
+        return tokens.map((token, index) => {
+          if (!/^\d+$/.test(token)) throw new Error(`“${token}” is not a positive integer.`);
+          const value = Number(token);
+          if (!Number.isSafeInteger(value) || value <= 0) throw new Error(`“${token}” must be greater than zero.`);
+          return { id: `n${index}`, value, origin: index + 1 };
+        });
+      }
+
+      function numberHTML(item, classes = '', keyPrefix = '') {
+        const key = `${keyPrefix}${item.id}`;
+        return `<span class="number ${classes}" data-key="${key}" aria-label="value ${item.value}, original position ${item.origin}">${item.value}<small>#${item.origin}</small></span>`;
+      }
+
+      function laneHTML(title, code, content) {
+        return `<section class="lane"><div class="lane-head"><span class="lane-title">${title}</span><span class="lane-code">${code}</span></div><div class="number-row">${content || '<span class="empty">empty</span>'}</div></section>`;
+      }
+
+      function pairAreaHTML(event) {
+        const boxes = event.pairs.map((pair, index) => `
+          <div class="pair-box">
+            <div class="pair-label"><span>pair ${index + 1}</span><span>winner ≥ loser</span></div>
+            <div class="pair-values">${numberHTML(pair.winner, 'winner')}<span class="relation">≥</span>${numberHTML(pair.loser, 'loser')}</div>
+          </div>`);
+
+        if (event.currentRaw.length) {
+          boxes.push(`
+            <div class="pair-box current">
+              <div class="pair-label"><span>pair ${event.pairNumber}</span><span>compare a and b</span></div>
+              <div class="pair-values">${numberHTML(event.currentRaw[0], 'comparing')}<span class="relation">?</span>${numberHTML(event.currentRaw[1], 'comparing')}</div>
+            </div>`);
+        } else if (event.currentPair) {
+          boxes.push(`
+            <div class="pair-box current">
+              <div class="pair-label"><span>pair ${event.pairNumber}</span><span>after swap</span></div>
+              <div class="pair-values">${numberHTML(event.currentPair.winner, 'winner comparing')}<span class="relation">≥</span>${numberHTML(event.currentPair.loser, 'loser comparing')}</div>
+            </div>`);
+        }
+        return `<section class="lane"><div class="lane-head"><span class="lane-title">Pair workspace</span><span class="lane-code">Pairs { winner, loser }</span></div><div class="pair-area">${boxes.join('') || '<span class="empty">No pairs stored yet.</span>'}</div></section>`;
+      }
+
+      function renderStage(event) {
+        let html = '';
+        const inputContent = event.remaining.map(item => numberHTML(item)).join('');
+        const stragglerContent = event.straggler ? numberHTML(event.straggler, 'straggler') : '';
+
+        if (event.type === 'enter') {
+          html += laneHTML('data at function entry', 'sortingVector(data)', event.input.map(item => numberHTML(item)).join(''));
+        } else if (event.type === 'base') {
+          html += laneHTML('base-case data', 'return data', event.result.map(item => numberHTML(item, 'returned')).join(''));
+        } else if (['detect', 'compare', 'swap', 'store', 'straggler'].includes(event.type)) {
+          if (inputContent) html += laneHTML('unprocessed data', 'data[i], data[i + 1]', inputContent);
+          html += pairAreaHTML(event);
+          if (stragglerContent) html += laneHTML('odd value waiting outside pairs', 'straggler = data.back()', stragglerContent);
+        } else if (event.type === 'extract') {
+          html += laneHTML('winners', 'winners.push_back(pair.winner)', event.winners.map(item => numberHTML(item, 'winner')).join(''));
+          html += laneHTML('losers kept with pairs', 'pairs[i].loser', event.losers.map(item => numberHTML(item, 'loser')).join(''));
+          if (stragglerContent) html += laneHTML('straggler', 'saved for later', stragglerContent);
+        } else if (event.type === 'copy' || event.type === 'call') {
+          html += laneHTML('winners (source vector)', 'winners', event.winners.map(item => numberHTML(item, 'winner source-copy', 'source:')).join(''));
+          html += laneHTML(event.type === 'call' ? 'moving into the recursive call' : 'winnersTmp (new copy)', event.type === 'call' ? 'sortingVector(winnersTmp)' : 'winnersTmp = winners', event.winnersTmp.map(item => numberHTML(item, 'winner')).join(''));
+          html += laneHTML('losers remain at this level', 'execution paused here', event.losers.map(item => numberHTML(item, 'loser')).join(''));
+          if (stragglerContent) html += laneHTML('straggler remains here', 'not recursive', stragglerContent);
+        } else if (event.type === 'returned' || event.type === 'ready') {
+          html += laneHTML('winnerSorted returned by recursion', 'winnerSorted = sortingVector(winnersTmp)', event.winnerSorted.map(item => numberHTML(item, 'returned')).join(''));
+          html += laneHTML('losers waiting to be reordered', 'next part of sortingVector', event.losers.map(item => numberHTML(item, 'loser')).join(''));
+          if (stragglerContent) html += laneHTML('straggler waiting for insertion', 'next phase', stragglerContent);
+        } else if (event.type === 'complete') {
+          html += laneHTML('sorted result returned to caller', 'return mainChain', event.result.map(item => numberHTML(item, 'returned')).join(''));
+        }
+
+        el('stage').innerHTML = html;
+      }
+
+      function captureRects() {
+        const rects = new Map();
+        document.querySelectorAll('.number[data-key]').forEach(node => rects.set(node.dataset.key, node.getBoundingClientRect()));
+        return rects;
+      }
+
+      function animateMovement(oldRects) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const duration = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--motion-duration'), 10) || 620;
+        document.querySelectorAll('.number[data-key]').forEach(node => {
+          const now = node.getBoundingClientRect();
+          const old = oldRects.get(node.dataset.key);
+          if (old) {
+            const dx = old.left - now.left;
+            const dy = old.top - now.top;
+            if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+              node.animate([
+                { transform: `translate(${dx}px, ${dy}px) scale(1.04)`, zIndex: 20 },
+                { transform: 'translate(0, 0) scale(1)', zIndex: 1 }
+              ], { duration, easing: 'cubic-bezier(.2,.8,.2,1)' });
+            }
+          } else {
+            node.animate([
+              { opacity: 0, transform: 'translateY(-8px) scale(.72)' },
+              { opacity: 1, transform: 'translateY(0) scale(1)' }
+            ], { duration: Math.min(duration, 480), easing: 'cubic-bezier(.2,.8,.2,1)' });
+          }
+        });
+      }
+
+      function renderRecursionMap(activeDepth) {
+        el('recursion-map').innerHTML = levels.map((level, depth) => {
+          const input = level.input.map(x => x.value).join(' ');
+          const winners = level.winners.length ? level.winners.map(x => x.value).join(' ') : 'base case';
+          return `<div class="level-row${depth === activeDepth ? ' active' : ''}"><span class="level-name">Level ${depth}</span><span class="level-values">data: ${input}</span><span class="level-arrow">→ winners →</span><span class="level-values winner-values">${winners}</span></div>`;
+        }).join('');
+      }
+
+      function renderCode(type) {
+        const activeLine = codeLineFor[type] || 23;
+        el('code-view').innerHTML = codeLines.map((line, index) => `<span class="code-line${index + 1 === activeLine ? ' active' : ''}"><span class="ln">${index + 1}</span><span class="src">${line || ' '}</span></span>`).join('');
+        const active = el('code-view').querySelector('.active');
+        const pre = el('code-view').parentElement;
+        if (active) pre.scrollTop = Math.max(0, active.offsetTop - pre.clientHeight / 2);
+      }
+
+      function render(animate = true) {
+        const oldRects = animate ? captureRects() : new Map();
+        const event = events[cursor];
+        const percent = events.length <= 1 ? 100 : Math.round(cursor / (events.length - 1) * 100);
+
+        el('event-label').textContent = event.type === 'call' ? 'Recursive call' : event.type;
+        el('event-title').textContent = event.title;
+        el('event-detail').textContent = event.detail;
+        el('stage-title').textContent = `Level ${event.depth} workspace`;
+        el('state-line').innerHTML = `
+          <span class="state-pill">depth <strong>${event.depth}</strong></span>
+          <span class="state-pill">data.size() <strong>${event.input.length}</strong></span>
+          <span class="state-pill">pairs <strong>${event.pairs.length}</strong></span>
+          <span class="state-pill">hasStraggler <strong>${event.hasStraggler ? 'true' : 'false'}</strong></span>`;
+        el('progress-label').textContent = `Step ${cursor + 1} of ${events.length}`;
+        el('progress-percent').textContent = `${percent}%`;
+        el('progress-bar').style.width = `${percent}%`;
+        el('progress-bar').parentElement.setAttribute('aria-valuenow', percent);
+        el('prev-btn').disabled = cursor === 0;
+        el('next-btn').disabled = cursor === events.length - 1;
+
+        renderRecursionMap(event.depth);
+        renderStage(event);
+        renderCode(event.type);
+        requestAnimationFrame(() => animateMovement(oldRects));
+      }
+
+      function stop() {
+        if (timer) window.clearInterval(timer);
+        timer = null;
+        el('play-btn').textContent = '▶ Play';
+        el('play-btn').setAttribute('aria-pressed', 'false');
+      }
+
+      function build() {
+        stop();
+        try {
+          const input = parseInput();
+          events = [];
+          levels = [];
+          traceLevel(input, 0);
+          cursor = 0;
+          el('error').textContent = '';
+          render(false);
+        } catch (error) {
+          el('error').textContent = error.message;
+        }
+      }
+
+      el('build-btn').addEventListener('click', build);
+      el('reset-btn').addEventListener('click', () => { stop(); cursor = 0; render(); });
+      el('prev-btn').addEventListener('click', () => { stop(); if (cursor > 0) { cursor--; render(); } });
+      el('next-btn').addEventListener('click', () => { stop(); if (cursor < events.length - 1) { cursor++; render(); } });
+      el('play-btn').addEventListener('click', () => {
+        if (timer) { stop(); return; }
+        if (cursor === events.length - 1) cursor = 0;
+        el('play-btn').textContent = 'Ⅱ Pause';
+        el('play-btn').setAttribute('aria-pressed', 'true');
+        render();
+        timer = window.setInterval(() => {
+          if (cursor >= events.length - 1) { stop(); return; }
+          cursor++;
+          render();
+        }, Number(el('speed-select').value));
+      });
+      el('data-input').addEventListener('keydown', event => { if (event.key === 'Enter') build(); });
+      el('speed-select').addEventListener('change', () => {
+        if (!timer) return;
+        stop();
+        el('play-btn').click();
+      });
+      document.addEventListener('keydown', event => {
+        if (event.target === el('data-input') || event.target === el('speed-select')) return;
+        if (event.key === 'ArrowRight' && cursor < events.length - 1) { stop(); cursor++; render(); }
+        if (event.key === 'ArrowLeft' && cursor > 0) { stop(); cursor--; render(); }
+      });
+
+      build();
+    })();
+  </script>
+</body>
+</html>

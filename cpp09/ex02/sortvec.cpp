@@ -1,6 +1,5 @@
 #include "PmergeMe.hpp"
 
-
 bool PmergeMe::buildPairsVec(std::vector<Pairs> &pairs, std::vector<int> const &data, bool &hasStraggler, int &straggler) const
 {
     if (data.size() < 2)
@@ -23,15 +22,11 @@ bool PmergeMe::buildPairsVec(std::vector<Pairs> &pairs, std::vector<int> const &
     return true;
 }
 
-
-
 void PmergeMe::insertLosersVec(std::vector<int> &mainChain, std::vector<int> const &losers, bool hasStraggler, int straggler)
 {
-    if (!losers.empty())
-    {
-        int first = losers[0];
-        mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), first), first);
-    }
+
+    int first = losers[0];
+    mainChain.insert(mainChain.begin(), first);
 
     std::vector<size_t> jacobsthalSequence = Jacobsthal(losers.size());
     for (size_t k = 0; k < jacobsthalSequence.size(); ++k)
@@ -42,7 +37,7 @@ void PmergeMe::insertLosersVec(std::vector<int> &mainChain, std::vector<int> con
         int value = losers[j - 1];
         mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), value), value);
     }
-
+    
     if (hasStraggler)
         mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), straggler), straggler);
 }

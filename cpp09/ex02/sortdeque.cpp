@@ -26,11 +26,9 @@ bool PmergeMe::buildPairsDeq(std::vector<Pairs> &pairs, std::deque<int> const &d
 
 void PmergeMe::insertLosersDeq(std::deque<int> &mainChain, std::deque<int> const &losers, bool hasStraggler, int straggler)
 {
-    if (!losers.empty())
-    {
-        int first = losers[0];
-        mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), first), first);
-    }
+
+    int first = losers[0];
+    mainChain.insert(mainChain.begin(), first);
 
     std::vector<size_t> jacobsthalSequence = Jacobsthal(losers.size());
     for (size_t k = 0; k < jacobsthalSequence.size(); ++k)
@@ -39,6 +37,8 @@ void PmergeMe::insertLosersDeq(std::deque<int> &mainChain, std::deque<int> const
         if (j < 2 || j > losers.size())
             continue;
         int value = losers[j - 1];
+
+        // try use find the correct position to insert the value in the mainChain
         mainChain.insert(std::lower_bound(mainChain.begin(), mainChain.end(), value), value);
     }
 

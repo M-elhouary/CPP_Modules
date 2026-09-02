@@ -104,7 +104,7 @@ bool RPN::parseInput(const std::string &input)
             if (isOperand(input[i]) && isOperand(input[i + 1]))
                 std::cerr << "Error: operand must be less than 10." << std::endl;
             else
-                std::cerr << "Error: failed to parse input." << std::endl;
+                std::cerr << "Error: failed to parse input. Tokens must be separated by whitespace." << std::endl;
             clearStack();
             return false;
         }
