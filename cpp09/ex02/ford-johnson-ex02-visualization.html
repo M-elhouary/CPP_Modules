@@ -1,0 +1,2077 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Ford Johnson Ex02 Peer</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Ford Johnson Ex02 Peer" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Ford Johnson Ex02 Peer&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+:root:not([data-app-block-surface], [data-visualize-standalone]) &gt; body {
+  padding: 12px;
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The shared runtime owns data-tooltip; suppress AppBlock&#x27;s pseudo-tooltip. */
+main [data-tooltip]::after {
+  content: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;fj-peer-explainer&quot;&gt;
+  &lt;style&gt;
+    #fj-peer-explainer {
+      color: var(--foreground);
+      width: 100%;
+    }
+    #fj-peer-explainer .fj-top {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    #fj-peer-explainer .fj-top h2,
+    #fj-peer-explainer .fj-top p { margin: 0; }
+    #fj-peer-explainer .fj-top p { margin-top: 4px; }
+    #fj-peer-explainer .fj-controls { margin-bottom: 12px; }
+    #fj-peer-explainer .fj-progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    #fj-peer-explainer .fj-phase-line {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 5px;
+      margin: 12px 0;
+    }
+    #fj-peer-explainer .fj-phase {
+      padding: 5px 3px;
+      border-bottom: 2px solid var(--border);
+      color: var(--muted-foreground);
+      text-align: center;
+    }
+    #fj-peer-explainer .fj-phase.is-active {
+      border-bottom-color: var(--primary);
+      color: var(--foreground);
+      font-weight: 500;
+    }
+    #fj-peer-explainer .fj-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(290px, .65fr);
+      gap: 18px;
+      align-items: start;
+    }
+    #fj-peer-explainer .fj-detail { margin-bottom: 12px; }
+    #fj-peer-explainer .fj-detail h3,
+    #fj-peer-explainer .fj-detail p { margin: 0; }
+    #fj-peer-explainer .fj-detail p { margin-top: 4px; }
+    #fj-peer-explainer .fj-detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+      color: var(--muted-foreground);
+    }
+    #fj-peer-explainer .fj-recursion {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    #fj-peer-explainer .fj-level {
+      padding: 5px 8px;
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--muted) 72%, transparent);
+      color: var(--muted-foreground);
+    }
+    #fj-peer-explainer .fj-level.is-active {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+    #fj-peer-explainer .fj-stage {
+      min-height: 330px;
+    }
+    #fj-peer-explainer .fj-lane {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    #fj-peer-explainer .fj-lane:last-child { border-bottom: 0; }
+    #fj-peer-explainer .fj-lane-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px 12px;
+      margin-bottom: 8px;
+    }
+    #fj-peer-explainer .fj-lane-title { font-weight: 500; }
+    #fj-peer-explainer .fj-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+      min-height: 42px;
+    }
+    #fj-peer-explainer .fj-tile {
+      position: relative;
+      z-index: 1;
+      display: inline-grid;
+      min-width: 42px;
+      height: 42px;
+      padding: 0 8px;
+      place-items: center;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      background: color-mix(in srgb, var(--foreground) 8%, transparent);
+      color: var(--foreground);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      will-change: transform;
+    }
+    #fj-peer-explainer .fj-tile small {
+      position: absolute;
+      right: 3px;
+      bottom: 0;
+      color: var(--muted-foreground);
+    }
+    #fj-peer-explainer .fj-tile.winner {
+      background: color-mix(in srgb, var(--viz-series-1) 18%, transparent);
+    }
+    #fj-peer-explainer .fj-tile.loser {
+      background: color-mix(in srgb, var(--viz-series-2) 18%, transparent);
+    }
+    #fj-peer-explainer .fj-tile.straggler {
+      background: color-mix(in srgb, var(--viz-series-3) 18%, transparent);
+      border-color: var(--viz-series-3);
+      border-style: dashed;
+    }
+    #fj-peer-explainer .fj-tile.active {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      transform: translateY(-2px);
+    }
+    #fj-peer-explainer .fj-tile.searchable {
+      border-color: var(--viz-series-1);
+    }
+    #fj-peer-explainer .fj-tile.partner::before {
+      content: &quot;bound&quot;;
+      position: absolute;
+      top: -15px;
+      color: var(--foreground);
+    }
+    #fj-peer-explainer .fj-tile.outside { opacity: .38; }
+    #fj-peer-explainer .fj-tile.done {
+      background: color-mix(in srgb, var(--viz-series-4) 18%, transparent);
+    }
+    #fj-peer-explainer .fj-arrow { color: var(--muted-foreground); }
+    #fj-peer-explainer .fj-pairs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    #fj-peer-explainer .fj-pair {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-top: 15px;
+    }
+    #fj-peer-explainer .fj-pair-label {
+      align-self: start;
+      color: var(--muted-foreground);
+    }
+    #fj-peer-explainer .fj-pend {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 7px;
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--viz-series-2) 16%, transparent);
+    }
+    #fj-peer-explainer .fj-pend.is-active {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+    #fj-peer-explainer .fj-pend.is-done { opacity: .42; }
+    #fj-peer-explainer .fj-schedule {
+      display: inline-grid;
+      min-width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 7px;
+      background: color-mix(in srgb, var(--foreground) 8%, transparent);
+      font-variant-numeric: tabular-nums;
+    }
+    #fj-peer-explainer .fj-schedule.is-active {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+    #fj-peer-explainer .fj-schedule.is-done { opacity: .4; }
+    #fj-peer-explainer .fj-code-title { margin: 0 0 6px; }
+    #fj-peer-explainer .fj-code {
+      margin: 0 0 12px;
+      padding: 10px 0 10px 12px;
+      border-left: 3px solid var(--primary);
+      overflow-x: auto;
+      color: var(--foreground);
+      background: transparent;
+      white-space: pre;
+    }
+    #fj-peer-explainer .fj-index-map {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 5px 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    #fj-peer-explainer .fj-index-map code { color: var(--foreground); }
+    #fj-peer-explainer .fj-empty { color: var(--muted-foreground); }
+    #fj-peer-explainer .fj-search-note {
+      margin-top: 7px;
+      color: var(--muted-foreground);
+    }
+    @media (max-width: 780px) {
+      #fj-peer-explainer .fj-layout { grid-template-columns: 1fr; }
+      #fj-peer-explainer .fj-stage { min-height: 280px; }
+    }
+    @media (max-width: 480px) {
+      #fj-peer-explainer .fj-top { align-items: start; flex-direction: column; }
+      #fj-peer-explainer .fj-phase-line { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      #fj-peer-explainer .fj-controls .btn { flex: 1; }
+      #fj-peer-explainer .fj-tile { min-width: 38px; height: 38px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #fj-peer-explainer * { scroll-behavior: auto !important; }
+    }
+  &lt;/style&gt;
+
+  &lt;div class=&quot;fj-top&quot;&gt;
+    &lt;div&gt;
+      &lt;h2&gt;Ford–Johnson in your PmergeMe code&lt;/h2&gt;
+      &lt;p class=&quot;text-muted&quot;&gt;Example input: &lt;code&gt;22 8 20 2 24 14 21 5 23 9&lt;/code&gt;&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;viz-badge&quot;&gt;C++98 · vector path&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-controls fj-controls&quot; aria-label=&quot;Animation controls&quot;&gt;
+    &lt;button class=&quot;btn&quot; id=&quot;fj-prev&quot; type=&quot;button&quot;&gt;← Previous&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; id=&quot;fj-next&quot; type=&quot;button&quot;&gt;Next →&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; id=&quot;fj-play&quot; type=&quot;button&quot; aria-pressed=&quot;false&quot;&gt;▶ Play&lt;/button&gt;
+    &lt;button class=&quot;btn btn-ghost&quot; id=&quot;fj-reset&quot; type=&quot;button&quot;&gt;Reset&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;fj-progress-label text-small text-muted&quot;&gt;
+    &lt;span id=&quot;fj-progress-label&quot;&gt;Step 1&lt;/span&gt;
+    &lt;span id=&quot;fj-progress-value&quot; class=&quot;tabular-nums&quot;&gt;0%&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;progress&quot; role=&quot;progressbar&quot; aria-label=&quot;Algorithm progress&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot; aria-valuenow=&quot;0&quot;&gt;
+    &lt;div class=&quot;progress-bar&quot; id=&quot;fj-progress-bar&quot; style=&quot;width:0%&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;fj-phase-line text-small&quot; aria-label=&quot;Algorithm phases&quot;&gt;
+    &lt;span class=&quot;fj-phase&quot; data-phase=&quot;pair&quot;&gt;Pair&lt;/span&gt;
+    &lt;span class=&quot;fj-phase&quot; data-phase=&quot;recurse&quot;&gt;Winners&lt;/span&gt;
+    &lt;span class=&quot;fj-phase&quot; data-phase=&quot;chain&quot;&gt;Main / pend&lt;/span&gt;
+    &lt;span class=&quot;fj-phase&quot; data-phase=&quot;order&quot;&gt;Jacobsthal&lt;/span&gt;
+    &lt;span class=&quot;fj-phase&quot; data-phase=&quot;insert&quot;&gt;Binary insert&lt;/span&gt;
+    &lt;span class=&quot;fj-phase&quot; data-phase=&quot;return&quot;&gt;Return&lt;/span&gt;
+    &lt;span class=&quot;fj-phase&quot; data-phase=&quot;done&quot;&gt;Sorted&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;fj-layout&quot;&gt;
+    &lt;section&gt;
+      &lt;div class=&quot;card fj-detail&quot; aria-live=&quot;polite&quot;&gt;
+        &lt;span id=&quot;fj-event-label&quot; class=&quot;viz-badge&quot;&gt;Pair&lt;/span&gt;
+        &lt;h3 id=&quot;fj-event-title&quot;&gt;Enter sortingVector(data)&lt;/h3&gt;
+        &lt;p id=&quot;fj-event-detail&quot;&gt;The vector is divided into adjacent pairs.&lt;/p&gt;
+        &lt;div class=&quot;fj-detail-meta text-small&quot;&gt;
+          &lt;span&gt;Depth &lt;strong id=&quot;fj-depth&quot; class=&quot;tabular-nums&quot;&gt;0&lt;/strong&gt;&lt;/span&gt;
+          &lt;span&gt;Comparisons &lt;strong id=&quot;fj-comparisons&quot; class=&quot;tabular-nums&quot;&gt;0&lt;/strong&gt;&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;fj-recursion text-small&quot; id=&quot;fj-recursion&quot; aria-label=&quot;Recursion levels&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;fj-stage&quot; id=&quot;fj-stage&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;aside&gt;
+      &lt;h3 class=&quot;fj-code-title&quot;&gt;Your code at this step&lt;/h3&gt;
+      &lt;pre class=&quot;fj-code&quot;&gt;&lt;code id=&quot;fj-code&quot;&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;div class=&quot;fj-index-map text-small&quot;&gt;
+        &lt;span class=&quot;text-muted&quot;&gt;Original b-index&lt;/span&gt;&lt;code&gt;3 2 5 4&lt;/code&gt;
+        &lt;span class=&quot;text-muted&quot;&gt;Rest one-based&lt;/span&gt;&lt;code&gt;2 1 4 3&lt;/code&gt;
+        &lt;span class=&quot;text-muted&quot;&gt;Rest zero-based&lt;/span&gt;&lt;code&gt;1 0 3 2&lt;/code&gt;
+      &lt;/div&gt;
+    &lt;/aside&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;fj-peer-explainer&#x27;);
+      if (!root) return;
+      const q = selector =&gt; root.querySelector(selector);
+      const qa = selector =&gt; Array.from(root.querySelectorAll(selector));
+      const inputValues = [22, 8, 20, 2, 24, 14, 21, 5, 23, 9];
+      const phaseOrder = [&#x27;pair&#x27;, &#x27;recurse&#x27;, &#x27;chain&#x27;, &#x27;order&#x27;, &#x27;insert&#x27;, &#x27;return&#x27;, &#x27;done&#x27;];
+      let events = [];
+      let levelInputs = {};
+      let comparisons = 0;
+      let cursor = 0;
+      let timer = null;
+
+      const item = (value, index) =&gt; ({ id: `v${index}`, value, origin: index + 1 });
+      const copyItem = value =&gt; value ? { ...value } : null;
+      const copyPairs = values =&gt; (values || []).map(pair =&gt; ({ winner: copyItem(pair.winner), loser: copyItem(pair.loser) }));
+      const copyPending = values =&gt; (values || []).map(record =&gt; ({ index: record.index, item: copyItem(record.item), partner: copyItem(record.partner), inserted: record.inserted }));
+
+      function emit(data) {
+        events.push({
+          type: data.type,
+          phase: data.phase,
+          depth: data.depth,
+          title: data.title,
+          detail: data.detail,
+          comparisons,
+          input: (data.input || []).map(copyItem),
+          remaining: (data.remaining || []).map(copyItem),
+          pairs: copyPairs(data.pairs),
+          current: (data.current || []).map(copyItem),
+          winners: (data.winners || []).map(copyItem),
+          sortedPairs: copyPairs(data.sortedPairs),
+          main: (data.main || []).map(copyItem),
+          pending: copyPending(data.pending),
+          straggler: copyItem(data.straggler),
+          schedule: [...(data.schedule || [])],
+          schedulePosition: data.schedulePosition ?? -1,
+          active: copyItem(data.active),
+          partner: copyItem(data.partner),
+          bound: data.bound ?? null,
+          insertPosition: data.insertPosition ?? null,
+          roles: { ...(data.roles || {}) }
+        });
+      }
+
+      function jacobsthal(n) {
+        const sequence = [];
+        if (n &lt;= 1) return sequence;
+        let previousJacob = 1;
+        let currentJacob = 3;
+        let previousBoundary = 1;
+        while (currentJacob &lt;= n) {
+          sequence.push(currentJacob);
+          for (let i = currentJacob - 1; i &gt; previousBoundary; --i) sequence.push(i);
+          previousBoundary = currentJacob;
+          const nextJacob = currentJacob + 2 * previousJacob;
+          previousJacob = currentJacob;
+          currentJacob = nextJacob;
+        }
+        for (let i = n; i &gt; previousBoundary; --i) sequence.push(i);
+        return sequence;
+      }
+
+      function fordJohnson(values, depth) {
+        levelInputs[depth] = values.map(copyItem);
+        emit({
+          type: &#x27;enter&#x27;, phase: &#x27;pair&#x27;, depth, input: values,
+          title: `sortingVector(data) enters level ${depth}`,
+          detail: depth === 0 ? &#x27;Start with the original vector.&#x27; : &#x27;The previous level passed only its winnersTmp vector.&#x27;
+        });
+
+        if (values.length &lt;= 1) {
+          emit({
+            type: &#x27;base&#x27;, phase: &#x27;return&#x27;, depth, input: values, main: values,
+            title: &#x27;Base case: data.size() &lt;= 1&#x27;,
+            detail: &#x27;Return this vector. Recursion now unwinds to the caller.&#x27;
+          });
+          return [...values];
+        }
+
+        const completed = [];
+        const pairEnd = values.length - values.length % 2;
+        const straggler = values.length % 2 ? values[values.length - 1] : null;
+
+        for (let i = 0; i &lt; pairEnd; i += 2) {
+          const left = values[i];
+          const right = values[i + 1];
+          comparisons++;
+          emit({
+            type: &#x27;compare&#x27;, phase: &#x27;pair&#x27;, depth, input: values,
+            remaining: values.slice(i + 2, pairEnd), pairs: completed,
+            current: [left, right], straggler,
+            title: `Compare ${left.value} and ${right.value}`,
+            detail: left.value &lt; right.value
+              ? `${left.value} &lt; ${right.value}, so std::swap(a, b) puts the larger value in winner.`
+              : `${left.value} ≥ ${right.value}, so no swap is needed.`
+          });
+          const pair = left.value &lt; right.value
+            ? { winner: right, loser: left }
+            : { winner: left, loser: right };
+          completed.push(pair);
+          emit({
+            type: &#x27;store&#x27;, phase: &#x27;pair&#x27;, depth, input: values,
+            remaining: values.slice(i + 2, pairEnd), pairs: completed,
+            straggler,
+            title: `Store winner ${pair.winner.value}, loser ${pair.loser.value}`,
+            detail: &#x27;The Pairs object is pushed into pairs; an odd final value remains the straggler.&#x27;
+          });
+        }
+
+        const winners = completed.map(pair =&gt; pair.winner);
+        emit({
+          type: &#x27;winners&#x27;, phase: &#x27;recurse&#x27;, depth, input: values,
+          pairs: completed, winners, straggler,
+          title: `Build winners = [${winners.map(x =&gt; x.value).join(&#x27;, &#x27;)}]`,
+          detail: &#x27;winnersTmp = winners, then sortingVector(winnersTmp) recursively sorts only these larger values.&#x27;
+        });
+
+        emit({
+          type: &#x27;call&#x27;, phase: &#x27;recurse&#x27;, depth, input: values,
+          pairs: completed, winners, straggler,
+          title: `Call sortingVector(winnersTmp) at level ${depth + 1}`,
+          detail: &#x27;The winner cards move down and become data in the next recursion level.&#x27;
+        });
+
+        const sortedWinners = fordJohnson(winners, depth + 1);
+        const pairByWinner = new Map(completed.map(pair =&gt; [pair.winner.id, pair]));
+        const sortedPairs = sortedWinners.map(winner =&gt; pairByWinner.get(winner.id));
+
+        emit({
+          type: &#x27;returned&#x27;, phase: &#x27;recurse&#x27;, depth, input: values,
+          winners: sortedWinners, sortedPairs, straggler,
+          title: `winnerSorted returns [${sortedWinners.map(x =&gt; x.value).join(&#x27;, &#x27;)}]`,
+          detail: &#x27;Reorder the losers by following their paired winners in this new order.&#x27;
+        });
+
+        const roles = {};
+        sortedPairs.forEach((pair, index) =&gt; {
+          roles[pair.winner.id] = `a${index + 1}`;
+          roles[pair.loser.id] = `b${index + 1}`;
+        });
+        if (straggler) roles[straggler.id] = `b${sortedPairs.length + 1}`;
+
+        let main = [sortedPairs[0].loser, ...sortedWinners];
+        const pending = [];
+        for (let i = 1; i &lt; sortedPairs.length; ++i) {
+          pending.push({ index: i + 1, item: sortedPairs[i].loser, partner: sortedPairs[i].winner, inserted: false });
+        }
+        if (straggler) pending.push({ index: sortedPairs.length + 1, item: straggler, partner: null, inserted: false });
+
+        emit({
+          type: &#x27;chain&#x27;, phase: &#x27;chain&#x27;, depth, input: values,
+          sortedPairs, main, pending, straggler, roles,
+          title: &#x27;Build main chain: [b₁, a₁, a₂, …]&#x27;,
+          detail: &#x27;b₁ is placed first. The other losers become pend and keep their paired-winner boundary.&#x27;
+        });
+
+        const logicalCount = sortedPairs.length + (straggler ? 1 : 0);
+        const schedule = jacobsthal(logicalCount);
+        emit({
+          type: &#x27;order&#x27;, phase: &#x27;order&#x27;, depth, input: values,
+          sortedPairs, main, pending, straggler, schedule, roles,
+          title: `Jacobsthal(${logicalCount}) → ${schedule.join(&#x27;, &#x27;) || &#x27;empty&#x27;}`,
+          detail: logicalCount === 5
+            ? &#x27;b₁ is already in main. Insert b₃, b₂, b₅, b₄. In a rest-only vector, that is positions 2, 1, 4, 3.&#x27;
+            : &#x27;The returned values are original one-based b-indexes; index 1 is omitted because b₁ is already in main.&#x27;
+        });
+
+        for (let orderPosition = 0; orderPosition &lt; schedule.length; ++orderPosition) {
+          const index = schedule[orderPosition];
+          const record = pending.find(value =&gt; value.index === index);
+          if (!record) continue;
+          const bound = record.partner ? main.findIndex(value =&gt; value.id === record.partner.id) : main.length;
+          let low = 0;
+          let high = bound;
+          while (low &lt; high) {
+            const middle = Math.floor((low + high) / 2);
+            comparisons++;
+            if (main[middle].value &lt; record.item.value) low = middle + 1;
+            else high = middle;
+          }
+          emit({
+            type: &#x27;search&#x27;, phase: &#x27;insert&#x27;, depth, input: values,
+            sortedPairs, main, pending, straggler, schedule,
+            schedulePosition: orderPosition, active: record.item,
+            partner: record.partner, bound, insertPosition: low, roles,
+            title: `Insert ${roles[record.item.id]} = ${record.item.value}`,
+            detail: record.partner
+              ? `lower_bound searches only [begin, ${roles[record.partner.id]}) and finds position ${low}.`
+              : `The straggler has no partner, so lower_bound searches the whole main chain.`
+          });
+          main.splice(low, 0, record.item);
+          record.inserted = true;
+          emit({
+            type: &#x27;inserted&#x27;, phase: &#x27;insert&#x27;, depth, input: values,
+            sortedPairs, main, pending, straggler, schedule,
+            schedulePosition: orderPosition, active: record.item, roles,
+            title: `${roles[record.item.id]} is now inside the sorted main chain`,
+            detail: &#x27;Continue with the next original b-index in the Jacobsthal schedule.&#x27;
+          });
+        }
+
+        emit({
+          type: &#x27;done&#x27;, phase: depth === 0 ? &#x27;done&#x27; : &#x27;return&#x27;, depth,
+          input: values, main, pending, schedule, straggler, roles,
+          title: depth === 0 ? `Sorted result: ${main.map(x =&gt; x.value).join(&#x27; &#x27;)}` : `Return ${main.map(x =&gt; x.value).join(&#x27; &#x27;)} to level ${depth - 1}`,
+          detail: depth === 0 ? &#x27;Run the same algorithm independently for std::vector and std::deque, then report their processing times.&#x27; : &#x27;This sorted chain becomes winnerSorted in the caller.&#x27;
+        });
+        return main;
+      }
+
+      function tileHTML(value, classes = &#x27;&#x27;, keyPrefix = &#x27;&#x27;, role = &#x27;&#x27;) {
+        const label = role || &#x27;&#x27;;
+        return `&lt;span class=&quot;fj-tile ${classes}&quot; data-key=&quot;${keyPrefix}${value.id}&quot; aria-label=&quot;${label ? label + &#x27;, &#x27; : &#x27;&#x27;}value ${value.value}&quot;&gt;${value.value}${label ? `&lt;small&gt;${label}&lt;/small&gt;` : &#x27;&#x27;}&lt;/span&gt;`;
+      }
+
+      function laneHTML(title, hint, content) {
+        return `&lt;section class=&quot;fj-lane&quot;&gt;&lt;div class=&quot;fj-lane-head&quot;&gt;&lt;span class=&quot;fj-lane-title&quot;&gt;${title}&lt;/span&gt;&lt;code class=&quot;text-small text-muted&quot;&gt;${hint}&lt;/code&gt;&lt;/div&gt;&lt;div class=&quot;fj-row&quot;&gt;${content || &#x27;&lt;span class=&quot;fj-empty text-small&quot;&gt;empty&lt;/span&gt;&#x27;}&lt;/div&gt;&lt;/section&gt;`;
+      }
+
+      function pairsHTML(event) {
+        const stored = event.pairs.map((pair, index) =&gt; `&lt;div class=&quot;fj-pair&quot;&gt;&lt;span class=&quot;fj-pair-label text-small&quot;&gt;P${index + 1}&lt;/span&gt;${tileHTML(pair.winner, &#x27;winner&#x27;)}&lt;span class=&quot;fj-arrow&quot;&gt;≥&lt;/span&gt;${tileHTML(pair.loser, &#x27;loser&#x27;)}&lt;/div&gt;`).join(&#x27;&#x27;);
+        const current = event.current.length === 2
+          ? `&lt;div class=&quot;fj-pair&quot;&gt;${tileHTML(event.current[0], &#x27;active&#x27;)}&lt;span class=&quot;fj-arrow&quot;&gt;?&lt;/span&gt;${tileHTML(event.current[1], &#x27;active&#x27;)}&lt;/div&gt;`
+          : &#x27;&#x27;;
+        return stored + current;
+      }
+
+      function renderStage(event) {
+        let html = &#x27;&#x27;;
+        if (event.type === &#x27;enter&#x27;) {
+          html = laneHTML(&#x27;data&#x27;, &#x27;sortingVector(data)&#x27;, event.input.map(value =&gt; tileHTML(value)).join(&#x27;&#x27;));
+        } else if (event.type === &#x27;base&#x27;) {
+          html = laneHTML(&#x27;base case&#x27;, &#x27;return data&#x27;, event.main.map(value =&gt; tileHTML(value, &#x27;done&#x27;)).join(&#x27;&#x27;));
+        } else if (event.type === &#x27;compare&#x27; || event.type === &#x27;store&#x27;) {
+          if (event.remaining.length) html += laneHTML(&#x27;unprocessed data&#x27;, &#x27;data[i], data[i + 1]&#x27;, event.remaining.map(value =&gt; tileHTML(value)).join(&#x27;&#x27;));
+          html += laneHTML(&#x27;normalized pairs&#x27;, &#x27;winner ≥ loser&#x27;, `&lt;div class=&quot;fj-pairs&quot;&gt;${pairsHTML(event)}&lt;/div&gt;`);
+          if (event.straggler) html += laneHTML(&#x27;straggler&#x27;, &#x27;data.back()&#x27;, tileHTML(event.straggler, &#x27;straggler&#x27;));
+        } else if (event.type === &#x27;winners&#x27; || event.type === &#x27;call&#x27;) {
+          html += laneHTML(event.type === &#x27;call&#x27; ? &#x27;winnersTmp enters recursion&#x27; : &#x27;winners&#x27;, event.type === &#x27;call&#x27; ? &#x27;sortingVector(winnersTmp)&#x27; : &#x27;winners.push_back(pair.winner)&#x27;, event.winners.map(value =&gt; tileHTML(value, &#x27;winner&#x27;)).join(&#x27;&#x27;));
+          const losers = event.pairs.map(pair =&gt; pair.loser);
+          html += laneHTML(&#x27;losers stay at this level&#x27;, &#x27;pairs[i].loser&#x27;, losers.map(value =&gt; tileHTML(value, &#x27;loser&#x27;)).join(&#x27;&#x27;));
+          if (event.straggler) html += laneHTML(&#x27;straggler stays at this level&#x27;, &#x27;not in winnersTmp&#x27;, tileHTML(event.straggler, &#x27;straggler&#x27;));
+        } else if (event.type === &#x27;returned&#x27;) {
+          html += laneHTML(&#x27;winnerSorted&#x27;, &#x27;sortingVector(winnersTmp) returned&#x27;, event.winners.map((value, index) =&gt; tileHTML(value, &#x27;winner done&#x27;, &#x27;&#x27;, `a${index + 1}`)).join(&#x27;&#x27;));
+          html += laneHTML(&#x27;reordered losers&#x27;, &#x27;follow each sorted winner&#x27;, event.sortedPairs.map((pair, index) =&gt; tileHTML(pair.loser, &#x27;loser&#x27;, &#x27;&#x27;, `b${index + 1}`)).join(&#x27;&#x27;));
+        } else {
+          const mainContent = event.main.map((value, index) =&gt; {
+            let classes = event.type === &#x27;done&#x27; ? &#x27;done&#x27; : &#x27;&#x27;;
+            if (event.active &amp;&amp; value.id === event.active.id) classes += &#x27; active&#x27;;
+            if (event.type === &#x27;search&#x27; &amp;&amp; event.bound !== null) {
+              if (index &lt; event.bound) classes += &#x27; searchable&#x27;;
+              else if (index === event.bound &amp;&amp; event.partner) classes += &#x27; partner&#x27;;
+              else classes += &#x27; outside&#x27;;
+            }
+            return tileHTML(value, classes, &#x27;&#x27;, event.roles[value.id]);
+          }).join(&#x27;&lt;span class=&quot;fj-arrow&quot;&gt;→&lt;/span&gt;&#x27;);
+          html += laneHTML(&#x27;main chain&#x27;, &#x27;sorted at every step&#x27;, mainContent);
+          if (event.pending.length) {
+            const pendContent = event.pending.map(record =&gt; `&lt;span class=&quot;fj-pend${record.inserted ? &#x27; is-done&#x27; : &#x27;&#x27;}${event.active &amp;&amp; event.active.id === record.item.id ? &#x27; is-active&#x27; : &#x27;&#x27;}&quot;&gt;&lt;code&gt;b${record.index}&lt;/code&gt;${record.item.value}&lt;span class=&quot;text-small&quot;&gt;→ ${record.partner ? `a${record.index}` : &#x27;end&#x27;}&lt;/span&gt;&lt;/span&gt;`).join(&#x27;&#x27;);
+            html += laneHTML(&#x27;pend&#x27;, &#x27;loser → paired winner bound&#x27;, pendContent);
+          }
+          if (event.schedule.length) {
+            const scheduleContent = event.schedule.map((value, index) =&gt; `&lt;span class=&quot;fj-schedule${index &lt; event.schedulePosition ? &#x27; is-done&#x27; : &#x27;&#x27;}${index === event.schedulePosition ? &#x27; is-active&#x27; : &#x27;&#x27;}&quot;&gt;${value}&lt;/span&gt;`).join(&#x27;&lt;span class=&quot;fj-arrow&quot;&gt;→&lt;/span&gt;&#x27;);
+            html += laneHTML(&#x27;Jacobsthal order&#x27;, &#x27;original one-based b-indexes&#x27;, scheduleContent);
+          }
+          if (event.type === &#x27;search&#x27;) {
+            html += `&lt;div class=&quot;fj-search-note text-small&quot;&gt;Search range: positions 0…${Math.max(0, event.bound - 1)} · insertion position: ${event.insertPosition}&lt;/div&gt;`;
+          }
+        }
+        q(&#x27;#fj-stage&#x27;).innerHTML = html;
+      }
+
+      function currentCode(event) {
+        const snippets = {
+          enter: `if (data.size() &lt;= 1)\n    return data;`,
+          base: `if (data.size() &lt;= 1)\n    return data;`,
+          compare: `int a = data[i];\nint b = data[i + 1];\nif (a &lt; b)\n    std::swap(a, b);`,
+          store: `pair.winner = a;\npair.loser = b;\npairs.push_back(pair);`,
+          winners: `for (size_t i = 0; i &lt; pairs.size(); ++i)\n    winners.push_back(pairs[i].winner);\n\nwinnersTmp = winners;`,
+          call: `winnerSorted = sortingVector(winnersTmp);`,
+          returned: `if (winners[j] == winnerSorted[i] &amp;&amp; !used[j])\n{\n    reorderLoser[i] = pairs[j].loser;\n    used[j] = true;\n}`,
+          chain: `mainChain.push_back(reorderedLosers[0]);\nfor (...)\n    mainChain.push_back(winnerSorted[i]);`,
+          order: `std::vector&lt;size_t&gt; order =\n    Jacobsthal(pendingCount);`,
+          search: `bound = mainChain.begin();\nstd::advance(bound, partnerPositions[j]);\nposition = std::lower_bound(\n    mainChain.begin(), bound, value);`,
+          inserted: `mainChain.insert(position, value);`,
+          done: `return mainChain;`
+        };
+        return snippets[event.type] || snippets.done;
+      }
+
+      function captureRects() {
+        const result = new Map();
+        qa(&#x27;.fj-tile[data-key]&#x27;).forEach(node =&gt; result.set(node.dataset.key, node.getBoundingClientRect()));
+        return result;
+      }
+
+      function animateCards(previous) {
+        if (window.matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches) return;
+        qa(&#x27;.fj-tile[data-key]&#x27;).forEach(node =&gt; {
+          const before = previous.get(node.dataset.key);
+          if (!before) return;
+          const after = node.getBoundingClientRect();
+          const dx = before.left - after.left;
+          const dy = before.top - after.top;
+          if (Math.abs(dx) &lt; 1 &amp;&amp; Math.abs(dy) &lt; 1) return;
+          node.animate([
+            { transform: `translate(${dx}px, ${dy}px) scale(1.05)`, zIndex: 20 },
+            { transform: &#x27;translate(0, 0) scale(1)&#x27;, zIndex: 1 }
+          ], { duration: 560, easing: &#x27;cubic-bezier(.2,.8,.2,1)&#x27; });
+        });
+      }
+
+      function renderRecursion(depth) {
+        const depths = Object.keys(levelInputs).map(Number).sort((a, b) =&gt; a - b);
+        q(&#x27;#fj-recursion&#x27;).innerHTML = depths.map((value, index) =&gt; {
+          const values = levelInputs[value].map(entry =&gt; entry.value).join(&#x27; &#x27;);
+          return `${index ? &#x27;&lt;span class=&quot;fj-arrow&quot;&gt;→&lt;/span&gt;&#x27; : &#x27;&#x27;}&lt;span class=&quot;fj-level${value === depth ? &#x27; is-active&#x27; : &#x27;&#x27;}&quot;&gt;L${value}: ${values}&lt;/span&gt;`;
+        }).join(&#x27;&#x27;);
+      }
+
+      function render(animate = true) {
+        const previous = animate ? captureRects() : new Map();
+        const event = events[cursor];
+        const percent = events.length &lt;= 1 ? 100 : Math.round(cursor / (events.length - 1) * 100);
+        q(&#x27;#fj-event-label&#x27;).textContent = event.phase;
+        q(&#x27;#fj-event-title&#x27;).textContent = event.title;
+        q(&#x27;#fj-event-detail&#x27;).textContent = event.detail;
+        q(&#x27;#fj-depth&#x27;).textContent = event.depth;
+        q(&#x27;#fj-comparisons&#x27;).textContent = event.comparisons;
+        q(&#x27;#fj-progress-label&#x27;).textContent = `Step ${cursor + 1} of ${events.length}`;
+        q(&#x27;#fj-progress-value&#x27;).textContent = `${percent}%`;
+        q(&#x27;#fj-progress-bar&#x27;).style.width = `${percent}%`;
+        q(&#x27;#fj-progress-bar&#x27;).parentElement.setAttribute(&#x27;aria-valuenow&#x27;, String(percent));
+        q(&#x27;#fj-code&#x27;).textContent = currentCode(event);
+        q(&#x27;#fj-prev&#x27;).disabled = cursor === 0;
+        q(&#x27;#fj-next&#x27;).disabled = cursor === events.length - 1;
+        qa(&#x27;.fj-phase&#x27;).forEach(node =&gt; node.classList.toggle(&#x27;is-active&#x27;, node.dataset.phase === event.phase));
+        renderRecursion(event.depth);
+        renderStage(event);
+        requestAnimationFrame(() =&gt; animateCards(previous));
+      }
+
+      function stop() {
+        if (timer) window.clearInterval(timer);
+        timer = null;
+        q(&#x27;#fj-play&#x27;).textContent = &#x27;▶ Play&#x27;;
+        q(&#x27;#fj-play&#x27;).setAttribute(&#x27;aria-pressed&#x27;, &#x27;false&#x27;);
+      }
+
+      q(&#x27;#fj-prev&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        stop();
+        if (cursor &gt; 0) { cursor--; render(); }
+      });
+      q(&#x27;#fj-next&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        stop();
+        if (cursor &lt; events.length - 1) { cursor++; render(); }
+      });
+      q(&#x27;#fj-reset&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        stop();
+        cursor = 0;
+        render();
+      });
+      q(&#x27;#fj-play&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        if (timer) { stop(); return; }
+        if (cursor === events.length - 1) cursor = 0;
+        q(&#x27;#fj-play&#x27;).textContent = &#x27;Ⅱ Pause&#x27;;
+        q(&#x27;#fj-play&#x27;).setAttribute(&#x27;aria-pressed&#x27;, &#x27;true&#x27;);
+        render();
+        timer = window.setInterval(() =&gt; {
+          if (cursor &gt;= events.length - 1) { stop(); return; }
+          cursor++;
+          render();
+        }, 980);
+      });
+
+      comparisons = 0;
+      events = [];
+      levelInputs = {};
+      fordJohnson(inputValues.map(item), 0);
+      render(false);
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerdown&quot;, handlePointer);
+    document.removeEventListener(&quot;pointercancel&quot;, handlePointer);
+    document.removeEventListener(&quot;click&quot;, handleTouchClick);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerdown&quot;, handlePointer);
+  document.addEventListener(&quot;pointercancel&quot;, handlePointer);
+  document.addEventListener(&quot;click&quot;, handleTouchClick);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
